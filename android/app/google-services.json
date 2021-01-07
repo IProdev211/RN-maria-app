@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "215846442436",
+    "firebase_url": "https://maria-285515.firebaseio.com",
+    "project_id": "maria-285515",
+    "storage_bucket": "maria-285515.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215846442436:android:c9fdd4b77ef5527e304091",
+        "android_client_info": {
+          "package_name": "jp.cyclone.maria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215846442436-i26hss75lko1c8vp4aqckmkime1fsl6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCD6dMOIBXOza8RwCPUoMaKlSwdbse1BD4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215846442436-i26hss75lko1c8vp4aqckmkime1fsl6k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "215846442436-i1l7ajf3bla86u437rk5k42l9h30j38t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "jp.cyclone.maria"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

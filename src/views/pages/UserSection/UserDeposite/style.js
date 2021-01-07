@@ -1,0 +1,102 @@
+import EStyleSheet from 'react-native-extended-stylesheet';
+import {Dimensions, Platform} from 'react-native';
+const screenWidth = Math.round(Dimensions.get('window').width);
+
+export default EStyleSheet.flatten(
+  EStyleSheet.create({
+    comments: {
+      width: '40%',
+      fontSize: 15,
+      marginLeft: 20,
+      borderWidth: 1.5,
+      marginRight: 20,
+      paddingLeft: 20,
+      borderRadius: 5,
+      paddingBottom: 60,
+      fontWeight: 'bold',
+      borderColor: '#ccc',
+      backgroundColor: '#e4ecf2',
+      height: 50,
+    },
+
+    cardNumber: {
+      width: screenWidth - 40,
+      fontSize: 16,
+      marginLeft: 20,
+      borderWidth: 1.5,
+      marginRight: 20,
+      borderRadius: 5,
+      borderColor: '#ccc',
+      backgroundColor: '#e4ecf2',
+      paddingLeft: 10,
+      height: 50,
+      color: '$primaryBgColor',
+    },
+    horizontalTextField: {
+      width: screenWidth / 2 - 29,
+      fontSize: 15,
+      borderWidth: 1.5,
+      paddingLeft: 10,
+      borderRadius: 5,
+      borderColor: '#ccc',
+      backgroundColor: '#e4ecf2',
+      height: 50,
+    },
+
+    optionHolder: {
+      marginTop: 20,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 15,
+    },
+    options: {
+      height: 50,
+      width: screenWidth - 40,
+      borderRadius: 5,
+      borderWidth: 0.5,
+      textAlign: 'center',
+      borderColor: '#bbb',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    head: {height: 40, backgroundColor: '#f1f8ff'},
+    text: {margin: 6},
+    mainContainer: {
+      marginTop: 25,
+    },
+    PointsInput: {
+      width: screenWidth - 40,
+      fontSize: 16,
+      marginHorizontal: 20,
+      borderWidth: 1,
+      borderRadius: 5,
+      borderColor: '#ccc',
+      backgroundColor: '#e4ecf2',
+      paddingLeft: 10,
+      height: 50,
+    },
+    PointsInputText: {
+      marginHorizontal: 20,
+      marginBottom: 15,
+      fontSize: 16,
+    },
+    pointCalculation: {
+      marginVertical: 20,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '$primaryBgColor',
+      marginHorizontal: 20,
+      height: 50,
+      borderRadius: 5,
+    },
+    pointCalculationText: {
+      textAlign: 'center',
+      color: 'white',
+      fontSize: 15,
+      fontWeight: 'bold',
+    },
+  }),
+);
