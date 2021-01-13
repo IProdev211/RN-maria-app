@@ -6,7 +6,7 @@ import {
   postCallApi,
   postApiDirectURL,
 } from './api';
-import {getApi} from './api';
+import { getApi } from './api';
 
 //register user
 export const LoginApi = async data => postApi('user/login', {}, data);
@@ -140,6 +140,10 @@ export const uploadProfileImage = async (
     fileType,
     fileName,
   );
+
+export const removeProfileImage = async (id) =>
+  postCallApi(`delete-img/profile-pic/${id}`, {}, {});
+
 export const uploadTweetImage = async (
   keyValue,
   uri,

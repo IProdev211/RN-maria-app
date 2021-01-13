@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Text,
@@ -7,10 +8,10 @@ import {
   Image,
   RefreshControl,
 } from 'react-native';
-import {Badge} from 'react-native-elements';
+import { Badge } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import DashBoardHeader from '../../../components/DashBoardHeader';
-import {allMessage, deleteMessage} from '../../../../services/AuthService';
+import { allMessage, deleteMessage } from '../../../../services/AuthService';
 import styles from './styles';
 
 class Message extends Component {
@@ -28,7 +29,7 @@ class Message extends Component {
       this.getAllMessage(),
     );
   }
-  componentDidUpdate() {}
+  componentDidUpdate() { }
   componentWillUnmount() {
     this.focusListener.remove();
   }
@@ -36,14 +37,14 @@ class Message extends Component {
   getAllMessage = async () => {
     try {
       const response = await allMessage();
-      this.setState({isFetching: false});
+      this.setState({ isFetching: false });
       if (response.isSuccess) {
         let data = response.result.user_all_message;
-        this.setState({data});
+        this.setState({ data });
       }
       console.log(response);
     } catch {
-      this.setState({isFetching: false});
+      this.setState({ isFetching: false });
     }
   };
   deleteMessageNote = async message => {
@@ -54,7 +55,7 @@ class Message extends Component {
         this.getAllMessage();
         console.log('deleteMessageNote');
       }
-    } catch {}
+    } catch { }
   };
   render() {
     return (
@@ -67,7 +68,7 @@ class Message extends Component {
         <View>
           <View style={styles.tabOption}>
             <TouchableOpacity
-              onPress={() => this.setState({TabOptionSelected: 0})}
+              onPress={() => this.setState({ TabOptionSelected: 0 })}
               style={
                 this.state.TabOptionSelected == 0
                   ? styles.tabOptionSelect
@@ -83,7 +84,7 @@ class Message extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.setState({TabOptionSelected: 1})}
+              onPress={() => this.setState({ TabOptionSelected: 1 })}
               style={
                 this.state.TabOptionSelected == 1
                   ? styles.tabOptionSelect
@@ -142,7 +143,7 @@ class Message extends Component {
                         }>
                         <View style={styles.container}>
                           <Image
-                            source={{uri: Notification.user_pic}}
+                            source={{ uri: Notification.user_pic }}
                             style={styles.avatar}
                           />
                           <View style={styles.content}>
@@ -151,17 +152,21 @@ class Message extends Component {
                                 <Text style={styles.name}>
                                   {Notification.user_name}{' '}
                                   <Text style={styles.ageShow}>
-                                    ({Notification.usr_age}y old)
+                                    ({Notification.usr_age}歳)
                                   </Text>
                                 </Text>
-                                <Text style={styles.timeAgo}>{`${
-                                  Notification.message_date
-                                }(${Notification.message_day.substring(0, 3)})${
-                                  Notification.message_time
-                                }`}</Text>
+                                <Text style={styles.timeAgo}>{`${Notification.message_date
+                                  }(${Notification.message_day.substring(0, 3)})${Notification.message_time
+                                  }`}</Text>
                               </View>
                               <View style={styles.text}>
-                                <Text>{Notification.message_text}</Text>
+                                <Text>
+                                  {this.props.userInfo && this.props.userInfo.last_deposite_balance != '0' ?
+                                    Notification.message_text
+                                    :
+                                    "メッセージが届いてます"
+                                  }
+                                </Text>
                                 {Notification.message_unseen ? (
                                   <Badge
                                     value={Notification.message_unseen}
@@ -178,10 +183,10 @@ class Message extends Component {
                 }}
               />
             ) : (
-              <View style={styles.NONotificationContainer}>
-                <Text>システム通知なし !</Text>
-              </View>
-            )}
+                <View style={styles.NONotificationContainer}>
+                  <Text>システム通知なし !</Text>
+                </View>
+              )}
           </View>
         </View>
       </DashBoardHeader>
@@ -189,4 +194,13 @@ class Message extends Component {
   }
 }
 
-export default Message;
+function mapStateToProps(state, props) {
+  return {
+    userInfo: state.mainReducers.main.userInfo,
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  {},
+)(Message);

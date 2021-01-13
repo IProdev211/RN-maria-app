@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>215846442436-i1l7ajf3bla86u437rk5k42l9h30j38t.apps.googleusercontent.com</string>
+	<string>149332836534-mralkqnrumug9jl07dvqb5cl9a071ef4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.215846442436-i1l7ajf3bla86u437rk5k42l9h30j38t</string>
+	<string>com.googleusercontent.apps.149332836534-mralkqnrumug9jl07dvqb5cl9a071ef4</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAJqdYYGr_sqkuhle4W9Lm0_u-onF5-qpA</string>
+	<string>AIzaSyAmsnM3NXntok74Mdcsyi4mASzG838OQ7g</string>
 	<key>GCM_SENDER_ID</key>
-	<string>215846442436</string>
+	<string>149332836534</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>jp.cyclone.maria</string>
+	<string>jp.mki.maria</string>
 	<key>PROJECT_ID</key>
-	<string>maria-285515</string>
+	<string>maria-app-7103f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>maria-285515.appspot.com</string>
+	<string>maria-app-7103f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:215846442436:ios:10ae02bfc676b389304091</string>
-	<key>DATABASE_URL</key>
-	<string>https://maria-285515.firebaseio.com</string>
+	<string>1:149332836534:ios:9f56773b9d0e67f9e2e617</string>
 </dict>
 </plist>

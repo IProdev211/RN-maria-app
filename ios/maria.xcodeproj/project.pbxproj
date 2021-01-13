@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* patoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* patoAppTests.m */; };
+		00E356F31AD99517003FC87E /* mariaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mariaTests.m */; };
 		046C284A24EB5317004424B4 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046C284924EB5317004424B4 /* File.swift */; };
 		04B9B63F24529E5300C6ABC4 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -17,11 +17,11 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* patoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* patoAppTests.m */; };
-		96B016F4EB313FF4ED4617BA /* libPods-patoApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C717441D81C9583E6415862 /* libPods-patoApp.a */; };
-		A60B4B5D90097B9917DBB5DC /* libPods-patoApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A6E20427A6F0ACDFA6BDA7 /* libPods-patoApp-tvOS.a */; };
-		CA39808EA9644F1E295CDA5E /* libPods-patoApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B26339D4384B4ADB60345D5 /* libPods-patoApp-tvOSTests.a */; };
-		E2CB51D563956576E1C13D6F /* libPods-patoAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB3C5FA1050510D531B77AB2 /* libPods-patoAppTests.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* mariaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* mariaTests.m */; };
+		96B016F4EB313FF4ED4617BA /* libPods-maria.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C717441D81C9583E6415862 /* libPods-maria.a */; };
+		A60B4B5D90097B9917DBB5DC /* libPods-maria-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97A6E20427A6F0ACDFA6BDA7 /* libPods-maria-tvOS.a */; };
+		CA39808EA9644F1E295CDA5E /* libPods-maria-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B26339D4384B4ADB60345D5 /* libPods-maria-tvOSTests.a */; };
+		D295564FED3C6AEF88012176 /* libPods-mariaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 371C8757E4D8707AE75AB589 /* libPods-mariaTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,68 +30,70 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = patoApp;
+			remoteInfo = maria;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "patoApp-tvOS";
+			remoteInfo = "maria-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* pMariaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pMariaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* mariaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mariaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* patoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = patoAppTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* mariaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mariaTests.m; sourceTree = "<group>"; };
 		0409FA522452F1C600DE9A0F /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		046C284824EB5316004424B4 /* patoApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "patoApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		046C284824EB5316004424B4 /* maria-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "maria-Bridging-Header.h"; sourceTree = "<group>"; };
 		046C284924EB5317004424B4 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		047EA2632481FE7900D5520E /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		047EA2652481FE9400D5520E /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		047EA2672481FEAE00D5520E /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		047EA2692481FEF700D5520E /* MobileRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileRTC.framework; path = "../node_modules/react-native-zoom-us/ios/libs/MobileRTC.framework"; sourceTree = "<group>"; };
 		047EA26D2481FFFF00D5520E /* MobileRTCResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MobileRTCResources.bundle; path = "../node_modules/react-native-zoom-us/ios/libs/MobileRTCResources.bundle"; sourceTree = "<group>"; };
-		0B26339D4384B4ADB60345D5 /* libPods-patoApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-patoApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B26339D4384B4ADB60345D5 /* libPods-maria-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maria-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D70046EE9AE4599B5833F39 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		1352965BBFFB456AA10C56F8 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* patoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = patoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = patoApp/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = patoApp/AppDelegate.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* maria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = maria.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = maria/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = maria/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = patoApp/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = patoApp/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = patoApp/main.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = maria/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = maria/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = maria/main.m; sourceTree = "<group>"; };
+		1A5F3824605C669453E2540B /* Pods-maria-mariaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-mariaTests.debug.xcconfig"; path = "Target Support Files/Pods-maria-mariaTests/Pods-maria-mariaTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1C33724A1F824542AC93978B /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		2105DCE06E749D451692AC58 /* Pods-patoAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoAppTests.debug.xcconfig"; path = "Target Support Files/Pods-patoAppTests/Pods-patoAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* pMariaApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "pMariaApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* pMariaApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "pMariaApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2105DCE06E749D451692AC58 /* Pods-mariaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mariaTests.debug.xcconfig"; path = "Target Support Files/Pods-mariaTests/Pods-mariaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* maria-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maria-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* maria-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "maria-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		371C8757E4D8707AE75AB589 /* libPods-mariaTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mariaTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		422873EBF5BD4554A7938D39 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		4B168B9560ACDF13D31882FC /* Pods-patoApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-patoApp-tvOSTests/Pods-patoApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4B168B9560ACDF13D31882FC /* Pods-maria-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-maria-tvOSTests/Pods-maria-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		50229DBDC8794425AAD7A3A0 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5904FD0C07A7419C9DCD9016 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		6C717441D81C9583E6415862 /* libPods-patoApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-patoApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6CFEF6D4343047EFADBF5603 /* Pods-patoApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoApp-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-patoApp-tvOSTests/Pods-patoApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6C717441D81C9583E6415862 /* libPods-maria.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maria.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CFEF6D4343047EFADBF5603 /* Pods-maria-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-maria-tvOSTests/Pods-maria-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		74FD7183F95B42BFB6E1645C /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		7E69D2B85131C7DC3B565F44 /* Pods-patoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoAppTests.release.xcconfig"; path = "Target Support Files/Pods-patoAppTests/Pods-patoAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		7E69D2B85131C7DC3B565F44 /* Pods-mariaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mariaTests.release.xcconfig"; path = "Target Support Files/Pods-mariaTests/Pods-mariaTests.release.xcconfig"; sourceTree = "<group>"; };
 		7F98DCDDAFE84D2E891FACD9 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		9174AEE0C96A062CC798B44B /* Pods-patoApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoApp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-patoApp-tvOS/Pods-patoApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		97A6E20427A6F0ACDFA6BDA7 /* libPods-patoApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-patoApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9174AEE0C96A062CC798B44B /* Pods-maria-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-tvOS.release.xcconfig"; path = "Target Support Files/Pods-maria-tvOS/Pods-maria-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		97A6E20427A6F0ACDFA6BDA7 /* libPods-maria-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maria-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CFDCF6912B449A0869CAB7C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		AA4D6798402F41719B12900F /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		B5B2EAAE506F44BA9EDC8B96 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		CD12A825781B4AEE997B1C09 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		D66807E9E7D327362736B52A /* Pods-patoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoApp.release.xcconfig"; path = "Target Support Files/Pods-patoApp/Pods-patoApp.release.xcconfig"; sourceTree = "<group>"; };
-		DB3C5FA1050510D531B77AB2 /* libPods-patoAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-patoAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D21956C3C5A158024DBDB5C9 /* Pods-maria-mariaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-mariaTests.release.xcconfig"; path = "Target Support Files/Pods-maria-mariaTests/Pods-maria-mariaTests.release.xcconfig"; sourceTree = "<group>"; };
+		D66807E9E7D327362736B52A /* Pods-maria.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria.release.xcconfig"; path = "Target Support Files/Pods-maria/Pods-maria.release.xcconfig"; sourceTree = "<group>"; };
 		EADCB4B9B208457F9718A0E4 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		EBB60683A27788254A8C3070 /* Pods-patoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoApp.debug.xcconfig"; path = "Target Support Files/Pods-patoApp/Pods-patoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EBB60683A27788254A8C3070 /* Pods-maria.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria.debug.xcconfig"; path = "Target Support Files/Pods-maria/Pods-maria.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F0F676E534D94C148EBC366A /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		F5BF7DB566454BD0A0C44548 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		F6F1C6972392958F225AB021 /* Pods-patoApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-patoApp-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-patoApp-tvOS/Pods-patoApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		F6F1C6972392958F225AB021 /* Pods-maria-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-maria-tvOS/Pods-maria-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		F7BA9968D9C84E64A41726A3 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,7 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2CB51D563956576E1C13D6F /* libPods-patoAppTests.a in Frameworks */,
+				D295564FED3C6AEF88012176 /* libPods-mariaTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96B016F4EB313FF4ED4617BA /* libPods-patoApp.a in Frameworks */,
+				96B016F4EB313FF4ED4617BA /* libPods-maria.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A60B4B5D90097B9917DBB5DC /* libPods-patoApp-tvOS.a in Frameworks */,
+				A60B4B5D90097B9917DBB5DC /* libPods-maria-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,20 +126,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA39808EA9644F1E295CDA5E /* libPods-patoApp-tvOSTests.a in Frameworks */,
+				CA39808EA9644F1E295CDA5E /* libPods-maria-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* patoAppTests */ = {
+		00E356EF1AD99517003FC87E /* mariaTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* patoAppTests.m */,
+				00E356F21AD99517003FC87E /* mariaTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = patoAppTests;
+			path = mariaTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -151,19 +153,21 @@
 		0697551E8AA6613200ABE3B4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EBB60683A27788254A8C3070 /* Pods-patoApp.debug.xcconfig */,
-				D66807E9E7D327362736B52A /* Pods-patoApp.release.xcconfig */,
-				F6F1C6972392958F225AB021 /* Pods-patoApp-tvOS.debug.xcconfig */,
-				9174AEE0C96A062CC798B44B /* Pods-patoApp-tvOS.release.xcconfig */,
-				6CFEF6D4343047EFADBF5603 /* Pods-patoApp-tvOSTests.debug.xcconfig */,
-				4B168B9560ACDF13D31882FC /* Pods-patoApp-tvOSTests.release.xcconfig */,
-				2105DCE06E749D451692AC58 /* Pods-patoAppTests.debug.xcconfig */,
-				7E69D2B85131C7DC3B565F44 /* Pods-patoAppTests.release.xcconfig */,
+				EBB60683A27788254A8C3070 /* Pods-maria.debug.xcconfig */,
+				D66807E9E7D327362736B52A /* Pods-maria.release.xcconfig */,
+				F6F1C6972392958F225AB021 /* Pods-maria-tvOS.debug.xcconfig */,
+				9174AEE0C96A062CC798B44B /* Pods-maria-tvOS.release.xcconfig */,
+				6CFEF6D4343047EFADBF5603 /* Pods-maria-tvOSTests.debug.xcconfig */,
+				4B168B9560ACDF13D31882FC /* Pods-maria-tvOSTests.release.xcconfig */,
+				2105DCE06E749D451692AC58 /* Pods-mariaTests.debug.xcconfig */,
+				7E69D2B85131C7DC3B565F44 /* Pods-mariaTests.release.xcconfig */,
+				1A5F3824605C669453E2540B /* Pods-maria-mariaTests.debug.xcconfig */,
+				D21956C3C5A158024DBDB5C9 /* Pods-maria-mariaTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* patoApp */ = {
+		13B07FAE1A68108700A75B9A /* maria */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -174,7 +178,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = patoApp;
+			name = maria;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -187,10 +191,10 @@
 				0409FA522452F1C600DE9A0F /* libRNGoogleSignin.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				6C717441D81C9583E6415862 /* libPods-patoApp.a */,
-				97A6E20427A6F0ACDFA6BDA7 /* libPods-patoApp-tvOS.a */,
-				0B26339D4384B4ADB60345D5 /* libPods-patoApp-tvOSTests.a */,
-				DB3C5FA1050510D531B77AB2 /* libPods-patoAppTests.a */,
+				6C717441D81C9583E6415862 /* libPods-maria.a */,
+				97A6E20427A6F0ACDFA6BDA7 /* libPods-maria-tvOS.a */,
+				0B26339D4384B4ADB60345D5 /* libPods-maria-tvOSTests.a */,
+				371C8757E4D8707AE75AB589 /* libPods-mariaTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -230,14 +234,14 @@
 			children = (
 				046C284924EB5317004424B4 /* File.swift */,
 				047EA26D2481FFFF00D5520E /* MobileRTCResources.bundle */,
-				13B07FAE1A68108700A75B9A /* patoApp */,
+				13B07FAE1A68108700A75B9A /* maria */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* patoAppTests */,
+				00E356EF1AD99517003FC87E /* mariaTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				772C4D3FB52247E0B4BB6037 /* Resources */,
 				0697551E8AA6613200ABE3B4 /* Pods */,
-				046C284824EB5316004424B4 /* patoApp-Bridging-Header.h */,
+				046C284824EB5316004424B4 /* maria-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -247,10 +251,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* patoApp.app */,
-				00E356EE1AD99517003FC87E /* pMariaAppTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* pMariaApp-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* pMariaApp-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* maria.app */,
+				00E356EE1AD99517003FC87E /* mariaTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* maria-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* maria-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -258,9 +262,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* pMariaAppTests */ = {
+		00E356ED1AD99517003FC87E /* mariaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "pMariaAppTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "mariaTests" */;
 			buildPhases = (
 				24900DFE82B32B0943DE862E /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -272,14 +276,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = pMariaAppTests;
-			productName = patoAppTests;
-			productReference = 00E356EE1AD99517003FC87E /* pMariaAppTests.xctest */;
+			name = mariaTests;
+			productName = mariaTests;
+			productReference = 00E356EE1AD99517003FC87E /* mariaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* pMariaApp */ = {
+		13B07F861A680F5B00A75B9A /* maria */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "pMariaApp" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "maria" */;
 			buildPhases = (
 				B007A2B8B99CA94DD1E4BB00 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -294,14 +298,14 @@
 			);
 			dependencies = (
 			);
-			name = pMariaApp;
-			productName = patoApp;
-			productReference = 13B07F961A680F5B00A75B9A /* patoApp.app */;
+			name = maria;
+			productName = maria;
+			productReference = 13B07F961A680F5B00A75B9A /* maria.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* pMariaApp-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* maria-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "pMariaApp-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maria-tvOS" */;
 			buildPhases = (
 				FCAFA389983494B0AC6EB070 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -314,14 +318,14 @@
 			);
 			dependencies = (
 			);
-			name = "pMariaApp-tvOS";
-			productName = "patoApp-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* pMariaApp-tvOS.app */;
+			name = "maria-tvOS";
+			productName = "maria-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* maria-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* pMariaApp-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* maria-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "pMariaApp-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maria-tvOSTests" */;
 			buildPhases = (
 				72A7B72CF7FC289E226BB03B /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -333,9 +337,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "pMariaApp-tvOSTests";
-			productName = "patoApp-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* pMariaApp-tvOSTests.xctest */;
+			name = "maria-tvOSTests";
+			productName = "maria-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* maria-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -352,8 +356,9 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = AV567J436S;
+						DevelopmentTeam = LGYZ8D7JJG;
 						LastSwiftMigration = 1160;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -366,7 +371,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "pMaria" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "maria" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -380,10 +385,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* pMariaApp */,
-				00E356ED1AD99517003FC87E /* pMariaAppTests */,
-				2D02E47A1E0B4A5D006451C7 /* pMariaApp-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* pMariaApp-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* maria */,
+				00E356ED1AD99517003FC87E /* mariaTests */,
+				2D02E47A1E0B4A5D006451C7 /* maria-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* maria-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -436,7 +441,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		24900DFE82B32B0943DE862E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -453,7 +458,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-patoAppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-mariaTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -480,22 +485,18 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-patoApp/Pods-patoApp-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-maria/Pods-maria-frameworks.sh",
 				"${PODS_ROOT}/AgoraRtcEngine_iOS_Crypto/Agora_Native_SDK_for_iOS_FULL/libs/AgoraRtcKit.framework",
 				"${PODS_ROOT}/AgoraRtcEngine_iOS_Crypto/Agora_Native_SDK_for_iOS_FULL/libs/AgoraRtcCryptoLoader.framework",
-				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
-				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRtcKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AgoraRtcCryptoLoader.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-patoApp/Pods-patoApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-maria/Pods-maria-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		72A7B72CF7FC289E226BB03B /* [CP] Check Pods Manifest.lock */ = {
@@ -513,7 +514,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-patoApp-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-maria-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -526,7 +527,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-patoApp/Pods-patoApp-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-maria/Pods-maria-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
@@ -545,7 +546,6 @@
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework/TwitterKitResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -567,11 +567,10 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TwitterKitResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-patoApp/Pods-patoApp-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-maria/Pods-maria-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B007A2B8B99CA94DD1E4BB00 /* [CP] Check Pods Manifest.lock */ = {
@@ -589,7 +588,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-patoApp-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-maria-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -611,7 +610,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-patoApp-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-maria-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -663,7 +662,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* patoAppTests.m in Sources */,
+				00E356F31AD99517003FC87E /* mariaTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,7 +689,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* patoAppTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* mariaTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,12 +698,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* pMariaApp */;
+			target = 13B07F861A680F5B00A75B9A /* maria */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* pMariaApp-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* maria-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -716,7 +715,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = patoApp;
+			path = maria;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -724,7 +723,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2105DCE06E749D451692AC58 /* Pods-patoAppTests.debug.xcconfig */;
+			baseConfigurationReference = 2105DCE06E749D451692AC58 /* Pods-mariaTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -732,7 +731,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = patoAppTests/Info.plist;
+				INFOPLIST_FILE = mariaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -742,18 +741,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pMariaApp.app/pMariaApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maria.app/maria";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7E69D2B85131C7DC3B565F44 /* Pods-patoAppTests.release.xcconfig */;
+			baseConfigurationReference = 7E69D2B85131C7DC3B565F44 /* Pods-mariaTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = patoAppTests/Info.plist;
+				INFOPLIST_FILE = mariaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -763,35 +762,38 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pMariaApp.app/pMariaApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maria.app/maria";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBB60683A27788254A8C3070 /* Pods-patoApp.debug.xcconfig */;
+			baseConfigurationReference = EBB60683A27788254A8C3070 /* Pods-maria.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = AV567J436S;
+				DEVELOPMENT_TEAM = LGYZ8D7JJG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/GoogleSignIn/Frameworks\"",
 					"\"${PODS_ROOT}/TwitterCore/iOS\"",
 					"\"${PODS_ROOT}/TwitterKit/iOS\"",
 				);
-				INFOPLIST_FILE = patoApp/Info.plist;
+				INFOPLIST_FILE = maria/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = jp.cyclone.maria;
-				PRODUCT_NAME = pMariaApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "patoApp-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.mki.maria;
+				PRODUCT_NAME = maria;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "maria-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -800,28 +802,31 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D66807E9E7D327362736B52A /* Pods-patoApp.release.xcconfig */;
+			baseConfigurationReference = D66807E9E7D327362736B52A /* Pods-maria.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = AV567J436S;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = LGYZ8D7JJG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/GoogleSignIn/Frameworks\"",
 					"\"${PODS_ROOT}/TwitterCore/iOS\"",
 					"\"${PODS_ROOT}/TwitterKit/iOS\"",
 				);
-				INFOPLIST_FILE = patoApp/Info.plist;
+				INFOPLIST_FILE = maria/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = jp.cyclone.maria;
-				PRODUCT_NAME = pMariaApp;
-				SWIFT_OBJC_BRIDGING_HEADER = "patoApp-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.mki.maria;
+				PRODUCT_NAME = maria;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "maria-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -829,7 +834,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F6F1C6972392958F225AB021 /* Pods-patoApp-tvOS.debug.xcconfig */;
+			baseConfigurationReference = F6F1C6972392958F225AB021 /* Pods-maria-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -840,14 +845,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "patoApp-tvOS/Info.plist";
+				INFOPLIST_FILE = "maria-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.patoApp-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maria-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -857,7 +862,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9174AEE0C96A062CC798B44B /* Pods-patoApp-tvOS.release.xcconfig */;
+			baseConfigurationReference = 9174AEE0C96A062CC798B44B /* Pods-maria-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -868,14 +873,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "patoApp-tvOS/Info.plist";
+				INFOPLIST_FILE = "maria-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.patoApp-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maria-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -885,7 +890,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6CFEF6D4343047EFADBF5603 /* Pods-patoApp-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 6CFEF6D4343047EFADBF5603 /* Pods-maria-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -895,24 +900,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "patoApp-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "maria-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.patoApp-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maria-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pMariaApp-tvOS.app/pMariaApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maria-tvOS.app/maria-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B168B9560ACDF13D31882FC /* Pods-patoApp-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 4B168B9560ACDF13D31882FC /* Pods-maria-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -922,17 +927,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "patoApp-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "maria-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.patoApp-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maria-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pMariaApp-tvOS.app/pMariaApp-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maria-tvOS.app/maria-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -1043,7 +1048,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "pMariaAppTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "mariaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1052,7 +1057,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "pMariaApp" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "maria" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1061,7 +1066,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "pMariaApp-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maria-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -1070,7 +1075,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "pMariaApp-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maria-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -1079,7 +1084,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "pMaria" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "maria" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

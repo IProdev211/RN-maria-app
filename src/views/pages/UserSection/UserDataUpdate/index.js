@@ -1,22 +1,23 @@
-import React, {Component} from 'react';
-import {View, Text, Image, Platform} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image, ScrollView } from 'react-native';
 import ImageResizer from 'react-native-image-resizer';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {showMessage} from 'react-native-flash-message';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { showMessage } from 'react-native-flash-message';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   getUserDetails,
   uploadProfileImage,
   setProfilePicture,
+  removeProfileImage
 } from '../../../../services/AuthService';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
 class UserDataUpdate extends Component {
   constructor(props) {
@@ -29,11 +30,11 @@ class UserDataUpdate extends Component {
       userData: null,
     };
   }
+
   componentDidMount() {
     this.getUserInformation();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
+
   getUserInformation = async () => {
     try {
       let response = await getUserDetails();
@@ -51,7 +52,7 @@ class UserDataUpdate extends Component {
       }
       this.forceUpdate();
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
 
@@ -74,7 +75,7 @@ class UserDataUpdate extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.uri};
+        const source = { uri: response.uri };
         this.uploadImagesIos(response);
       }
     });
@@ -88,15 +89,14 @@ class UserDataUpdate extends Component {
       .catch(err => {
         this.showError(err);
       });
-    this.setState({profileImage: data.uri});
+    this.setState({ profileImage: data.uri });
   };
 
   uploadImages = async (data, path) => {
     try {
-      this.setState({loading: true});
+      this.setState({ loading: true });
       let uriParts = path.split('.');
       let fileType = uriParts[uriParts.length - 1];
-      console.log(fileType);
       let response = await uploadProfileImage(
         {},
         data.uri,
@@ -104,15 +104,14 @@ class UserDataUpdate extends Component {
         `files.${fileType ? fileType : 'png'}`,
       );
       if (response && response.isSuccess) {
-        console.log('Image up', response);
         this.getUserInformation();
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       showMessage({
-        message: '間違ったコードを入力しました',
+        message: '失敗しました。',
         type: 'error',
       });
     }
@@ -132,9 +131,26 @@ class UserDataUpdate extends Component {
       if (response.isSuccess) {
         this.getUserInformation();
       }
-    } catch {}
-    console.log(data);
+    } catch { }
   };
+
+  removeImage = async (id) => {
+    try {
+      this.setState({ loading: true });
+      let response = await removeProfileImage(id);
+      if (response && response.isSuccess) {
+        this.getUserInformation();
+      } else {
+        this.setState({ loading: false });
+      }
+    } catch (errors) {
+      this.setState({ loading: false });
+      showMessage({
+        message: '失敗しました。',
+        type: 'error',
+      });
+    }
+  }
 
   render() {
     return (
@@ -142,54 +158,64 @@ class UserDataUpdate extends Component {
         title="マイページ"
         navigation={this.props.navigation}
         backNavigation={true}>
-        <View style={{backgroundColor: '#FEF6E1', paddingBottom: 20}}>
+        <View style={{ backgroundColor: '#FEF6E1', paddingBottom: 20 }}>
           <View style={styles.ProfileContainer}>
             <View>
               {this.state.profileImage ? (
                 <Image
                   style={styles.profilePicImage}
-                  source={{uri: this.state.profileImage}}
+                  source={{ uri: this.state.profileImage }}
                 />
               ) : (
-                <Image
-                  style={styles.profilePicImage}
-                  source={require('../../../../assets/panda.png')}
-                />
-              )}
+                  <Image
+                    style={styles.profilePicImage}
+                    source={require('../../../../assets/panda.png')}
+                  />
+                )}
             </View>
             <Text style={styles.UserNameText}>{this.state.userName}</Text>
           </View>
           <View style={styles.ImageContainer}>
-            {this.state.userData &&
-            this.state.userData.usr_profile_photo.length > 0
-              ? this.state.userData.usr_profile_photo.map((x, index) => {
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {this.state.userData &&
+                this.state.userData.usr_profile_photo.length > 0
+                ? this.state.userData.usr_profile_photo.map((x, index) => {
                   let ImageUrl = x.picture_url;
                   return (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => this.selctedImage(x, index)}>
-                      <Image
-                        style={[
-                          styles.imageStyle,
-                          this.state.selectedImageIndex == index
-                            ? styles.SelectedImage
-                            : styles.UnSelectedImage,
-                        ]}
-                        source={{uri: ImageUrl}}
-                      />
-                    </TouchableOpacity>
+                    <View key={index}>
+                      <TouchableOpacity
+                        style={{ marginLeft: 57, marginBottom: 0 }}
+                        onPress={() => this.removeImage(x.id)}
+                      >
+                        <Icon name="remove" size={20} color="#999" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => this.selctedImage(x, index)}
+                      >
+                        <Image
+                          style={[
+                            styles.imageStyle,
+                            this.state.selectedImageIndex == index
+                              ? styles.SelectedImage
+                              : styles.UnSelectedImage,
+                          ]}
+                          source={{ uri: ImageUrl }}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   );
                 })
-              : null}
-            {this.state.userData &&
-            this.state.userData.usr_profile_photo.length <= 9 ? (
-              <TouchableOpacity
-                style={styles.addNewPhoto}
-                key="9098"
-                onPress={() => this.UploadProfileImageFromMobile()}>
-                <Icon name="plus" size={25} color="#fff" />
-              </TouchableOpacity>
-            ) : null}
+                : null}
+              {this.state.userData &&
+                this.state.userData.usr_profile_photo.length <= 9 ? (
+                  <TouchableOpacity
+                    style={styles.addNewPhoto}
+                    key="9098"
+                    onPress={() => this.UploadProfileImageFromMobile()}>
+                    <Icon name="plus" size={25} color="#fff" />
+                  </TouchableOpacity>
+                ) : null}
+            </ScrollView>
           </View>
         </View>
         <TouchableOpacity
@@ -221,7 +247,7 @@ class UserDataUpdate extends Component {
               value: this.state.userData.todays_message,
             })
           }>
-          <Text style={{maxWidth: '80%'}}>
+          <Text style={{ maxWidth: '80%' }}>
             {this.state.userData ? this.state.userData.todays_message : null}
           </Text>
           <View style={styles.onPressEventRight}>
@@ -240,7 +266,7 @@ class UserDataUpdate extends Component {
               value: this.state.userData.self_introduction,
             })
           }>
-          <Text style={{maxWidth: '80%', height: 150}}>
+          <Text style={{ maxWidth: '80%', height: 150 }}>
             {this.state.userData ? this.state.userData.self_introduction : null}
           </Text>
           <View style={styles.onPressEventRight}>
@@ -259,7 +285,7 @@ class UserDataUpdate extends Component {
             <Icon name="angle-right" size={25} color="#000" />
           </View>
         </TouchableOpacity>
-        <View style={{paddingBottom: 50}} />
+        <View style={{ paddingBottom: 50 }} />
       </HeaderAfterLogin>
     );
   }

@@ -25,7 +25,7 @@ import SetpByStepProcess from '../../components/SetpByStepProcess';
 import ProfileGirdElementOnlyImage from '../../components/profileGirdElementOnlyImage';
 import Modal from 'react-native-modal';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {useNavigationState} from '@react-navigation/native';
+
 //redux
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -46,7 +46,6 @@ import ButtonCustom from '../../components/ButtonCustom';
 import {sliderWidth, sliderItemWidth} from './styles';
 import styles from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import pusherConfig from '../../../services/api/pusher.json';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -198,12 +197,6 @@ class Dashboard extends Component {
       }
     } catch {}
   };
-
-  loginOutUSer = () => {
-    this.props.navigation.navigate('Registration');
-  };
-
-  componentDidUpdate() {}
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
@@ -854,7 +847,7 @@ class Dashboard extends Component {
                     }}
                     onMaxError={() => {
                       Alert.alert(
-                        'ワーリング',
+                        'ウォーニング',
                         '以前の都市を破棄して新しい都市を選択してください。',
                       );
                     }}

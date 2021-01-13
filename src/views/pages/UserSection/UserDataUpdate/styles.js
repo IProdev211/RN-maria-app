@@ -104,7 +104,7 @@ export default EStyleSheet.flatten(
       marginRight: 30,
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 5,
+      marginTop: 25,
     },
     oNpressEvent: {
       backgroundColor: '#fff',

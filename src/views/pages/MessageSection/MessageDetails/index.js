@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   View,
-  Dimensions,
   TouchableWithoutFeedback,
   TouchableOpacity,
   Text,
@@ -12,12 +11,11 @@ import {
   TouchableHighlight,
   Button,
 } from 'react-native';
-import { GiftedChat, Bubble } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, Message, MessageText } from 'react-native-gifted-chat';
 import ImageResizer from 'react-native-image-resizer';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SetpByStepProcess from '../../../components/SetpByStepProcess';
-import { Divider } from 'react-native-elements';
 import shortid from 'shortid';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -26,7 +24,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { duckOperations } from '../../../../redux/Main/duck';
 
-const { width, height } = Dimensions.get('window');
 import {
   singleUserUpdatedMessage,
   sendMessage,
@@ -45,7 +42,7 @@ class Search extends Component {
       messages: [],
       loadEarlier: true,
       typingText: null,
-      isLoadingEarlier: false,
+      isLoadingEarlier: true,
       user_id: null,
       dateData: null,
       user_name: '',
@@ -99,20 +96,44 @@ class Search extends Component {
     } catch { }
   };
   onSend(messages = []) {
-    this.setState(
-      {
-        dateData: null,
-      },
-      () => {
-        this.forceUpdate();
-        this.sendMessageToOthers(messages);
-        this.props.pushCurrentMessage(
-          messages[0],
-          this.props.route.params.user_id,
-          this.props.userInfo.id,
-        );
-      },
-    );
+    if (
+      this.props.userInfo &&
+      this.props.userInfo.last_deposite_balance != '0'
+    ) {
+      this.setState(
+        {
+          dateData: null,
+        },
+        () => {
+          this.forceUpdate();
+          this.sendMessageToOthers(messages);
+          this.props.pushCurrentMessage(
+            messages[0],
+            this.props.route.params.user_id,
+            this.props.userInfo.id,
+          );
+        },
+      );
+    } else {
+      Alert.alert(
+        '警告',
+        'クレジットカードを登録してください, 今すぐクレジットカードを登録するには、[はい]を押します',
+        [
+          {
+            text: 'キャンセル',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'はい',
+            onPress: () => {
+              this.props.navigation.navigate('UserDeposite');
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    }
   }
 
   sendMessageToOthers = async messages => {
@@ -124,14 +145,15 @@ class Search extends Component {
       const response = await sendMessage(data);
     } catch { }
   };
+
   componentWillUnmount() {
     this._isMounted = false;
     this._unsubscribe();
-  }
-  componentDidUpdate() { }
+  };
+
   onLoadEarlier() {
     this.getUpdatedMessage();
-  }
+  };
 
   uploadImages = async data => {
     await ImageResizer.createResizedImage(data.uri, 500, 500, 'JPEG', 20, 0)
@@ -143,6 +165,7 @@ class Search extends Component {
         this.showError(err);
       });
   };
+
   uploadMessageImage = async (data, path) => {
     try {
       let uriParts = path.split('.');
@@ -181,7 +204,8 @@ class Search extends Component {
         }),
       };
     });
-  }
+  };
+
   onImageReceive(image) {
     this.setState(previousState => {
       return {
@@ -217,32 +241,56 @@ class Search extends Component {
     );
   }
   sendImage = () => {
-    const options = {
-      title: 'プロフィール画像をアップロード',
-      takePhotoButtonTitle: '撮影する',
-      chooseFromLibraryButtonTitle: '写真ライブラリから',
-      cancelButtonTitle: 'キャンセル',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        const source = { uri: response.uri };
-        this.uploadImage(source);
-        this.setState({
-          DateProfImageUri: source.uri,
-          DateProfImagePath: response.path,
-        });
-      }
-    });
+    if (
+      this.props.userInfo &&
+      this.props.userInfo.last_deposite_balance != '0'
+    ) {
+      const options = {
+        title: 'プロフィール画像をアップロード',
+        takePhotoButtonTitle: '撮影する',
+        chooseFromLibraryButtonTitle: '写真ライブラリから',
+        cancelButtonTitle: 'キャンセル',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+      ImagePicker.showImagePicker(options, response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          const source = { uri: response.uri };
+          this.uploadImage(source);
+          this.setState({
+            DateProfImageUri: source.uri,
+            DateProfImagePath: response.path,
+          });
+        }
+      });
+    } else {
+      Alert.alert(
+        '警告',
+        'クレジットカードを登録してください, 今すぐクレジットカードを登録するには、[はい]を押します',
+        [
+          {
+            text: 'キャンセル',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'はい',
+            onPress: () => {
+              this.props.navigation.navigate('UserDeposite');
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    }
   };
   uploadImage = url => {
     this.newUrlImageMessage(url.uri);
@@ -281,11 +329,28 @@ class Search extends Component {
         <Button
           title="以前のメッセージをロード"
           color="#ccc"
+          onPress={this.onLoadEarlier}
         >
         </Button>
-
       </View>
     )
+  }
+
+  renderMessage(props, userInfo) {
+    if (userInfo && userInfo.last_deposite_balance === '0' && props.currentMessage.user._id !== userInfo.id) {
+      return (
+        <Message
+          {...props}
+          currentMessage={{ ...props.currentMessage, text: 'メッセージを確認するにはクレジットカードを登録してください。', image: null }}
+        ></Message>
+      );
+    } else {
+      return (
+        <Message
+          {...props}
+        ></Message>
+      );
+    }
   }
 
   openModal = () => {
@@ -295,9 +360,33 @@ class Search extends Component {
   };
 
   openCalender = () => {
-    this.setState({
-      isCalenderOpen: !this.state.isCalenderOpen,
-    });
+    if (
+      this.props.userInfo &&
+      this.props.userInfo.last_deposite_balance != '0'
+    ) {
+      this.setState({
+        isCalenderOpen: !this.state.isCalenderOpen,
+      });
+    } else {
+      Alert.alert(
+        '警告',
+        'クレジットカードを登録してください, 今すぐクレジットカードを登録するには、[はい]を押します',
+        [
+          {
+            text: 'キャンセル',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'はい',
+            onPress: () => {
+              this.props.navigation.navigate('UserDeposite');
+            },
+          },
+        ],
+        { cancelable: false },
+      );
+    }
   };
 
   openGift = () => {
@@ -335,10 +424,10 @@ class Search extends Component {
   sendGift = async data => {
     Alert.alert(
       '確認',
-      `このギフトをこのユーザーに送信しますか？ ${data.icon_value}Pかかります`,
+      `このギフトをこのユーザーに送信しますか？ ${data.icon_value}Pかかります。`,
       [
         {
-          text: '番号',
+          text: 'キャンセル',
           onPress: () => this.setState({ isGiftOpen: false }),
         },
         {
@@ -359,7 +448,10 @@ class Search extends Component {
         [
           {
             text: '預金残高',
-            onPress: () => this.props.navigation.navigate('UserDeposite'),
+            onPress: () => {
+              this.setState({ isGiftOpen: false });
+              this.props.navigation.navigate('UserDeposite');
+            },
           },
           {
             text: 'キャンセル',
@@ -427,7 +519,7 @@ class Search extends Component {
       [
         {
           text: 'オーケー',
-          onPress: () => this.callBlckAPI(),
+          onPress: () => this.callBlockAPI(),
         },
         {
           text: 'キャンセル',
@@ -437,7 +529,7 @@ class Search extends Component {
       { cancelable: false },
     );
   };
-  callBlckAPI = async () => {
+  callBlockAPI = async () => {
     this.props.navigation.goBack();
     let data = {
       blocked_user: this.props.route.params.user_id,
@@ -450,7 +542,7 @@ class Search extends Component {
   reportUser = async () => {
     if (!this.state.reportedIssue) {
       Alert.alert(
-        'ワーリング',
+        'ウォーニング',
         '問題を報告してください。空欄にすることはできません',
         [
           {
@@ -486,11 +578,14 @@ class Search extends Component {
   closeNotification = v => {
     this.setState({ [v]: false });
   };
+
   onChangeDate = (event, selectedDate) => {
     console.log(event, selectedDate);
   };
+
   render() {
     const { user_pic, user_name, dateData } = this.state;
+
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -557,6 +652,7 @@ class Search extends Component {
             renderBubble={this.renderBubble}
             placeholder="ここにメッセージを入力..."
             renderLoadEarlier={this.renderLoadEarlier}
+            renderMessage={(props) => this.renderMessage(props, this.props.userInfo)}
           // renderCustomView={this.renderCustomView}
           // renderFooter={this.renderFooter}
           />
@@ -574,6 +670,7 @@ class Search extends Component {
               renderBubble={this.renderBubble}
               placeholder="ここにメッセージを入力..."
               renderLoadEarlier={this.renderLoadEarlier}
+              renderMessage={(props) => this.renderMessage(props, this.props.userInfo)}
             // renderCustomView={this.renderCustomView}
             // renderFooter={this.renderFooter}
             />
@@ -774,8 +871,8 @@ class Search extends Component {
             </View>
           </View>
         </Modal>
-        {/* Block Modal */}
 
+        {/* Block Modal */}
         <Modal
           onBackdropPress={this.openBlock}
           isVisible={this.state.isBlockModalPopUp}>

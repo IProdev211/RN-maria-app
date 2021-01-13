@@ -1,15 +1,7 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
-  Button,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
 import styles from './styles';
 
 class CustomCard extends Component {

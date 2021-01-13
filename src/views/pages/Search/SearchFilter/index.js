@@ -246,7 +246,7 @@ class CreateNewCast extends Component {
                           }}
                           onMaxError={() => {
                             Alert.alert(
-                              'ワーリング',
+                              'ウォーニング',
                               '以前の都市を破棄して新しい都市を選択してください。',
                             );
                           }}

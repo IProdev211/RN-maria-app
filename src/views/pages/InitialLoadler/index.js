@@ -53,20 +53,22 @@ class InitialLoadler extends Component {
           SplashScreen.hide();
           this.setState({loading: false});
         }, 500);
-        this.loginOutUSer();
+        this.logOutUser();
       }
     } catch {
       setTimeout(x => {
         SplashScreen.hide();
         this.setState({loading: false});
       }, 500);
-      this.loginOutUSer();
+      this.logOutUser();
     }
   };
-  loginOutUSer = async () => {
+  
+  logOutUser = async () => {
     this.props.navigation.navigate('Registration');
     const response = await AsyncStorage.clear();
   };
+
   UpdateNessaryInformation = id => {
     this.getAllTrags();
     this.getAllNotification();

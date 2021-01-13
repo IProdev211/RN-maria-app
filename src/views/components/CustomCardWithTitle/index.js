@@ -1,15 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
-  Text,
-  Button,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Modal from 'react-native-modal';
 import styles from './styles';
 
 class CustomCardWithTitle extends Component {
@@ -22,11 +14,11 @@ class CustomCardWithTitle extends Component {
       modalSelector: false,
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
+  componentDidMount() { }
+  componentDidUpdate() { }
+  componentWillUnmount() { }
   changeCityModal = () => {
-    this.setState({modalSelector: !this.state.modalSelector});
+    this.setState({ modalSelector: !this.state.modalSelector });
   };
 
   render() {

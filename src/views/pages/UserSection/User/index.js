@@ -101,7 +101,7 @@ class User extends Component {
       }
       setTimeout(x => {
         this.setState({loading: false});
-        this.props.navigation.navigate('InitialLoader');
+        this.props.navigation.navigate('Registration');
       }, 4000);
     } catch (error) {
       console.log(error);

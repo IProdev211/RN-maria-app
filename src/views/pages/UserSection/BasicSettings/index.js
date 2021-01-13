@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {View, TextInput, TouchableWithoutFeedback, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, TextInput, TouchableWithoutFeedback, Text, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
-import {Divider, CheckBox, Button} from 'react-native-elements';
+import { Divider, CheckBox, Button } from 'react-native-elements';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {showMessage} from 'react-native-flash-message';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {updateBasicInfo} from '../../../../services/AuthService';
+import { showMessage } from 'react-native-flash-message';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { updateBasicInfo } from '../../../../services/AuthService';
 import {
   getAllBasicShow,
   getAllBasicInfo,
@@ -25,42 +25,41 @@ class BasicSettings extends Component {
       ModalTitle: '',
       ModalData: null,
       target: '',
-      height: '',
+      height: '0',
     };
   }
   componentDidMount() {
     this.getAllBasicInfo();
     this.getAllBasicInfoMeta();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
-  changeOnText = () => {};
+  componentDidUpdate() { }
+  componentWillUnmount() { }
+  changeOnText = () => { };
   getAllBasicInfo = async () => {
     try {
       const response = await getAllBasicShow();
       if (response.isSuccess) {
         let basic_info = response.result.success;
-        this.setState({basic_info, height: basic_info.height});
+        this.setState({ basic_info, height: basic_info.height });
       }
-    } catch {}
+    } catch { }
   };
+
   getAllBasicInfoMeta = async () => {
     try {
       const response = await getAllBasicInfo();
-      console.log(response);
       if (response.isSuccess) {
         let meta_data = response.result;
-        this.setState({meta_data});
+        this.setState({ meta_data });
       }
-    } catch {}
+    } catch { }
   };
 
   updateAllDataBasicSettings = async () => {
-    console.log(this.state.basic_info);
     try {
       let response = await updateBasicInfo(this.state.basic_info);
       if (response.isSuccess) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         console.log(response);
         this.props.navigation.push('UserDataUpdate');
         showMessage({
@@ -68,7 +67,7 @@ class BasicSettings extends Component {
           type: 'success',
         });
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: '問題が発生しました。',
           type: 'error',
@@ -90,10 +89,8 @@ class BasicSettings extends Component {
     return value;
   };
   closeModal = () => {
-    let data = this.state.height;
-    console.log(data);
-    this.changeCheckedButton('height', this.state.height.toString());
-    this.setState({modalView: false});
+    this.changeCheckedButton('height', this.state.height);
+    this.setState({ modalView: false });
   };
   ischeckedMOdal = (field, item) => {
     if (this.state.basic_info[field] == item) {
@@ -103,42 +100,45 @@ class BasicSettings extends Component {
     }
   };
   changeCheckedButton = (field, item) => {
-    let data = this.state.basic_info;
-    data[field] = item;
-    this.setState({basic_info: data});
+    let basic_info = this.state.basic_info;
+    if (basic_info) {
+      basic_info[field] = item;
+      this.setState({ basic_info });
+    }
   };
   showModalView = TARGET => {
     if (TARGET == 'annual_income') {
-      this.setState({ModalTitle: '年収'});
+      this.setState({ ModalTitle: '年収' });
     } else if (TARGET == 'educational_background') {
-      this.setState({ModalTitle: '学歴'});
+      this.setState({ ModalTitle: '学歴' });
     } else if (TARGET == 'hair_color') {
-      this.setState({ModalTitle: '髪の色'});
+      this.setState({ ModalTitle: '髪の色' });
     } else if (TARGET == 'hair_style') {
-      this.setState({ModalTitle: '髪型'});
+      this.setState({ ModalTitle: '髪型' });
     } else if (TARGET == 'height') {
-      this.setState({ModalTitle: '身長'});
+      this.setState({ ModalTitle: '身長' });
     } else if (TARGET == 'location') {
-      this.setState({ModalTitle: 'ロケーション'});
+      this.setState({ ModalTitle: 'ロケーション' });
     } else if (TARGET == 'place_of_birth') {
-      this.setState({ModalTitle: '出生地'});
+      this.setState({ ModalTitle: '出生地' });
     } else if (TARGET == 'sake_drink') {
-      this.setState({ModalTitle: '日本酒'});
+      this.setState({ ModalTitle: '日本酒' });
     } else if (TARGET == 'smoking') {
-      this.setState({ModalTitle: '喫煙'});
+      this.setState({ ModalTitle: '喫煙' });
     } else if (TARGET == 'work') {
-      this.setState({ModalTitle: '職業'});
+      this.setState({ ModalTitle: '職業' });
     }
-    this.setState({modalView: true});
     this.setState({
       ModalData: this.state.meta_data ? this.state.meta_data[TARGET] : null,
       target: TARGET,
     });
-    console.log(this.state.meta_data[TARGET]);
+    this.setState({ modalView: true });
   };
+
   changeHeight = height => {
-    this.setState({height});
+    this.setState({ height });
   };
+
   render() {
     return (
       <HeaderAfterLogin
@@ -148,7 +148,7 @@ class BasicSettings extends Component {
         rightButton="更新"
         rightButtonAction={() => this.updateAllDataBasicSettings()}
         backNavigation={true}>
-        <View style={{paddingBottom: 20}}>
+        <View style={{ paddingBottom: 20 }}>
           <View style={styles.subTextInfo}>
             <Text>今日のひとこと</Text>
           </View>
@@ -271,40 +271,46 @@ class BasicSettings extends Component {
             <View style={styles.content}>
               <Text style={styles.contentTitle}>{this.state.ModalTitle}</Text>
               <Divider style={styles.DividerStyle} />
-              {this.state.target == 'height' ? (
-                <View>
-                  <TextInput
-                    keyboardType="numeric"
-                    value={this.state.height}
-                    onChangeText={environment => this.changeHeight(environment)}
-                    placeholder={'身長'}
-                    placeholderTextColor="#202020"
-                    style={styles.input}
-                    underlineColorAndroid="gray"
-                  />
-                  <Text style={styles.cmStyle}>cm</Text>
-                </View>
-              ) : this.state.ModalData ? (
-                this.state.ModalData.map((x, index) => {
-                  return (
-                    <CheckBox
-                      title={x.value}
-                      key={index}
-                      checkedIcon="dot-circle-o"
-                      uncheckedIcon="circle-o"
-                      checked={this.ischeckedMOdal(x.field_name, x.value)}
-                      onPress={() =>
-                        this.changeCheckedButton(x.field_name, x.value)
-                      }
-                    />
-                  );
-                })
-              ) : null}
-
-              <View style={{paddingTop: 20}} />
+              <ScrollView style={{maxHeight: 200}}>
+                {
+                  this.state.target == 'height' ?
+                    (
+                      <View>
+                        <TextInput
+                          keyboardType="numeric"
+                          value={this.state.height}
+                          onChangeText={height => this.changeHeight(height)}
+                          placeholder={'身長'}
+                          placeholderTextColor="#202020"
+                          style={styles.input}
+                          underlineColorAndroid="gray"
+                        />
+                        <Text style={styles.cmStyle}>cm</Text>
+                      </View>
+                    )
+                    :
+                    this.state.ModalData ?
+                      (
+                        this.state.ModalData.map((x, index) => {
+                          return (
+                            <CheckBox
+                              key={index}
+                              title={x.value}
+                              checkedIcon="dot-circle-o"
+                              uncheckedIcon="circle-o"
+                              checked={this.ischeckedMOdal(x.field_name, x.value)}
+                              onPress={() => this.changeCheckedButton(x.field_name, x.value)}
+                            />
+                          );
+                        })
+                      )
+                      :
+                      null}
+              </ScrollView>
+              <View style={{ paddingTop: 20 }} />
               <Button
                 large
-                rightIcon={{name: 'code'}}
+                rightIcon={{ name: 'code' }}
                 title="はい"
                 onPress={() => this.closeModal()}
               />

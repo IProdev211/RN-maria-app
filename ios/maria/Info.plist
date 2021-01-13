@@ -39,7 +39,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
 	<string>3335685716527383</string>
 	<key>FacebookDisplayName</key>
@@ -61,12 +61,14 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access you camera for scanning your refferal code.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is used to calculate the distance from other users.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Your location is used to calculate the distance from other users.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access you camera for scanning your refferal code.</string>
+	<string>We need to access your microphone for video chatting with other users.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access you camera for scanning your refferal code.</string>
+	<string>We need to access your photo library for scanning your photo.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -92,11 +94,13 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDarkContent</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

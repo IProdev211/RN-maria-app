@@ -27,7 +27,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import LinearGradient from 'react-native-linear-gradient';
-import InstagramLogin from 'react-native-instagram-login';
+// import InstagramLogin from 'react-native-instagram-login';
 import golbalConstants from '../../Common/GlobalStyles/constants';
 import SplashScreen from 'react-native-splash-screen';
 import ImageResizer from 'react-native-image-resizer';
@@ -672,7 +672,7 @@ class Registration extends Component {
                   <View style={styles.topLogoSection}>
                     <Image
                       style={styles.logo}
-                      source={require('../../../assets/pato_logo_white.png')}
+                      source={require('../../../assets/maria_logo_white.png')}
                     />
                   </View>
                   <View style={styles.textSection}>
@@ -1077,7 +1077,7 @@ class Registration extends Component {
                       }}
                       onMaxError={() => {
                         Alert.alert(
-                          'ワーリング',
+                          'ウォーニング',
                           '以前の都市を破棄して新しい都市を選択してください。',
                         );
                       }}
@@ -1499,7 +1499,7 @@ class Registration extends Component {
             </View>
           ) : null}
           {/* registartion stage 7 End*/}
-          <InstagramLogin
+          {/* <InstagramLogin
             ref={ref => (this.instagramLogin = ref)}
             appId="529631451057034"
             appSecret="7f56acd7f4bb0226445e08c877109c86"
@@ -1507,7 +1507,7 @@ class Registration extends Component {
             scopes={['user_profile', 'user_media']}
             onLoginSuccess={e => console.log('instram', e)}
             onLoginFailure={data => console.log(data)}
-          />
+          /> */}
           <Spinner
             visible={this.state.loading}
             textContent={'読み込み中...'}
