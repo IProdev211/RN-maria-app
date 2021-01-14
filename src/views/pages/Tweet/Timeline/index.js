@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   FlatList,
-  TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import {withNavigationFocus} from 'react-navigation';
+import { withNavigationFocus } from 'react-navigation';
 // import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ButtonCustom from '../../../components/ButtonCustom';
-import {getAllTweet} from '../../../../services/AuthService';
+import { getAllTweet } from '../../../../services/AuthService';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import Tweet from '../../../components/Tweet';
 import styles from './styles';
@@ -27,21 +26,19 @@ class Timeline extends Component {
   componentDidMount() {
     this.getAllTweet();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   getAllTweet = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       let response = await getAllTweet();
       console.log(response);
       if (response.isSuccess) {
         let tweet = response.result.user_tweets;
         let validation = Array.isArray(tweet);
-        this.setState({data: validation ? tweet : null});
+        this.setState({ data: validation ? tweet : null });
       }
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
   getAllTweetWithoutLoading = async () => {
@@ -50,9 +47,9 @@ class Timeline extends Component {
       if (response.isSuccess) {
         let tweet = response.result.user_tweets;
         let validation = Array.isArray(tweet);
-        this.setState({data: validation ? tweet : null});
+        this.setState({ data: validation ? tweet : null });
       }
-    } catch (errors) {}
+    } catch (errors) { }
   };
   checkAMPM = time => {
     let timeInfom = Number(time);
@@ -65,13 +62,13 @@ class Timeline extends Component {
     this.getAllTweetWithoutLoading();
   };
   gotoDetailsPage = id => {
-    this.props.navigation.push('SingleTweetDetails', {tweetId: id});
+    this.props.navigation.push('SingleTweetDetails', { tweetId: id });
   };
   profileView = id => {
     let data = {
       id: id,
     };
-    this.props.navigation.push('UserDetails', {userData: data});
+    this.props.navigation.push('UserDetails', { userData: data });
   };
   render() {
     return (
@@ -119,14 +116,14 @@ class Timeline extends Component {
               }}
             />
           ) : (
-            <View style={styles.container}>
-              <Text>役職が見つかりません。新しい役職を作成してください</Text>
-              <ButtonCustom
-                title="面談に通過すると"
-                onPress={() => this.props.navigation.navigate('AddTweet')}
-              />
-            </View>
-          )}
+              <View style={styles.container}>
+                <Text>役職が見つかりません。新しい役職を作成してください</Text>
+                <ButtonCustom
+                  title="面談に通過すると"
+                  onPress={() => this.props.navigation.navigate('AddTweet')}
+                />
+              </View>
+            )}
         </View>
         {/* <AnimatedLoader
           visible={this.state.loading}

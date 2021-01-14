@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
-import {View, Alert, Text} from 'react-native';
-import {Divider} from 'react-native-elements';
+import React, { Component } from 'react';
+import { View, Alert, Text } from 'react-native';
+import { Divider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import DashBoardHeader from '../../../components/DashBoardHeader';
-import {getCitys} from '../../../../services/AuthService';
-import {TagSelect} from 'react-native-tag-select';
+import { getCitys } from '../../../../services/AuthService';
+import { TagSelect } from 'react-native-tag-select';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import SetpByStepProcess from '../../../components/SetpByStepProcess';
 
 class CreateNewCast extends Component {
@@ -83,8 +83,8 @@ class CreateNewCast extends Component {
   componentDidMount() {
     this.getCitesInformations();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
+  componentDidUpdate() { }
+  componentWillUnmount() { }
   getCitesInformations = async () => {
     try {
       let response = await getCitys();
@@ -101,11 +101,11 @@ class CreateNewCast extends Component {
           };
           upatedcity.push(item);
         });
-        this.setState({citys: upatedcity});
+        this.setState({ citys: upatedcity });
       }
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
 
@@ -131,7 +131,7 @@ class CreateNewCast extends Component {
                 <TouchableOpacity
                   style={styles.SubRow}
                   onPress={() =>
-                    this.setState({showHideCity: !this.state.showHideCity})
+                    this.setState({ showHideCity: !this.state.showHideCity })
                   }>
                   <Text style={styles.SubRowText}>東京</Text>
                   <Icon
@@ -165,7 +165,7 @@ class CreateNewCast extends Component {
               ) : null}
             </View>
             <Divider style={styles.dividerStle} />
-            <View style={{paddingBottom: 15}}>
+            <View style={{ paddingBottom: 15 }}>
               <View style={styles.mainRow}>
                 <Text style={styles.rowTitle}>いつ呼びますか？</Text>
               </View>
@@ -179,7 +179,7 @@ class CreateNewCast extends Component {
                           ? styles.CallTimeButtonSelected
                           : styles.CallTimeButton
                       }
-                      onPress={() => this.setState({selectedCallTime: x.id})}>
+                      onPress={() => this.setState({ selectedCallTime: x.id })}>
                       <Text
                         style={
                           this.state.selectedCallTime == x.id
@@ -212,14 +212,14 @@ class CreateNewCast extends Component {
                   <TouchableOpacity>
                     <AntDesign name="minuscircleo" size={30} color="#000" />
                   </TouchableOpacity>
-                  <TouchableOpacity style={{paddingLeft: 30}}>
+                  <TouchableOpacity style={{ paddingLeft: 30 }}>
                     <AntDesign name="pluscircleo" size={30} color="#000" />
                   </TouchableOpacity>
                 </View>
               </View>
             </View>
             <Divider style={styles.dividerStle} />
-            <View style={{paddingBottom: 15}}>
+            <View style={{ paddingBottom: 15 }}>
               <View style={styles.mainRow}>
                 <Text style={styles.rowTitle}>何時問呼びますか？</Text>
               </View>
@@ -233,7 +233,7 @@ class CreateNewCast extends Component {
                           ? styles.CallTimeButtonSelected
                           : styles.CallTimeButton
                       }
-                      onPress={() => this.setState({selectedCallTime: x.id})}>
+                      onPress={() => this.setState({ selectedCallTime: x.id })}>
                       <Text
                         style={
                           this.state.selectedCallTimeAfter == x.id
@@ -248,7 +248,7 @@ class CreateNewCast extends Component {
               </View>
             </View>
             <Divider style={styles.dividerStle} />
-            <View style={{paddingBottom: 15}}>
+            <View style={{ paddingBottom: 15 }}>
               <View style={styles.mainRow}>
                 <Text style={styles.rowTitle}>
                   - ご希望のキャストクラスは？
@@ -263,7 +263,7 @@ class CreateNewCast extends Component {
                           ? styles.packageButtonS
                           : styles.packageButton
                       }
-                      onPress={() => this.setState({selectedPackage: x.id})}>
+                      onPress={() => this.setState({ selectedPackage: x.id })}>
                       <Text
                         style={
                           this.state.selectedPackage == x.id
@@ -285,7 +285,7 @@ class CreateNewCast extends Component {
                 })}
               </View>
             </View>
-            <View style={{paddingVertical: 30}}>
+            <View style={{ paddingVertical: 30 }}>
               <View style={styles.mainRow}>
                 <SetpByStepProcess
                   title="次に進む (1/4)"

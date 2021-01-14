@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import React, { Component } from 'react';
+import { Text } from 'react-native';
 import DashBoardHeader from '../../../components/DashBoardHeader';
-import styles from './styles';
 
 class CreateNewCast extends Component {
   constructor(props) {
@@ -10,9 +9,6 @@ class CreateNewCast extends Component {
       data: [],
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
 
   render() {
     return (

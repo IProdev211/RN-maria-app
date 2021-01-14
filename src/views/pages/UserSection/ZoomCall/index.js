@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { Component, useState } from 'react';
 import AgoraUIKit from 'agora-rn-uikit';
 
 const VideoCallData = route => {
@@ -19,11 +19,11 @@ const VideoCallData = route => {
   return videoCall ? (
     <AgoraUIKit rtcProps={rtcProps} callbacks={callbacks} />
   ) : (
-    <></>
-  );
+      <></>
+    );
 };
 
-class UserReview extends React.Component {
+class UserReview extends Component {
   constructor(props) {
     super(props);
   }

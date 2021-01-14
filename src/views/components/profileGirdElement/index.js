@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from './styles';
 import {
   TouchableWithoutFeedback,
-  TouchableOpacity,
   Image,
   View,
   Text,
 } from 'react-native';
+
 class ProfileGirdElement extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   render() {
     return (
@@ -48,7 +48,7 @@ class ProfileGirdElement extends Component {
               source={require('../../../assets/profile/blackG.png')}
               style={styles.bgImageForshawdow}
             />
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <View style={styles.circle} />
               <Text numberOfLines={1} style={styles.textOnImage}>
                 {this.props.name}

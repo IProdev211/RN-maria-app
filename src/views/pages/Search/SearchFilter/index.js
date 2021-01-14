@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,18 +12,18 @@ import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon1 from 'react-native-vector-icons/AntDesign';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import RangeSlider from 'rn-range-slider';
-import {TagSelect} from 'react-native-tag-select';
+import { TagSelect } from 'react-native-tag-select';
 import Modal from 'react-native-modal';
 import SetpByStepProcess from '../../../components/SetpByStepProcess';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
-import {SearchUser} from '../../../../services/AuthService';
+import { SearchUser } from '../../../../services/AuthService';
 
 class CreateNewCast extends Component {
   constructor(props) {
@@ -41,14 +41,11 @@ class CreateNewCast extends Component {
       Birthday: false,
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   closeModal = () => {
-    this.setState({modalStatus: false});
+    this.setState({ modalStatus: false });
   };
   openModal = selectedRow => {
-    this.setState({modalStatus: true, selectedRow});
+    this.setState({ modalStatus: true, selectedRow });
   };
   changeCityValue = () => {
     console.log(this.state.selectedCityName);
@@ -64,7 +61,7 @@ class CreateNewCast extends Component {
     if (this.state.dates[selectedDate]) {
       const newDates = this.state.dates;
       delete newDates[selectedDate];
-      this.setState({dates: newDates});
+      this.setState({ dates: newDates });
     } else {
       const newDates = this.state.dates;
       newDates[selectedDate] = {
@@ -72,7 +69,7 @@ class CreateNewCast extends Component {
         marked: true,
         selectedColor: '#03A9F5',
       };
-      this.setState({dates: newDates});
+      this.setState({ dates: newDates });
     }
   };
   searchUser = async () => {
@@ -93,7 +90,7 @@ class CreateNewCast extends Component {
         this.props.SearchFilteredData(data);
         this.props.navigation.navigate('Search');
       }
-    } catch {}
+    } catch { }
   };
 
   render() {
@@ -145,7 +142,7 @@ class CreateNewCast extends Component {
             <View style={styles.marginBottom20}>
               <Calendar
                 onDayPress={day => this.selectDate(day)}
-                markedDates={{...this.state.dates}}
+                markedDates={{ ...this.state.dates }}
               />
             </View>
             <View style={[styles.rangePickerContainer, styles.marginBottom20]}>
@@ -154,7 +151,7 @@ class CreateNewCast extends Component {
                 <Text>{this.state.rangeHigh}P</Text>
               </View>
               <RangeSlider
-                style={{width: '100%', height: 80}}
+                style={{ width: '100%', height: 80 }}
                 gravity={'center'}
                 min={100}
                 max={45000}
@@ -162,7 +159,7 @@ class CreateNewCast extends Component {
                 selectionColor="#3df"
                 blankColor="#ababab"
                 onValueChanged={(low, high, fromUser) => {
-                  this.setState({rangeLow: low, rangeHigh: high});
+                  this.setState({ rangeLow: low, rangeHigh: high });
                 }}
               />
             </View>
@@ -173,11 +170,11 @@ class CreateNewCast extends Component {
                 <Text style={styles.basicTextColor}>最近参加した</Text>
                 <View style={styles.onPressEventRight}>
                   <Switch
-                    trackColor={{false: '#f1f2f3', true: '#03A9F5'}}
+                    trackColor={{ false: '#f1f2f3', true: '#03A9F5' }}
                     thumbColor={this.state.isEnableed ? '#03A9F5' : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => {
-                      this.setState({RecentlyJoin: !this.state.RecentlyJoin});
+                      this.setState({ RecentlyJoin: !this.state.RecentlyJoin });
                     }}
                     value={this.state.RecentlyJoin}
                   />
@@ -189,18 +186,18 @@ class CreateNewCast extends Component {
                 <Text style={styles.basicTextColor}>今月の誕生日</Text>
                 <View style={styles.onPressEventRight}>
                   <Switch
-                    trackColor={{false: '#f1f2f3', true: '#03A9F5'}}
+                    trackColor={{ false: '#f1f2f3', true: '#03A9F5' }}
                     thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={() => {
-                      this.setState({Birthday: !this.state.Birthday});
+                      this.setState({ Birthday: !this.state.Birthday });
                     }}
                     value={this.state.Birthday}
                   />
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{paddingTop: 50, marginBottom: 30}}>
+            <View style={{ paddingTop: 50, marginBottom: 30 }}>
               <SetpByStepProcess
                 hideIcon={true}
                 title="探す"
@@ -242,7 +239,7 @@ class CreateNewCast extends Component {
                             this.tag = tag;
                           }}
                           onItemPress={item => {
-                            this.setState({selectedCityName: item});
+                            this.setState({ selectedCityName: item });
                           }}
                           onMaxError={() => {
                             Alert.alert(
@@ -286,7 +283,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>
@@ -303,7 +300,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>
@@ -320,7 +317,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>
@@ -337,7 +334,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>
@@ -354,7 +351,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>
@@ -371,7 +368,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>
@@ -388,7 +385,7 @@ class CreateNewCast extends Component {
                               this.tag = tag;
                             }}
                             onItemPress={item => {
-                              this.setState({selectedCityName: item});
+                              this.setState({ selectedCityName: item });
                             }}
                           />
                         </View>

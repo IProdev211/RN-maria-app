@@ -1,8 +1,8 @@
-import {Image, Platform, View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -55,8 +55,8 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       initialRouteName="Dashboard"
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           let title;
           if (route.name === 'Dashboard') {
@@ -81,8 +81,8 @@ const TabNavigator = () => {
               {route.name === 'Tweet' ? (
                 <Ionicons name={iconName} size={size} color={color} />
               ) : (
-                <FontAwesome name={iconName} size={size} color={color} />
-              )}
+                  <FontAwesome name={iconName} size={size} color={color} />
+                )}
 
               <Text style={focused ? styles.selectedTab : styles.noSelectedTab}>
                 {title}

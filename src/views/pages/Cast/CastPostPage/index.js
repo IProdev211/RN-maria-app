@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Alert,
@@ -11,13 +11,13 @@ import {
   TextInput,
 } from 'react-native';
 import shortid from 'shortid';
-import {Divider, CheckBox} from 'react-native-elements';
+import { Divider } from 'react-native-elements';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Modal from 'react-native-modal';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 
 import {
   getCitys,
@@ -25,17 +25,17 @@ import {
   postCastUser,
   sendMessageToAdmin,
 } from '../../../../services/AuthService';
-import {TagSelect} from 'react-native-tag-select';
+import { TagSelect } from 'react-native-tag-select';
 import styles from './styles';
 import SetpByStepProcess from '../../../components/SetpByStepProcess';
 import ProfileGirdElementCast from '../../../components/ProfileGirdElementCast';
 import ProfileGirdElementCastGrid from '../../../components/ProfileGirdElementCastGrid';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class CreateNewCast extends Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class CreateNewCast extends Component {
     this.getCitesInformations();
     BackHandler.addEventListener('hardwareBackPress', this.backKeyAction);
   }
-  componentDidUpdate() {}
+
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.backKeyAction);
   }
@@ -81,11 +81,11 @@ class CreateNewCast extends Component {
           };
           upatedcity.push(item);
         });
-        this.setState({citys: upatedcity});
+        this.setState({ citys: upatedcity });
       }
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
   getTagsData = () => {
@@ -101,7 +101,7 @@ class CreateNewCast extends Component {
         tag = tag + ',' + x.id;
       }
     });
-    this.setState({tags, tagId: tag});
+    this.setState({ tags, tagId: tag });
     return tag;
   };
   searchForUser = async () => {
@@ -110,8 +110,8 @@ class CreateNewCast extends Component {
       Alert.alert(
         '警告',
         '上から少なくとも1つのタグを選択する必要があります',
-        [{text: 'オーケー', onPress: () => console.log('OK Pressed')}],
-        {cancelable: false},
+        [{ text: 'オーケー', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false },
       );
       return;
     }
@@ -126,22 +126,22 @@ class CreateNewCast extends Component {
       when_call: main.when_call,
       tags: this.getTagsData(),
     };
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       const response = await getCastUser(data);
       if (response.isSuccess) {
         console.log(response);
         let users = response.result.users;
-        this.setState({searchedUser: users, castProcess: 2});
-        this.setState({loading: false});
+        this.setState({ searchedUser: users, castProcess: 2 });
+        this.setState({ loading: false });
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     } catch {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
-  renderListComponent = ({item}) => {
+  renderListComponent = ({ item }) => {
     if (this.props.userInfo.usr_type != item.usr_type)
       return (
         <ProfileGirdElementCastGrid
@@ -151,7 +151,7 @@ class CreateNewCast extends Component {
         />
       );
   };
-  renderListComponent1 = ({item}) => (
+  renderListComponent1 = ({ item }) => (
     <ProfileGirdElementCast
       key={shortid.generate()}
       navigation={this.props.navigation}
@@ -162,11 +162,11 @@ class CreateNewCast extends Component {
     if (this.state.castProcess == 1) {
       this.props.navigation.goBack();
     } else if (this.state.castProcess == 2) {
-      this.setState({castProcess: 1});
+      this.setState({ castProcess: 1 });
     } else if (this.state.castProcess == 3) {
-      this.setState({castProcess: 2});
+      this.setState({ castProcess: 2 });
     } else if (this.state.castProcess == 4) {
-      this.setState({castProcess: 2});
+      this.setState({ castProcess: 2 });
     }
     return true;
   };
@@ -199,26 +199,26 @@ class CreateNewCast extends Component {
         //   ],
         //   {cancelable: false},
         // );
-        this.setState({thanksModal: true});
+        this.setState({ thanksModal: true });
       }
-    } catch {}
+    } catch { }
   };
 
   getGuestList = () => {
     let text = '';
     this.props.castSelectedUser
       ? this.props.castSelectedUser.map((x, index) => {
-          if (index == 0) {
-            text = x.id;
-          } else {
-            text = text + ',' + x.id;
-          }
-        })
+        if (index == 0) {
+          text = x.id;
+        } else {
+          text = text + ',' + x.id;
+        }
+      })
       : null;
     return text;
   };
   closeThank = () => {
-    this.setState({thanksModal: false});
+    this.setState({ thanksModal: false });
     this.props.navigation.navigate('DashboardMain');
   };
 
@@ -237,7 +237,7 @@ class CreateNewCast extends Component {
         const response = await sendMessageToAdmin(data);
         console.log(response, data, this.props.userInfo);
         if (response.isSuccess) {
-          this.setState({adminMessageText: '', adminMessage: false});
+          this.setState({ adminMessageText: '', adminMessage: false });
           Alert.alert(
             '成功',
             'メッセージが管理者に送信されました',
@@ -246,7 +246,7 @@ class CreateNewCast extends Component {
                 text: '大丈夫',
               },
             ],
-            {cancelable: false},
+            { cancelable: false },
           );
         }
       } catch (error) {
@@ -345,17 +345,17 @@ class CreateNewCast extends Component {
                     numColumns={2}
                   />
                 ) : (
-                  <View style={styles.centerTextConatiner}>
-                    <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
-                  </View>
-                )}
+                    <View style={styles.centerTextConatiner}>
+                      <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
+                    </View>
+                  )}
               </View>
               <View style={styles.scrollingMargin} />
             </ScrollView>
             <View style={styles.stepContainer}>
               <SetpByStepProcess
                 title="次に進む (3/4)"
-                action={() => this.setState({castProcess: 4})}
+                action={() => this.setState({ castProcess: 4 })}
               />
             </View>
           </View>
@@ -413,7 +413,7 @@ class CreateNewCast extends Component {
             <View style={styles.stepContainer}>
               <SetpByStepProcess
                 title="次に進む (4/4)"
-                action={() => this.setState({castProcess: 4})}
+                action={() => this.setState({ castProcess: 4 })}
               />
             </View>
           </View>
@@ -505,18 +505,18 @@ class CreateNewCast extends Component {
                       numColumns={1}
                     />
                   ) : (
-                    <View style={styles.centerTextConatiner}>
-                      <Text style={styles.NoUser}>
-                        ユーザーが見つかりません
+                      <View style={styles.centerTextConatiner}>
+                        <Text style={styles.NoUser}>
+                          ユーザーが見つかりません
                       </Text>
-                    </View>
-                  )}
+                      </View>
+                    )}
                 </View>
                 <Divider style={styles.dividerStle} />
                 <TouchableOpacity
                   style={styles.paddingTop20}
                   onPress={() =>
-                    this.setState({adminMessage: !this.state.adminMessage})
+                    this.setState({ adminMessage: !this.state.adminMessage })
                   }>
                   <View style={styles.organgeBgText}>
                     <Text>運営へのご希望があればご記入ください</Text>
@@ -572,15 +572,15 @@ class CreateNewCast extends Component {
             <View style={styles.modalOverlay} />
           </TouchableWithoutFeedback>
           <View style={styles.content}>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Image
-                style={{width: 200, height: 140}}
+                style={{ width: 200, height: 140 }}
                 source={require('../../../../assets/profile/maria_logo.png')}
               />
             </View>
 
             <View style={styles.thanksConatiner}>
-              <Text style={{textAlign: 'center', fontSize: 12}}>
+              <Text style={{ textAlign: 'center', fontSize: 12 }}>
                 Mariaでのご注文ありがとうございます。お希望のキャストが、到着するまで、しばらくお待ちください。
               </Text>
             </View>
@@ -589,15 +589,15 @@ class CreateNewCast extends Component {
         <Modal
           testID={'sendMessageToAdmin'}
           isVisible={this.state.adminMessage}
-          onSwipeComplete={() => this.setState({adminMessage: false})}
+          onSwipeComplete={() => this.setState({ adminMessage: false })}
           swipeDirection={['up', 'left', 'right', 'down']}
           style={styles.ModalView}>
           <TouchableWithoutFeedback
-            onPress={() => this.setState({adminMessage: false})}>
+            onPress={() => this.setState({ adminMessage: false })}>
             <View style={styles.modalOverlay} />
           </TouchableWithoutFeedback>
           <View style={styles.content}>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
               <Text>メッセージを書いてください</Text>
             </View>
             <View>
@@ -606,7 +606,7 @@ class CreateNewCast extends Component {
                 numberOfLines={4}
                 style={styles.adminMessage}
                 placeholder="管理者に送信するメッセージを送信してください..."
-                onChangeText={text => this.setState({adminMessageText: text})}
+                onChangeText={text => this.setState({ adminMessageText: text })}
                 value={this.state.adminMessageText}
               />
             </View>

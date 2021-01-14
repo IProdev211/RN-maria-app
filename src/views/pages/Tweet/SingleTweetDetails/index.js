@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import {withNavigationFocus} from 'react-navigation';
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 // import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {getAllTweet, getSignleTweet} from '../../../../services/AuthService';
+import { getSignleTweet } from '../../../../services/AuthService';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import Tweet from '../../../components/Tweet';
 import styles from './styles';
+
 class SingleTweetDetails extends Component {
   constructor(props) {
     super(props);
@@ -17,22 +17,20 @@ class SingleTweetDetails extends Component {
   componentDidMount() {
     this.getSigleAllTweet();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   getSigleAllTweet = async () => {
     let tweetId = this.props.route.params.tweetId;
     console.log('tweetId', tweetId);
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       let data = `tweet/${tweetId}`;
       let response = await getSignleTweet(data);
       console.log(response);
       if (response.isSuccess) {
-        this.setState({data: response.result.user_tweets});
+        this.setState({ data: response.result.user_tweets });
       }
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
   checkAMPM = time => {
@@ -57,13 +55,13 @@ class SingleTweetDetails extends Component {
       }
       updatedData.push(x);
     });
-    this.setState({data: updatedData});
+    this.setState({ data: updatedData });
   };
   gotoDetailsPage = id => {
-    this.props.navigation.navigate('Details', {id});
+    this.props.navigation.navigate('Details', { id });
   };
   profileView = id => {
-    this.props.navigation.navigate('UserDetails', {userData: id});
+    this.props.navigation.navigate('UserDetails', { userData: id });
   };
   render() {
     return (
@@ -95,10 +93,10 @@ class SingleTweetDetails extends Component {
               );
             })
           ) : (
-            <View>
-              <Text>NO Post Found</Text>
-            </View>
-          )}
+              <View>
+                <Text>NO Post Found</Text>
+              </View>
+            )}
         </View>
         {/* <AnimatedLoader
           visible={this.state.loading}

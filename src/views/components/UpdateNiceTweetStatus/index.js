@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import React, { Component } from 'react';
+import { TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {updateNiceStatus} from '../../../services/AuthService';
+import { updateNiceStatus } from '../../../services/AuthService';
 import styles from './styles';
 
 class UpdateNiceTweetStatus extends Component {
@@ -19,11 +19,9 @@ class UpdateNiceTweetStatus extends Component {
     //   nice: this.props.loved,
     // });
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
 
   updateNiceStatus = async id => {
-    this.setState({isLiked: !this.state.isLiked});
+    this.setState({ isLiked: !this.state.isLiked });
     try {
       let data = {
         tweet_id: id,
@@ -53,8 +51,8 @@ class UpdateNiceTweetStatus extends Component {
         {this.state.isLiked ? (
           <Icon name="heart" size={30} color="#FF9C01" />
         ) : (
-          <Icon name="heart-o" size={30} color="#FF9C01" />
-        )}
+            <Icon name="heart-o" size={30} color="#FF9C01" />
+          )}
         <Text style={styles.lovedSectionText}>{this.state.nice}</Text>
       </TouchableOpacity>
     );

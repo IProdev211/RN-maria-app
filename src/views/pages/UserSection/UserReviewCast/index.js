@@ -1,18 +1,17 @@
 import styles from './styles';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Stars from 'react-native-stars';
-import {View, Text, Image, TextInput, BackHandler} from 'react-native';
+import { View, Text, Image, TextInput, BackHandler } from 'react-native';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {getSignleUserInfo, postReview} from '../../../../services/AuthService';
+import { getSignleUserInfo, postReview } from '../../../../services/AuthService';
 import SplashScreen from 'react-native-splash-screen';
-import {Card} from 'react-native-elements';
-import {showMessage} from 'react-native-flash-message';
+import { Card } from 'react-native-elements';
+import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
 //redux
-import {connect} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ThemeProvider} from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class UserReviewCast extends Component {
   constructor(props) {
@@ -40,7 +39,7 @@ class UserReviewCast extends Component {
     this.getUserInformation();
     BackHandler.addEventListener('hardwareBackPress', this.backKeyAction);
   }
-  componentDidUpdate() {}
+  componentDidUpdate() { }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.backKeyAction);
   }
@@ -55,12 +54,12 @@ class UserReviewCast extends Component {
 
   getUserInformation = async () => {
     let data = this.props.route.params.data;
-    this.setState({userData: data ? data : this.state.userData});
+    this.setState({ userData: data ? data : this.state.userData });
 
     if (this.state.userData.host_id == this.props.userInfo.id) {
-      this.setState({userId: this.state.userData.guest_id});
+      this.setState({ userId: this.state.userData.guest_id });
     } else {
-      this.setState({userId: this.state.userData.host_id});
+      this.setState({ userId: this.state.userData.host_id });
     }
 
     this.setState({
@@ -70,13 +69,13 @@ class UserReviewCast extends Component {
     try {
       const response = await getSignleUserInfo(this.state.userId);
       console.log('----------------------', response);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       console.log(response);
       if (response.isSuccess) {
         if (response.result.success) {
           let profileImage =
             response.result.success.is_profile_pic == 'null' ||
-            !response.result.success.is_profile_pic
+              !response.result.success.is_profile_pic
               ? 'https://avatar.amuniversal.com/user_avatars/avatars_gocomicsver3/3147000/3147996/8A0811EE-F63A-4561-A936-67F91B168274.png'
               : response.result.success.is_profile_pic;
 
@@ -88,11 +87,11 @@ class UserReviewCast extends Component {
       }
     } catch (error) {
       console.log('----------------------', error);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
   onChangeText(text) {
-    this.setState({review_text: text});
+    this.setState({ review_text: text });
   }
 
   writeReview = async () => {
@@ -138,7 +137,7 @@ class UserReviewCast extends Component {
             <Text style={styles.titleText}>ユーザーレビュー</Text>
           </View>
           <Card>
-            <Text style={{textAlign: 'center'}}>
+            <Text style={{ textAlign: 'center' }}>
               前回のセッションでは、推定時間は{this.state.userData.total_time}
               分で、費用は{this.state.userData.total_cost}ポイントでした。
               実際の時間は{this.state.userData.actual_calling_time}分でした。
@@ -150,25 +149,25 @@ class UserReviewCast extends Component {
           {this.state.profileImage ? (
             <Image
               style={styles.profilePicImage}
-              source={{uri: this.state.profileImage}}
+              source={{ uri: this.state.profileImage }}
             />
           ) : (
-            <Image
-              style={styles.profilePicImage}
-              source={require('../../../../assets/panda.png')}
-            />
-          )}
+              <Image
+                style={styles.profilePicImage}
+                source={require('../../../../assets/panda.png')}
+              />
+            )}
           <Text style={styles.bodyTitle}>{this.state.userName}</Text>
           <Text style={styles.bodySubTitle}>
             ホストが提供するサービスを評価する
           </Text>
         </View>
-        <View style={{alignItems: 'center', marginTop: 20, marginBottom: 20}}>
+        <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
           <Stars
             count={5}
             starSize={100}
             update={val => {
-              this.setState({stars: val});
+              this.setState({ stars: val });
             }}
             fullStar={<Icon name={'star'} style={[styles.myStarStyle]} />}
             emptyStar={
@@ -190,7 +189,7 @@ class UserReviewCast extends Component {
         </View>
         <View style={styles.optionHolder}>
           <TouchableOpacity
-            style={{...styles.options, backgroundColor: '#6678AB'}}
+            style={{ ...styles.options, backgroundColor: '#6678AB' }}
             onPress={() => this.writeReview()}>
             <View>
               <Text

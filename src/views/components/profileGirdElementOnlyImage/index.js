@@ -1,19 +1,13 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from './styles';
 import {
-  AppRegistry,
-  TouchableOpacity,
   Image,
-  FlatList,
-  ActivityIndicator,
-  StyleSheet,
   View,
-  Platform,
   Text,
 } from 'react-native';
 class ProfileGirdElementOnlyImage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   render() {
     return (
@@ -47,7 +41,7 @@ class ProfileGirdElementOnlyImage extends Component {
             source={require('../../../assets/profile/blackG.png')}
             style={styles.bgImageForshawdow}
           />
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.circle} />
             <Text numberOfLines={1} style={styles.textOnImage}>
               {this.props.name}

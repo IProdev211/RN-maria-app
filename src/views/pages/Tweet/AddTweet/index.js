@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, TextInput, Image, Text, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import Textarea from 'react-native-textarea';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -11,9 +11,10 @@ import {
   createTweet,
   getUserDetails,
 } from '../../../../services/AuthService';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 // import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
+
 class AddTweet extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,7 @@ class AddTweet extends Component {
   componentDidMount() {
     this.getUserInformation();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
+
   imagePickerForTweetImage = () => {
     const options = {
       title: 'プロフィール画像をアップロード',
@@ -60,7 +60,7 @@ class AddTweet extends Component {
     await ImageResizer.createResizedImage(data.uri, 500, 500, 'JPEG', 20, 0)
       .then(compressedImage => {
         console.log(compressedImage);
-        const source = {uri: compressedImage.uri};
+        const source = { uri: compressedImage.uri };
         this.setState({
           TweetImage: source,
           process6ImagePath: compressedImage.path,
@@ -73,10 +73,10 @@ class AddTweet extends Component {
       });
   };
   uploadTweet = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     if (this.state.TweetImage) {
       try {
-        this.setState({loading: true});
+        this.setState({ loading: true });
         let uriParts = this.state.process6ImagePath.split('.');
         let fileType = uriParts[uriParts.length - 1];
         let response = await uploadTweetImage(
@@ -91,10 +91,10 @@ class AddTweet extends Component {
           });
           this.updatePost();
         } else {
-          this.setState({loading: false});
+          this.setState({ loading: false });
         }
       } catch (errors) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: '間違ったコードを入力しました',
           type: 'error',
@@ -112,21 +112,21 @@ class AddTweet extends Component {
     try {
       let response = await createTweet(data);
       if (response.isSuccess) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.props.navigation.push('TweetDetails');
         showMessage({
           message: '投稿が正常に追加されました。',
           type: 'success',
         });
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: '投稿を作成できません。管理者に連絡してください！',
           type: 'error',
         });
       }
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       showMessage({
         message: 'インターネット接続を確認してください！',
         type: 'error',
@@ -149,7 +149,7 @@ class AddTweet extends Component {
         });
       }
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
 
@@ -160,7 +160,7 @@ class AddTweet extends Component {
         title="つぶやきを投稿 "
         notificationHide={true}
         backNavigation={true}>
-        <View style={{flex: 1, height: '100%'}}>
+        <View style={{ flex: 1, height: '100%' }}>
           <View style={styles.container}>
             <Image
               source={{
@@ -183,7 +183,7 @@ class AddTweet extends Component {
             <Textarea
               containerStyle={styles.textareaContainer}
               style={styles.textarea}
-              onChangeText={x => this.setState({tweet_content: x})}
+              onChangeText={x => this.setState({ tweet_content: x })}
               defaultValue={this.state.tweet_content}
               maxLength={500}
               placeholder={'キャストについて役職する 。。。'}

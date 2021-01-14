@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -14,17 +14,17 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Modal from 'react-native-modal';
 import styles from './styles';
-import {ifIphoneX} from 'react-native-iphone-x-helper';
-import {CheckBox} from 'react-native-elements';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
+import { CheckBox } from 'react-native-elements';
 import shortid from 'shortid';
-import {GetCities} from '../../../services/AuthService';
-import {Icon, withBadge} from 'react-native-elements';
+import { GetCities } from '../../../services/AuthService';
+import { Icon, withBadge } from 'react-native-elements';
 import golbalConstants from '../../Common/GlobalStyles/constants';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
 
 class DashBoardHeader extends Component {
   constructor(props) {
@@ -45,17 +45,15 @@ class DashBoardHeader extends Component {
     try {
       const response = await GetCities();
       if (response.isSuccess && response.result.city_list.length > 0) {
-        this.setState({cityName: response.result.city_list});
+        this.setState({ cityName: response.result.city_list });
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   changeCityModal = () => {
-    this.setState({modalSelector: !this.state.modalSelector});
+    this.setState({ modalSelector: !this.state.modalSelector });
   };
   backButtonAction = () => {
     if (this.props.customNavigation) {
@@ -93,10 +91,10 @@ class DashBoardHeader extends Component {
                     </View>
                   </TouchableOpacity>
                 ) : (
-                  <View style={styles.titleStyleContainer}>
-                    <Text style={styles.titleStyle}>{this.props.title}</Text>
-                  </View>
-                )
+                    <View style={styles.titleStyleContainer}>
+                      <Text style={styles.titleStyle}>{this.props.title}</Text>
+                    </View>
+                  )
               ) : this.props.SearchPage ? (
                 <TouchableOpacity
                   style={styles.citySelector}
@@ -113,22 +111,22 @@ class DashBoardHeader extends Component {
                   </View>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity
-                  style={styles.citySelector}
-                  onPress={() => this.changeCityModal()}>
-                  <Text style={styles.citySelectorText}>
-                    {this.state.selectedCityText}
-                  </Text>
-                  <View style={styles.citySelectorIcon}>
-                    <Icon1
-                      name="angle-down"
-                      size={25}
-                      color={golbalConstants.secondaryColor}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
-              <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                      style={styles.citySelector}
+                      onPress={() => this.changeCityModal()}>
+                      <Text style={styles.citySelectorText}>
+                        {this.state.selectedCityText}
+                      </Text>
+                      <View style={styles.citySelectorIcon}>
+                        <Icon1
+                          name="angle-down"
+                          size={25}
+                          color={golbalConstants.secondaryColor}
+                        />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+              <View style={{ flexDirection: 'row' }}>
                 {this.props.notificationHide ? null : (
                   <TouchableOpacity
                     style={styles.marginLeft20}
@@ -183,13 +181,13 @@ class DashBoardHeader extends Component {
         {this.props.scrollingOff ? (
           <View>{this.props.children}</View>
         ) : (
-          <SafeAreaView style={styles.Ccontainer}>
-            <ScrollView style={styles.scrollView}>
-              {this.props.children}
-              <View style={{marginVertical: 100}} />
-            </ScrollView>
-          </SafeAreaView>
-        )}
+            <SafeAreaView style={styles.Ccontainer}>
+              <ScrollView style={styles.scrollView}>
+                {this.props.children}
+                <View style={{ marginVertical: 100 }} />
+              </ScrollView>
+            </SafeAreaView>
+          )}
 
         {this.state.cityName.length > 0 && (
           <Modal
@@ -200,11 +198,11 @@ class DashBoardHeader extends Component {
             animationOut="zoomOutUp"
             animationInTiming={600}
             animationOutTiming={600}
-            onBackdropPress={() => this.setState({modalSelector: false})}
+            onBackdropPress={() => this.setState({ modalSelector: false })}
             backdropTransitionInTiming={600}
             backdropTransitionOutTiming={600}>
             <View style={styles.content}>
-              <View style={{paddingVertical: 20}}>
+              <View style={{ paddingVertical: 20 }}>
                 <Text>下から都市を選択してください</Text>
               </View>
               <ScrollView>
@@ -236,9 +234,9 @@ class DashBoardHeader extends Component {
                   </TouchableWithoutFeedback>
                 </TouchableHighlight>
               </ScrollView>
-              <View style={{justifyContent: 'flex-end'}}>
+              <View style={{ justifyContent: 'flex-end' }}>
                 <TouchableWithoutFeedback
-                  onPress={() => this.setState({modalSelector: false})}>
+                  onPress={() => this.setState({ modalSelector: false })}>
                   <View style={styles.okButton}>
                     <Text>OK</Text>
                   </View>

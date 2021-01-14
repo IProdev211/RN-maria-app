@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import React, { Component } from 'react';
+import { Text } from 'react-native';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class ButtonCustom extends Component {
   constructor(props) {
@@ -10,9 +10,6 @@ class ButtonCustom extends Component {
       data: [],
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
 
   render() {
     return (

@@ -1,7 +1,5 @@
-import React, {Component} from 'react';
-import Stars from 'react-native-stars';
-import {View, Text, Image, TextInput} from 'react-native';
-import {Table, Row, Rows} from 'react-native-table-component';
+import React, { Component } from 'react';
+import { View, Text, TextInput } from 'react-native';
 import {
   getUserDetails,
   getDepositeAll,
@@ -14,18 +12,17 @@ import {
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import styles from './style';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {CreditCardInput} from 'react-native-credit-card-input';
-import {showMessage} from 'react-native-flash-message';
+import { CreditCardInput } from 'react-native-credit-card-input';
+import { showMessage } from 'react-native-flash-message';
 
-import {returnErrorMessage} from '../../../Common/utilies/error_codes';
+import { returnErrorMessage } from '../../../Common/utilies/error_codes';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {stringify} from 'qs';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class UserDeposite extends Component {
   constructor(props) {
@@ -64,21 +61,21 @@ class UserDeposite extends Component {
         ];
       });
       console.log(arr, 'table data');
-      this.setState({tableData: arr});
+      this.setState({ tableData: arr });
     }
   };
 
   onChangeHandler = (val, name) => {
-    this.setState({[name]: val});
+    this.setState({ [name]: val });
   };
   onSubmit = async () => {
-    const {cardNumber, cardName, amount} = this.state;
+    const { cardNumber, cardName, amount } = this.state;
     const data = {
       deposit_amount: amount,
       depositor_card_name: cardName,
       depositor_card_number: cardNumber,
     };
-    this.setState({amount: '', cardName: '', cardNumber: ''});
+    this.setState({ amount: '', cardName: '', cardNumber: '' });
     const res = await PostDeposite(data);
     console.log(res, 'response from deposite');
   };
@@ -87,7 +84,7 @@ class UserDeposite extends Component {
     let data = {
       points: this.state.pointsAmount,
     };
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       const response = await orderPointsToBuy(data);
       console.log(response);
@@ -95,7 +92,7 @@ class UserDeposite extends Component {
         this.creatOrderInGMO(response.result[0]);
       }
     } catch {
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
 
@@ -122,7 +119,7 @@ class UserDeposite extends Component {
             message: returnErrorMessage(result.ErrInfo),
             type: 'error',
           });
-          this.setState({loading: false});
+          this.setState({ loading: false });
           return;
         } else {
           this.setState({
@@ -141,14 +138,14 @@ class UserDeposite extends Component {
         message: 'Network error',
         type: 'error',
       });
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
 
   confirmPrchase = () => {
-    this.setState({buyingStage: 2});
+    this.setState({ buyingStage: 2 });
   };
-  _onChange = form => this.setState({cardInfo: form});
+  _onChange = form => this.setState({ cardInfo: form });
 
   makePayment = async () => {
     if (!this.state.cardInfo || !this.state.cardInfo.valid) {
@@ -181,7 +178,7 @@ class UserDeposite extends Component {
         HttpAccept: '*/*',
         HttpUserAgent: 'Maria App Client',
       };
-      this.setState({loading: true});
+      this.setState({ loading: true });
       try {
         const response = await paymentOrderInGmo(data);
         if (response.isSuccess) {
@@ -191,7 +188,7 @@ class UserDeposite extends Component {
               message: returnErrorMessage(result.ErrInfo),
               type: 'error',
             });
-            this.setState({loading: false});
+            this.setState({ loading: false });
             return;
           } else {
             if (result.Approve) {
@@ -204,15 +201,15 @@ class UserDeposite extends Component {
                 coupon: false,
                 status: true,
               };
-              this.setState({loading: false});
+              this.setState({ loading: false });
               try {
                 const response = await confirmOrderPayment(info);
                 if (response.isSuccess) {
-                  this.setState({loading: false, buyingStage: 3});
+                  this.setState({ loading: false, buyingStage: 3 });
                   this.getUserInfo();
                 }
               } catch {
-                this.setState({loading: false});
+                this.setState({ loading: false });
               }
             }
           }
@@ -222,7 +219,7 @@ class UserDeposite extends Component {
           message: 'Network error',
           type: 'error',
         });
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     }
   };
@@ -242,7 +239,7 @@ class UserDeposite extends Component {
         this.props.addUserInfo(response.result.success);
         this.forceUpdate();
       }
-    } catch {}
+    } catch { }
   };
   render() {
     return (
@@ -259,7 +256,7 @@ class UserDeposite extends Component {
               <TextInput
                 style={styles.cardNumber}
                 placeholder="ポイント"
-                onChangeText={text => this.setState({pointsAmount: text})}
+                onChangeText={text => this.setState({ pointsAmount: text })}
                 value={this.state.pointsAmount}
                 keyboardType="numeric"
               />
@@ -292,7 +289,7 @@ class UserDeposite extends Component {
               <Text style={styles.PointsInputText}>
                 支払いを行うには、すべてのクレジットカード情報を入力してください
               </Text>
-              <View style={{padding: 20}}>
+              <View style={{ padding: 20 }}>
                 <CreditCardInput requiresName onChange={this._onChange} />
               </View>
               <TouchableOpacity

@@ -11,9 +11,6 @@ class BgComponent extends Component {
       data: [],
     };
   }
-  componentDidMount() { }
-  componentDidUpdate() { }
-  componentWillUnmount() { }
 
   render() {
     return (

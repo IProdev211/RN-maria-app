@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {View, TextInput, Image} from 'react-native';
+import React, { Component } from 'react';
+import { View, TextInput } from 'react-native';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import styles from './styles';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {updateUserInfo} from '../../../../services/AuthService';
+import { updateUserInfo } from '../../../../services/AuthService';
 
 class UserDataUpdateField extends Component {
   constructor(props) {
@@ -25,21 +25,18 @@ class UserDataUpdateField extends Component {
       field: this.props.route.params.field,
       [this.props.route.params.field]: this.props.route.params.value,
     });
-    console.log(this.props.route.params.field, this.props.route.params.value);
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
-  changeOnText = () => {};
+  changeOnText = () => { };
   updateProfileInformation = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       let data = {
         [this.state.field]: this.state[this.state.field],
       };
       let response = await updateUserInfo(data);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       if (response.isSuccess) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         console.log(response);
         this.props.navigation.push('UserDataUpdate');
         showMessage({
@@ -47,14 +44,14 @@ class UserDataUpdateField extends Component {
           type: 'success',
         });
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: '問題が発生しました。電話番号を確認してください！',
           type: 'error',
         });
       }
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       showMessage({
         message: 'インターネット接続を確認してください！',
         type: 'error',
@@ -79,7 +76,7 @@ class UserDataUpdateField extends Component {
           {this.state.field == 'usr_nickname' ? (
             <TextInput
               style={styles.TextInputStyle}
-              onChangeText={text => this.setState({usr_nickname: text})}
+              onChangeText={text => this.setState({ usr_nickname: text })}
               value={this.state.usr_nickname}
               placeholder="ユーザー名を更新"
             />
@@ -92,7 +89,7 @@ class UserDataUpdateField extends Component {
               placeholderTextColor="grey"
               numberOfLines={4}
               multiline={true}
-              onChangeText={text => this.setState({todays_message: text})}
+              onChangeText={text => this.setState({ todays_message: text })}
               value={this.state.todays_message}
             />
           ) : null}
@@ -104,7 +101,7 @@ class UserDataUpdateField extends Component {
               placeholderTextColor="grey"
               numberOfLines={6}
               multiline={true}
-              onChangeText={text => this.setState({self_introduction: text})}
+              onChangeText={text => this.setState({ self_introduction: text })}
               value={this.state.self_introduction}
             />
           ) : null}

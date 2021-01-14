@@ -1,18 +1,17 @@
-import React, {Component} from 'react';
-import {View, Text, FlatList} from 'react-native';
-import {Col, Row, Grid} from 'react-native-easy-grid';
+import React, { Component } from 'react';
+import { View, Text, FlatList } from 'react-native';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import ProfileGirdElement from '../../../components/profileGirdElement';
 import CustomCard from '../../../components/CustomCard';
 import Carousel from 'react-native-snap-carousel';
-import {sliderWidth, sliderItemWidth} from './styles';
-import {GetAllUsers, getAllNewUser} from '../../../../services/AuthService';
+import { sliderWidth, sliderItemWidth } from './styles';
+import { GetAllUsers, getAllNewUser } from '../../../../services/AuthService';
 import styles from './styles';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
 class Search extends Component {
   constructor(props) {
@@ -33,20 +32,16 @@ class Search extends Component {
       const response = await getAllNewUser();
       if (response.isSuccess) {
         let data = response.result.users ? response.result.users : [];
-        this.setState({newUser: data});
+        this.setState({ newUser: data });
       }
-    } catch {}
+    } catch { }
   };
-
-  componentDidUpdate() {}
-
-  componentWillUnmount() {}
 
   gotoUserDetailsPage = item => {
-    this.props.navigation.navigate('UserDetails', {userData: item});
+    this.props.navigation.navigate('UserDetails', { userData: item });
   };
 
-  renderListComponent = ({item}) => (
+  renderListComponent = ({ item }) => (
     <ProfileGirdElement
       item={item}
       name={item.usr_nickname}
@@ -56,7 +51,7 @@ class Search extends Component {
       }
     />
   );
-  renderListComponentShort = ({item}) => (
+  renderListComponentShort = ({ item }) => (
     <ProfileGirdElement
       item={item}
       name={item.usr_nickname}
@@ -74,7 +69,7 @@ class Search extends Component {
       if (response.isSuccess) {
         this.props.SearchFilteredData(response.result.users);
       }
-    } catch {}
+    } catch { }
   };
 
   getFilterData = data => {
@@ -82,10 +77,10 @@ class Search extends Component {
     let filterDate = [];
     data
       ? data.map(x => {
-          if (x.usr_type != user.usr_type) {
-            filterDate.push(x);
-          }
-        })
+        if (x.usr_type != user.usr_type) {
+          filterDate.push(x);
+        }
+      })
       : [];
     return data;
   };
@@ -101,7 +96,7 @@ class Search extends Component {
               </View>
               {this.state.newUser ? (
                 <Carousel
-                  containerCustomStyle={{backgroundColor: 'pink'}}
+                  containerCustomStyle={{ backgroundColor: 'pink' }}
                   contentContainerCustomStyle={{
                     backgroundColor: '#fff',
                     height: 250,
@@ -115,10 +110,10 @@ class Search extends Component {
                   inactiveSlideOpacity={1}
                 />
               ) : (
-                <View style={styles.centerTextConatiner}>
-                  <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
-                </View>
-              )}
+                  <View style={styles.centerTextConatiner}>
+                    <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
+                  </View>
+                )}
             </CustomCard>
           ) : null}
 
@@ -141,10 +136,10 @@ class Search extends Component {
                 numColumns={2}
               />
             ) : (
-              <View style={styles.centerTextConatiner}>
-                <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
-              </View>
-            )}
+                <View style={styles.centerTextConatiner}>
+                  <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
+                </View>
+              )}
           </CustomCard>
         </View>
       </HeaderAfterLogin>

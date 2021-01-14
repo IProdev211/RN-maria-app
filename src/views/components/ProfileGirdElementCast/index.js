@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from './styles';
-import {TouchableOpacity, Image, View, Text} from 'react-native';
-import {Badge} from 'react-native-elements';
+import { TouchableOpacity, Image, View, Text } from 'react-native';
+import { Badge } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
+
 class ProfileGirdElementCast extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   rowPressAction = id => {
     this.props.navigation.push('UserDetailsCast', {
@@ -47,10 +48,10 @@ class ProfileGirdElementCast extends Component {
               )
             }
             onPress={() => this.rowPressAction(this.props.data.id)}
-            style={{flexDirection: 'row'}}>
-            <View style={{width: 50, height: 50, marginRight: 15}}>
+            style={{ flexDirection: 'row' }}>
+            <View style={{ width: 50, height: 50, marginRight: 15 }}>
               <Image
-                style={{width: 50, height: 50, borderRadius: 25}}
+                style={{ width: 50, height: 50, borderRadius: 25 }}
                 source={{
                   uri: this.props.data.usr_profile_photo
                     ? this.props.data.usr_profile_photo.picture_url
@@ -70,18 +71,18 @@ class ProfileGirdElementCast extends Component {
                   ? this.props.data.usr_age + '歳'
                   : null}
               </Text>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 {this.props.data.usr_hourly_rate ? (
                   <Badge
                     value={
                       this.props.data.usr_hourly_rate.toLocaleString() + 'P/30'
                     }
                     textStyle={styles.bageStyle}
-                    containerStyle={{marginRight: 10}}
+                    containerStyle={{ marginRight: 10 }}
                   />
                 ) : null}
 
-                <Badge value={'VIP'} textStyle={{color: '#fff'}} />
+                <Badge value={'VIP'} textStyle={{ color: '#fff' }} />
               </View>
             </View>
           </TouchableOpacity>

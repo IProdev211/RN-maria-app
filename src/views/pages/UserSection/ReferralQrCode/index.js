@@ -1,19 +1,15 @@
-import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import React, { Component } from 'react';
+import { Text, Alert } from 'react-native';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import styles from './styles';
-import CustomCardWithTitle from '../../../components/CustomCardWithTitle';
-import CustomCard from '../../../components/CustomCard';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {refferalUser} from '../../../../services/AuthService';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { refferalUser } from '../../../../services/AuthService';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
@@ -27,22 +23,19 @@ class ReferralQrCode extends Component {
       loading: false,
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   onSuccess = async e => {
     console.log(e);
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       let Apidata = {
         referral_by: e.data,
       };
       const response = await refferalUser(Apidata);
       if (response.isSuccess) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.refferalAddedNotic();
       }
-    } catch {}
+    } catch { }
   };
 
   refferalAddedNotic = () => {
@@ -57,7 +50,7 @@ class ReferralQrCode extends Component {
           },
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 

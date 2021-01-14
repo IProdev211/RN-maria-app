@@ -1,7 +1,6 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 import styles from './styles';
-import LinearGradient from 'react-native-linear-gradient';
 
 class SettingElement extends Component {
   constructor(props) {
@@ -10,9 +9,6 @@ class SettingElement extends Component {
       data: [],
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
 
   render() {
     return (

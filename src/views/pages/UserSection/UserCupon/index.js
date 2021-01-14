@@ -1,15 +1,13 @@
-import React, {Component} from 'react';
-import Stars from 'react-native-stars';
-import {View, Text, Image, TextInput} from 'react-native';
-import {postCoupon, getDepositeAll} from '../../../../services/AuthService';
-import {Table, Row, Rows} from 'react-native-table-component';
+import React, { Component } from 'react';
+import { View, Text, TextInput } from 'react-native';
+import { postCoupon, getDepositeAll } from '../../../../services/AuthService';
+import { Table, Row, Rows } from 'react-native-table-component';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
 
 //redux
-import {connect} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class UserCoupon extends Component {
   constructor(props) {
@@ -38,16 +36,16 @@ class UserCoupon extends Component {
           ],
         ];
       });
-      this.setState({tableData: arr});
+      this.setState({ tableData: arr });
     }
   };
 
   onChangeHandler = (val, name) => {
-    this.setState({[name]: val});
+    this.setState({ [name]: val });
   };
   onSubmit = async () => {
-    const data = {coupon_code: this.state.CouponValue};
-    this.setState({CouponValue: ''});
+    const data = { coupon_code: this.state.CouponValue };
+    this.setState({ CouponValue: '' });
     const res = await postCoupon(data);
 
     console.log(res, 'Coupon Code');
@@ -60,7 +58,7 @@ class UserCoupon extends Component {
         backNavigation={true}
         title={'Coupon'}>
         <View>
-          <View style={{padding: 20, marginBottom: 0}}>
+          <View style={{ padding: 20, marginBottom: 0 }}>
             <Text
               style={{
                 fontSize: 18,
@@ -110,8 +108,8 @@ class UserCoupon extends Component {
           </View>
         </View>
 
-        <View style={{margin: 26}}>
-          <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+        <View style={{ margin: 26 }}>
+          <Table borderStyle={{ borderWidth: 2, borderColor: '#c8e1ff' }}>
             <Row
               data={this.state.tableHead}
               style={styles.head}

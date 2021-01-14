@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Switch, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, Switch, Text } from 'react-native';
 import HeaderAfterLogin from '../../components/DashBoardHeader';
 import SettingTitle from '../../components/SettingTitle';
 import SettingElement from '../../components/SettingElement';
@@ -14,9 +14,10 @@ import {
   updatePrivacySetting,
 } from '../../../services/AuthService';
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
+
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -50,8 +51,7 @@ class Settings extends Component {
     this.getNessearyInfo();
     console.log(this.props.userInfo);
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
+
   getNessearyInfo = () => {
     this.getEmailSetiing();
     this.getAppSetiing();
@@ -60,29 +60,29 @@ class Settings extends Component {
   getEmailSetiing = async () => {
     try {
       const response = await getEmailSettings();
-      this.setState({emailSetting: response.result.success});
+      this.setState({ emailSetting: response.result.success });
       console.log('email setting', this.state.emailSetting);
-    } catch {}
+    } catch { }
   };
   getAppSetiing = async () => {
     try {
       const response = await getAppSettings();
-      this.setState({appSettings: response.result.success});
+      this.setState({ appSettings: response.result.success });
       console.log('appSettings setting', this.state.appSettings);
-    } catch {}
+    } catch { }
   };
   getPrivacySetiing = async () => {
     try {
       const response = await getPrivacySettings();
-      this.setState({privacySetting: response.result.success});
+      this.setState({ privacySetting: response.result.success });
       console.log('privacySetting setting', this.state.privacySetting);
-    } catch {}
+    } catch { }
   };
   changeValueSetting = (enitiy, type) => {
     if (type == 'EMAIL') {
       let emailSetting = this.state.emailSetting;
       emailSetting[enitiy] = !emailSetting[enitiy];
-      this.setState({emailSetting: emailSetting});
+      this.setState({ emailSetting: emailSetting });
       let data = {
         [enitiy]: emailSetting[enitiy] ? 1 : 0,
       };
@@ -90,7 +90,7 @@ class Settings extends Component {
     } else if (type == 'APP') {
       let appSettings = this.state.appSettings;
       appSettings[enitiy] = !appSettings[enitiy];
-      this.setState({appSettings: appSettings});
+      this.setState({ appSettings: appSettings });
       let data = {
         [enitiy]: appSettings[enitiy] ? 1 : 0,
       };
@@ -98,7 +98,7 @@ class Settings extends Component {
     } else if (type == 'PRIVACY') {
       let privacySetting = this.state.privacySetting;
       privacySetting[enitiy] = !privacySetting[enitiy];
-      this.setState({privacySetting: privacySetting});
+      this.setState({ privacySetting: privacySetting });
       let data = {
         [enitiy]: privacySetting[enitiy] ? 1 : 0,
       };
@@ -111,21 +111,21 @@ class Settings extends Component {
     try {
       const response = await updateEmailSetting(data);
       console.log(response);
-    } catch {}
+    } catch { }
   };
   updateAppSetting = async data => {
     console.log(data);
     try {
       const response = await updateAppSetting(data);
       console.log(response);
-    } catch {}
+    } catch { }
   };
   updateprivacySetting = async data => {
     console.log(data);
     try {
       const response = await updatePrivacySetting(data);
       console.log(response);
-    } catch {}
+    } catch { }
   };
 
   render() {
@@ -134,11 +134,11 @@ class Settings extends Component {
         backNavigation={true}
         navigation={this.props.navigation}
         title="各種設定">
-        <View style={{backgroundColor: '#fff'}}>
+        <View style={{ backgroundColor: '#fff' }}>
           <SettingTitle text="アプリ通知設定" />
           <SettingElement text="ギフトアイコンを購入する。">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -149,7 +149,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="足あと">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -160,7 +160,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="つぶやきへのいいね">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -171,7 +171,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="自動延長通知 ">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -196,7 +196,7 @@ class Settings extends Component {
           {/* Email Setting */}
           <SettingElement text="足あと">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -209,7 +209,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="いいね ">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -222,7 +222,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="メッセージ">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -235,7 +235,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="コンシェルジュのメッセージ">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -253,7 +253,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="合流・解散通知">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -271,7 +271,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="自動延長通知">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -286,7 +286,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="つぶやきへのいいね">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -304,7 +304,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="運営からのお知らせ">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -320,7 +320,7 @@ class Settings extends Component {
           <SettingTitle text="プライベート設定" />
           <SettingElement text="全体ランキング設定">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -333,7 +333,7 @@ class Settings extends Component {
           </SettingElement>
           <SettingElement text="（おきにいり）ランキング">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -346,7 +346,7 @@ class Settings extends Component {
           <SettingTitle text="フィーバーズ設定" />
           <SettingElement text="タグ設定">
             <Switch
-              trackColor={{false: '#f1f2f3', true: golbalConstants.mainColor}}
+              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
@@ -358,7 +358,7 @@ class Settings extends Component {
 
           {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
         </View>
-        <View style={{paddingTop: 50}} />
+        <View style={{ paddingTop: 50 }} />
       </HeaderAfterLogin>
     );
   }

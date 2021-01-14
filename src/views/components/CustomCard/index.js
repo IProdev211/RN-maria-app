@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
 } from 'react-native';
@@ -14,11 +14,8 @@ class CustomCard extends Component {
       modalSelector: false,
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   changeCityModal = () => {
-    this.setState({modalSelector: !this.state.modalSelector});
+    this.setState({ modalSelector: !this.state.modalSelector });
   };
 
   render() {

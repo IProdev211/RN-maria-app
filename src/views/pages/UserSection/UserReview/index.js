@@ -1,13 +1,13 @@
 import styles from './styles';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Stars from 'react-native-stars';
-import {View, Text, Image, TextInput} from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
 import HeaderAfterLogin from '../../../components/DashBoardHeader';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //redux
-import {connect} from 'react-redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class UserReview extends Component {
   constructor(props) {
@@ -48,25 +48,25 @@ class UserReview extends Component {
           {this.state.profileImage ? (
             <Image
               style={styles.profilePicImage}
-              source={{uri: this.state.profileImage}}
+              source={{ uri: this.state.profileImage }}
             />
           ) : (
-            <Image
-              style={styles.profilePicImage}
-              source={require('../../../../assets/panda.png')}
-            />
-          )}
+              <Image
+                style={styles.profilePicImage}
+                source={require('../../../../assets/panda.png')}
+              />
+            )}
           <Text style={styles.bodyTitle}>{this.state.userName}</Text>
           <Text style={styles.bodySubTitle}>
             ホストが提供するサービスを評価する
           </Text>
         </View>
-        <View style={{alignItems: 'center', marginTop: 20, marginBottom: 20}}>
+        <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
           <Stars
             count={5}
             starSize={100}
             update={val => {
-              this.setState({stars: val});
+              this.setState({ stars: val });
             }}
             fullStar={<Icon name={'star'} style={[styles.myStarStyle]} />}
             emptyStar={

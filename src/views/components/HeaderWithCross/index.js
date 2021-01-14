@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 class HeaderWithCross extends Component {
@@ -9,9 +9,6 @@ class HeaderWithCross extends Component {
       data: [],
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
 
   render() {
     return (

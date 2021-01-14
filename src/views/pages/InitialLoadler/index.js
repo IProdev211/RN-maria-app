@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 // import AnimatedLoader from 'react-native-animated-loader';
@@ -7,9 +7,9 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import styles from './styles';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
 
 import {
   checktokenInfo,
@@ -33,37 +33,37 @@ class InitialLoadler extends Component {
       this.getCities();
     });
   }
-  componentDidUpdate() {}
+
   componentWillUnmount() {
     this._unsubscribe();
   }
   checkLogIn = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
       const response = await checktokenInfo();
       if (response.result.is_valid_token) {
         setTimeout(x => {
           SplashScreen.hide();
-          this.setState({loading: false});
+          this.setState({ loading: false });
         }, 500);
         this.props.navigation.navigate('TabNavigator');
         this.UpdateNessaryInformation();
       } else {
         setTimeout(x => {
           SplashScreen.hide();
-          this.setState({loading: false});
+          this.setState({ loading: false });
         }, 500);
         this.logOutUser();
       }
     } catch {
       setTimeout(x => {
         SplashScreen.hide();
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }, 500);
       this.logOutUser();
     }
   };
-  
+
   logOutUser = async () => {
     this.props.navigation.navigate('Registration');
     const response = await AsyncStorage.clear();
@@ -82,14 +82,14 @@ class InitialLoadler extends Component {
       if (response.isSuccess) {
         this.props.getAllGiftIcon(response.result.gift_icon);
       }
-    } catch {}
+    } catch { }
   };
 
   getAllTrags = async () => {
     try {
       const response = await getAllTags();
       this.props.addTagValue(response.result.tag_values[0]);
-    } catch {}
+    } catch { }
   };
 
   getCities = async () => {
@@ -98,7 +98,7 @@ class InitialLoadler extends Component {
       if (response.isSuccess) {
         this.props.addCites(response.result.city_list);
       }
-    } catch {}
+    } catch { }
   };
   getAllNotification = async () => {
     const response = await getNotification();
@@ -112,7 +112,7 @@ class InitialLoadler extends Component {
       if (response.isSuccess) {
         this.props.addUserInfo(response.result.success);
       }
-    } catch {}
+    } catch { }
   };
 
   render() {

@@ -32,9 +32,6 @@ class BasicSettings extends Component {
     this.getAllBasicInfo();
     this.getAllBasicInfoMeta();
   }
-  componentDidUpdate() { }
-  componentWillUnmount() { }
-  changeOnText = () => { };
   getAllBasicInfo = async () => {
     try {
       const response = await getAllBasicShow();
@@ -271,7 +268,7 @@ class BasicSettings extends Component {
             <View style={styles.content}>
               <Text style={styles.contentTitle}>{this.state.ModalTitle}</Text>
               <Divider style={styles.DividerStyle} />
-              <ScrollView style={{maxHeight: 200}}>
+              <ScrollView style={{ maxHeight: 200 }}>
                 {
                   this.state.target == 'height' ?
                     (

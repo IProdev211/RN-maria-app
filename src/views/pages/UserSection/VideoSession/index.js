@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Platform,
   ScrollView,
@@ -20,8 +20,8 @@ import RtcEngine, {
 import SetpByStepProcess from '../../../components/SetpByStepProcess';
 import Modal from 'react-native-modal';
 import requestCameraAndAudioPermission from './permission';
-import {Icon, Card, Avatar, Button, CheckBox} from 'react-native-elements';
-import {showMessage} from 'react-native-flash-message';
+import { Icon, Card, Avatar, Button, CheckBox } from 'react-native-elements';
+import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
 import golbalConstants from '../../../Common/GlobalStyles/constants';
 import Pusher from 'pusher-js/react-native';
@@ -30,14 +30,13 @@ import {
   acceptVideoSession,
   endVideoSession,
   extendVideoSession,
-  reviewVideoSession,
   getSignleUserInfo,
 } from '../../../../services/AuthService';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
 import styles from './style';
 import shortid from 'shortid';
@@ -149,11 +148,9 @@ class index extends Component {
       this.setState({
         sessionStatusGuest: session,
         startStage: 4,
-        startCallHeaderTitle: `現在のセッションの推定時間は${
-          main.total_time
-        }分、推定コストは${main.total_cost}ポイント、残り${
-          this.state.sessionActualTime
-        }分です`,
+        startCallHeaderTitle: `現在のセッションの推定時間は${main.total_time
+          }分、推定コストは${main.total_cost}ポイント、残り${this.state.sessionActualTime
+          }分です`,
         session_status: true,
       });
     });
@@ -191,7 +188,7 @@ class index extends Component {
               },
             },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
       }
       console.log('ExtendSessionNotification', data);
@@ -199,7 +196,7 @@ class index extends Component {
   };
 
   loadingMessage = (state, text) => {
-    this.setState({loading: state, loadingText: text});
+    this.setState({ loading: state, loadingText: text });
   };
 
   getTiles = () => {
@@ -232,7 +229,7 @@ class index extends Component {
   };
 
   init = async () => {
-    const {appId} = this.state;
+    const { appId } = this.state;
     let channel = this.props.route.params.channel;
     let userType = this.props.route.params.type;
     this.getSingleUserData(this.props.route.params.userId);
@@ -253,7 +250,7 @@ class index extends Component {
     this._engine.addListener('UserJoined', (uid, elapsed) => {
       console.log('UserJoined', uid, elapsed);
       // Get current peer IDs
-      const {peerIds} = this.state;
+      const { peerIds } = this.state;
       // If new user
       if (peerIds.indexOf(uid) === -1) {
         this.setState({
@@ -265,7 +262,7 @@ class index extends Component {
 
     this._engine.addListener('UserOffline', (uid, reason) => {
       console.log('UserOffline', uid, reason);
-      const {peerIds} = this.state;
+      const { peerIds } = this.state;
       this.setState({
         peerIds: peerIds.filter(id => id !== uid),
       });
@@ -281,16 +278,16 @@ class index extends Component {
     });
   };
   getSingleUserData = async userId => {
-    this.setState({loading: true, loadingText: 'Preparing Video Session....'});
+    this.setState({ loading: true, loadingText: 'Preparing Video Session....' });
     try {
       const response = await getSignleUserInfo(userId);
       console.log('----------------------', response);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       if (response.isSuccess) {
         if (response.result.success) {
           let url =
             response.result.success.is_profile_pic == 'null' ||
-            !response.result.success.is_profile_pic
+              !response.result.success.is_profile_pic
               ? 'https://avatar.amuniversal.com/user_avatars/avatars_gocomicsver3/3147000/3147996/8A0811EE-F63A-4561-A936-67F91B168274.png'
               : response.result.success.is_profile_pic;
           //usr_hourly_rate
@@ -304,7 +301,7 @@ class index extends Component {
             GuestHourlyRate: hourly_rate,
           });
 
-          this.setState({hourlyRate: hourly_rate});
+          this.setState({ hourlyRate: hourly_rate });
           const packageData = [
             this.getPrice(hourly_rate, 30),
             this.getPrice(hourly_rate, 60),
@@ -327,12 +324,12 @@ class index extends Component {
       }
     } catch (error) {
       console.log('----------------------', error);
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
   };
 
   changeSelectedPackage = id => {
-    this.setState({selectedPackage: id});
+    this.setState({ selectedPackage: id });
   };
 
   getPrice = (data, time) => {
@@ -352,17 +349,17 @@ class index extends Component {
   cancelTimerAndRestart = (type, time) => {
     let newTime = Number(time);
     if (type === 0) {
-      this.setState({killTimer: true});
+      this.setState({ killTimer: true });
       setTimeout(x => {
-        this.setState({killTimer: false});
+        this.setState({ killTimer: false });
         this.timeCountDown(newTime);
       }, 2000);
     } else if (type === 1) {
       let previousTime = Number(this.state.sessionActualTime);
       let extendTime = newTime + previousTime;
-      this.setState({killTimer: true});
+      this.setState({ killTimer: true });
       setTimeout(x => {
-        this.setState({killTimer: false});
+        this.setState({ killTimer: false });
         this.timeCountDown(extendTime);
       }, 2000);
     }
@@ -375,11 +372,11 @@ class index extends Component {
   };
   endCall = async () => {
     await this._engine?.leaveChannel();
-    this.setState({peerIds: [], joinSucceed: false});
+    this.setState({ peerIds: [], joinSucceed: false });
   };
   micOnOff = async () => {
     let status = !this.state.micOnOff;
-    this.setState({micOnOff: status});
+    this.setState({ micOnOff: status });
     if (status) {
       await this._engine?.enableAudio();
     } else {
@@ -388,7 +385,7 @@ class index extends Component {
   };
   videoOnOff = async () => {
     let status = !this.state.videoOnOff;
-    this.setState({videoOnOff: status});
+    this.setState({ videoOnOff: status });
     if (status) {
       await this._engine?.enableVideo();
     } else {
@@ -402,7 +399,7 @@ class index extends Component {
 
   OpenHideSettingPanel = () => {
     if (this.state.userType === 'host') {
-      this.setState({callSettingModal: !this.state.callSettingModal});
+      this.setState({ callSettingModal: !this.state.callSettingModal });
     } else if (this.state.userType === 'guest') {
       if (this.state.session_status) {
         this.setState({
@@ -440,18 +437,15 @@ class index extends Component {
           });
           this.setState({
             startStage: 2,
-            startCallHeaderTitle: `アカウントに十分なポイントがありません。入金してください。この${
-              selectedPackage.time
-            }分のビデオセッションには${
-              selectedPackage.points
-            }ポイントが必要です。`,
+            startCallHeaderTitle: `アカウントに十分なポイントがありません。入金してください。この${selectedPackage.time
+              }分のビデオセッションには${selectedPackage.points
+              }ポイントが必要です。`,
           });
         } else {
           this.setState({
             startStage: 1,
-            startCallHeaderTitle: `このビデオセッションでは、${
-              selectedPackage.time
-            }分間${selectedPackage.points}ポイントが課金されます`,
+            startCallHeaderTitle: `このビデオセッションでは、${selectedPackage.time
+              }分間${selectedPackage.points}ポイントが課金されます`,
           });
         }
         break;
@@ -472,7 +466,7 @@ class index extends Component {
         this.props.navigation.navigate('UserDeposite');
         break;
       case 3:
-        this.setState({callSettingModal: false});
+        this.setState({ callSettingModal: false });
         showMessage({
           message:
             '私たちはあなたのキャストにあなたのリクエストを送りました、あなたは彼がそれを受け入れた後に通知を受け取ります',
@@ -529,9 +523,9 @@ class index extends Component {
           type: 'warning',
         });
       }
-      this.setState({loading: false});
+      this.setState({ loading: false });
     } catch (errors) {
-      this.setState({loading: false});
+      this.setState({ loading: false });
       showMessage({
         message: '間違ったコードを入力しました',
         type: 'error',
@@ -539,7 +533,7 @@ class index extends Component {
     }
   };
   closeNotification = v => {
-    this.setState({[v]: false});
+    this.setState({ [v]: false });
   };
   acceptSessionCall = async () => {
     this.loadingMessage(true, 'リクエストを処理しています ...');
@@ -555,7 +549,7 @@ class index extends Component {
       const response = await acceptVideoSession(data);
       this.loadingMessage(false, 'リクエストを処理しています ...');
       if (response.isSuccess) {
-        this.setState({acceptSessionNotification: false, session_status: true});
+        this.setState({ acceptSessionNotification: false, session_status: true });
         this.startCall();
         this.cancelTimerAndRestart(0, data.total_time);
         showMessage({
@@ -563,7 +557,7 @@ class index extends Component {
           type: 'success',
         });
       }
-    } catch {}
+    } catch { }
   };
   timeCountDown = total_time => {
     var countDownDate = this.addMinutes(new Date(), total_time).getTime();
@@ -583,11 +577,11 @@ class index extends Component {
       let actualMinuteLeft = minutes > 0 ? Number(minutes) : 0;
       let totalMinuteLeft = actualTimeHourLeft + actualMinuteLeft;
       if (distance <= 600000) {
-        this.setState({sessionTimerAlert: true});
+        this.setState({ sessionTimerAlert: true });
       }
       if (distance < 1000) {
         exitCounting();
-        this.setState({joinSucceed: false});
+        this.setState({ joinSucceed: false });
         this.endSessionApi();
       }
 
@@ -616,7 +610,7 @@ class index extends Component {
     let charge = point * 0.01;
     data[4].points = charge + point;
     data[4].title = `${Number(text)} Mins ${point}P + ${charge}P`;
-    this.setState({package: data});
+    this.setState({ package: data });
     this.changeSelectedPackage(data[4].id);
   };
   onExtendTimePointText = text => {
@@ -627,7 +621,7 @@ class index extends Component {
     let charge = point * 0.01;
     data.points = charge + point;
     data.title = `${Number(text)} 分 ${point}P + ${charge}P`;
-    this.setState({extendTimePoint: data});
+    this.setState({ extendTimePoint: data });
   };
   extendTime = async () => {
     if (Number(this.state.extendTimePoint.time) < 1) {
@@ -644,7 +638,7 @@ class index extends Component {
     try {
       const response = await extendVideoSession(data);
       console.log(response);
-      this.setState({callSettingModal: false});
+      this.setState({ callSettingModal: false });
       if (response && response.isSuccess) {
         showMessage({
           message: '時間が正常に延長されました',
@@ -657,7 +651,7 @@ class index extends Component {
         });
       }
     } catch (error) {
-      this.setState({callSettingModal: false});
+      this.setState({ callSettingModal: false });
     }
   };
 
@@ -683,7 +677,7 @@ class index extends Component {
           },
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -713,7 +707,7 @@ class index extends Component {
           data: response.end_session,
         });
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   render() {
@@ -854,27 +848,27 @@ class index extends Component {
                             onPress={() => this.changeSelectedPackage(x.id)}
                           />
                         ) : (
-                          <View style={styles.customInputContainer} key={x.id}>
-                            <TextInput
-                              style={style.customInputStartCall}
-                              onChangeText={text =>
-                                this.onChangePackagePointText(text)
-                              }
-                              value={String(x.time)}
-                              keyboardType={'number-pad'}
-                              textAlign={'center'}
-                            />
-                            <Text style={styles.customInputStartText}>
-                              {x.title}
-                            </Text>
-                          </View>
-                        );
+                            <View style={styles.customInputContainer} key={x.id}>
+                              <TextInput
+                                style={style.customInputStartCall}
+                                onChangeText={text =>
+                                  this.onChangePackagePointText(text)
+                                }
+                                value={String(x.time)}
+                                keyboardType={'number-pad'}
+                                textAlign={'center'}
+                              />
+                              <Text style={styles.customInputStartText}>
+                                {x.title}
+                              </Text>
+                            </View>
+                          );
                       })}
                     </View>
                   ) : null}
                   {this.state.startStage === 1 ? (
                     <View>
-                      <Text style={{paddingBottom: 20}}>
+                      <Text style={{ paddingBottom: 20 }}>
                         Please Press send Button if your agree.
                       </Text>
                       <Button
@@ -892,7 +886,7 @@ class index extends Component {
                   ) : null}
                   {this.state.startStage === 4 ? (
                     <View>
-                      <Text style={{paddingBottom: 30}}>
+                      <Text style={{ paddingBottom: 30 }}>
                         ビデオセッションが進行中です、現在あなたのキャストは{' '}
                         {this.state.GuestDetailsName}.
                       </Text>
@@ -915,7 +909,7 @@ class index extends Component {
                 </View>
               </TouchableHighlight>
             </ScrollView>
-            <View style={{flex: 1, marginTop: 60}}>
+            <View style={{ flex: 1, marginTop: 60 }}>
               <SetpByStepProcess
                 hideIcon={true}
                 title={this.getTitleForSessionModal()}
@@ -955,7 +949,7 @@ class index extends Component {
                 </View>
               </TouchableHighlight>
             </ScrollView>
-            <View style={{flex: 1, marginTop: 60}}>
+            <View style={{ flex: 1, marginTop: 60 }}>
               <SetpByStepProcess
                 hideIcon={true}
                 title="Ok"
@@ -979,7 +973,7 @@ class index extends Component {
           <View style={styles.content}>
             <View style={styles.centerImage}>
               <Image
-                style={{width: 200, height: 140}}
+                style={{ width: 200, height: 140 }}
                 source={require('../../../../assets/profile/maria_logo.png')}
               />
             </View>
@@ -1024,7 +1018,7 @@ class index extends Component {
     );
   }
   _renderVideos = () => {
-    const {joinSucceed} = this.state;
+    const { joinSucceed } = this.state;
     return joinSucceed ? (
       <View style={styles.fullView}>
         <RtcLocalView.SurfaceView
@@ -1038,11 +1032,11 @@ class index extends Component {
   };
 
   _renderRemoteVideos = () => {
-    const {peerIds} = this.state;
+    const { peerIds } = this.state;
     return (
       <ScrollView
         style={styles.remoteContainer}
-        contentContainerStyle={{paddingHorizontal: 2.5}}
+        contentContainerStyle={{ paddingHorizontal: 2.5 }}
         horizontal={true}>
         {peerIds.map((value, index, array) => {
           return (

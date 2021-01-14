@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,20 +12,20 @@ import {
   Alert,
   NativeModules,
 } from 'react-native';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import DatePicker from 'react-native-date-picker';
 import BgComponent from '../../components/BgComponent';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Fontisto';
-import {Avatar} from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
 import HeaderWithCross from '../../components/HeaderWithCross';
 import SetpByStepProcess from '../../components/SetpByStepProcess';
 import NetInfo from '@react-native-community/netinfo';
-import {TagSelect} from 'react-native-tag-select';
+import { TagSelect } from 'react-native-tag-select';
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import LinearGradient from 'react-native-linear-gradient';
 // import InstagramLogin from 'react-native-instagram-login';
 import golbalConstants from '../../Common/GlobalStyles/constants';
@@ -49,12 +49,11 @@ import {
   verifyEmailAddress,
 } from '../../../services/AuthService';
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
-import {TransitioningView} from 'react-native-reanimated';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
 
-const {RNTwitterSignIn} = NativeModules;
+const { RNTwitterSignIn } = NativeModules;
 
 const Constants = {
   //Dev Parse keys
@@ -101,7 +100,7 @@ class Registration extends Component {
     });
     SplashScreen.hide();
   }
-  componentDidUpdate() {}
+
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
@@ -116,24 +115,24 @@ class Registration extends Component {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => BackHandler.exitApp()},
+        { text: 'OK', onPress: () => BackHandler.exitApp() },
       ],
     );
     return true;
   }
   changeGender = data => {
-    this.setState({selectedGender: data});
+    this.setState({ selectedGender: data });
   };
   emailValidation = inputtxt => {
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return regex.test(inputtxt);
   };
   selectedCity = (city, selectedCityName) => {
-    this.setState({selectedCity: city, selectedCityName});
+    this.setState({ selectedCity: city, selectedCityName });
   };
   selectedCityOption = () => {
     if (this.state.selectedCityName) {
-      this.setState({registrationStage: 4});
+      this.setState({ registrationStage: 4 });
     } else {
       showMessage({
         message: '都市を選択してください',
@@ -143,7 +142,7 @@ class Registration extends Component {
   };
   changeNickName = () => {
     if (this.state.nickName) {
-      this.setState({registrationStage: 7});
+      this.setState({ registrationStage: 7 });
       // this.chooseOption();
     } else {
       showMessage({
@@ -153,7 +152,7 @@ class Registration extends Component {
     }
   };
   changeGenderFunction = () => {
-    this.setState({registrationStage: 5});
+    this.setState({ registrationStage: 5 });
   };
   changeHourlyRate = () => {
     if (!this.state.hourlyRate && this.state.hourlyRate == '') {
@@ -162,7 +161,7 @@ class Registration extends Component {
         type: 'error',
       });
     } else {
-      this.setState({registrationStage: '6b'});
+      this.setState({ registrationStage: '6b' });
     }
   };
   imagePickerForDateValidationImage = () => {
@@ -185,12 +184,12 @@ class Registration extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.uri};
+        const source = { uri: response.uri };
         this.setState({
           DateProfImageUri: source.uri,
           DateProfImagePath: response.path,
         });
-        this.setState({photoDocument: false});
+        this.setState({ photoDocument: false });
         this.reSizeUploadImage(response);
       }
     });
@@ -219,13 +218,13 @@ class Registration extends Component {
           message: '年齢識別写真のアップロードの成功',
           type: 'success',
         });
-        this.setState({photoDocument: true});
+        this.setState({ photoDocument: true });
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     } catch (errors) {
       console.log('Image Upload error', errors);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       showMessage({
         message: '間違ったコードを入力しました',
         type: 'error',
@@ -252,7 +251,7 @@ class Registration extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.uri};
+        const source = { uri: response.uri };
         console.log(response);
         this.setState({
           profileImage: source.uri,
@@ -265,13 +264,13 @@ class Registration extends Component {
     if (this.state.profileImage && this.state.process6ImagePath) {
       this.uploadImages(this.state.profileImage);
     } else {
-      this.setState({userImage: this.state.profileImage});
+      this.setState({ userImage: this.state.profileImage });
       this.updateProfileInformation();
     }
   };
   uploadImages = async data => {
     try {
-      this.setState({loading: true});
+      this.setState({ loading: true });
       let uriParts = this.state.process6ImagePath.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let response = await uploadProfileImage(
@@ -283,14 +282,14 @@ class Registration extends Component {
       console.log('Image up', response);
       if (response && response.isSuccess) {
         console.log('Image up', response);
-        this.setState({userImage: response.result.success.profile_pic});
+        this.setState({ userImage: response.result.success.profile_pic });
         this.updateProfileInformation();
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
       }
     } catch (errors) {
       console.log('Image Upload error', errors);
-      this.setState({loading: false});
+      this.setState({ loading: false });
       showMessage({
         message: '間違ったコードを入力しました',
         type: 'error',
@@ -320,14 +319,14 @@ class Registration extends Component {
       let response = await updateUserInfo(data);
       console.log('-- profile update : ', response, data);
       if (response.isSuccess) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.props.navigation.navigate('InitialLoader');
         showMessage({
           message: '4桁のコードが携帯電話に送信されました。',
           type: 'success',
         });
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: '問題が発生しました。電話番号を確認してください！',
           type: 'error',
@@ -345,10 +344,10 @@ class Registration extends Component {
   loginApi = async (userInfo, type) => {
     this.props.changeSignInMethod(type);
     if (userInfo && userInfo.picture.data.url) {
-      this.setState({profileImage: userInfo.picture.data.url});
+      this.setState({ profileImage: userInfo.picture.data.url });
     }
     if (userInfo && userInfo.name) {
-      this.setState({nickName: userInfo.name});
+      this.setState({ nickName: userInfo.name });
     }
     try {
       let email =
@@ -356,10 +355,10 @@ class Registration extends Component {
       let data = {
         usr_email: email,
       };
-      this.setState({customEmail: email});
+      this.setState({ customEmail: email });
       let response = await LoginApi(data);
       if (response) {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: 'ログイン成功',
           type: 'success',
@@ -369,10 +368,10 @@ class Registration extends Component {
         if (existing_user == 1) {
           this.props.navigation.push('InitialLoader');
         } else {
-          this.setState({registrationStage: 2});
+          this.setState({ registrationStage: 2 });
         }
       } else {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         console.log(response);
         showMessage({
           message:
@@ -399,13 +398,13 @@ class Registration extends Component {
     console.log(PROFILE_REQUEST_PARAMS);
     const profileRequest = new GraphRequest(
       '/me',
-      {token, parameters: PROFILE_REQUEST_PARAMS},
+      { token, parameters: PROFILE_REQUEST_PARAMS },
       (error, result) => {
         if (error) {
           console.log('login info has error: ' + error);
         } else {
           this.loginApi(result, 'fb');
-          this.setState({userInfo: result});
+          this.setState({ userInfo: result });
         }
       },
     );
@@ -444,7 +443,7 @@ class Registration extends Component {
     RNTwitterSignIn.logIn()
       .then(loginData => {
         console.log(loginData);
-        const {authToken, authTokenSecret} = loginData;
+        const { authToken, authTokenSecret } = loginData;
         if (authToken && authTokenSecret) {
           //if successfull
         }
@@ -459,7 +458,7 @@ class Registration extends Component {
   };
   changeDate = () => {
     if (this.state.DateProfImageUri) {
-      this.setState({registrationStage: 3});
+      this.setState({ registrationStage: 3 });
     } else {
       showMessage({
         message:
@@ -470,9 +469,9 @@ class Registration extends Component {
   };
   chooseOption = () => {
     if (this.state.selectedGender == 1) {
-      this.setState({registrationStage: '6a'});
+      this.setState({ registrationStage: '6a' });
     } else {
-      this.setState({registrationStage: 7});
+      this.setState({ registrationStage: 7 });
     }
   };
 
@@ -483,7 +482,7 @@ class Registration extends Component {
       };
       const response = await wantInterView(data);
       console.log(response);
-    } catch {}
+    } catch { }
   };
   signInGoogle = async () => {
     try {
@@ -499,12 +498,12 @@ class Registration extends Component {
           id: userData.id,
           last_name: userData.familyName,
           name: userData.name,
-          picture: {data: {url: userData.photo}},
+          picture: { data: { url: userData.photo } },
         };
         this.loginApi(data, 'google');
-        this.setState({userInfo: data});
+        this.setState({ userInfo: data });
       }
-      this.setState({userInfo});
+      this.setState({ userInfo });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         showMessage({
@@ -539,10 +538,10 @@ class Registration extends Component {
       let data = {
         city_name: this.state.addCity,
       };
-      this.setState({Spinner: true});
+      this.setState({ Spinner: true });
       try {
         const response = await addNewCity(data);
-        this.setState({Spinner: false, addCity: ''});
+        this.setState({ Spinner: false, addCity: '' });
         showMessage({
           message: '都市が追加されました上記から選択してください',
           type: 'success',
@@ -551,7 +550,7 @@ class Registration extends Component {
           this.props.addCites(response.result.city_list);
         }
       } catch {
-        this.setState({Spinner: false, addCity: ''});
+        this.setState({ Spinner: false, addCity: '' });
         showMessage({
           message: 'この都市を追加できません。別の都市をお試しください',
           type: 'error',
@@ -583,17 +582,17 @@ class Registration extends Component {
       let data = {
         usr_email: this.state.emailAddress.toLowerCase(),
       };
-      this.setState({loading: true});
+      this.setState({ loading: true });
       try {
         const response = await loginWithEmailAddress(data);
         console.log('Login With Email step  one', response);
-        this.setState({loading: false});
+        this.setState({ loading: false });
         if (response.isSuccess) {
           showMessage({
             message: 'メールアドレスにワンタイムパスワードを送信しました',
             type: 'success',
           });
-          this.setState({registrationStage: '1a'});
+          this.setState({ registrationStage: '1a' });
         } else {
           showMessage({
             message: '問題が発生しました',
@@ -601,7 +600,7 @@ class Registration extends Component {
           });
         }
       } catch {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: 'インターネットに接続されていません。接続を確認してください',
           type: 'error',
@@ -621,10 +620,10 @@ class Registration extends Component {
         usr_email: this.state.emailAddress,
         code: this.state.otpCode,
       };
-      this.setState({loading: true});
+      this.setState({ loading: true });
       try {
         const response = await verifyEmailAddress(data);
-        this.setState({loading: false});
+        this.setState({ loading: false });
         console.log('Login With Email step  two', data, response);
         if (response) {
           if (response.status === 401) {
@@ -643,15 +642,15 @@ class Registration extends Component {
               id: null,
               last_name: null,
               name: null,
-              picture: {data: {url: null}},
+              picture: { data: { url: null } },
             };
-            this.setState({emailAddress: '', otpCode: ''});
-            this.setState({userInfo: data, registrationStage: 0});
+            this.setState({ emailAddress: '', otpCode: '' });
+            this.setState({ userInfo: data, registrationStage: 0 });
             this.loginApi(data, 'email');
           }
         }
       } catch {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         showMessage({
           message: 'インターネットに接続されていません。接続を確認してください',
           type: 'error',
@@ -749,7 +748,7 @@ class Registration extends Component {
                   </View>
                   <View style={styles.botomActionSection}>
                     <TouchableOpacity
-                      onPress={() => this.setState({registrationStage: 1})}
+                      onPress={() => this.setState({ registrationStage: 1 })}
                       style={[
                         styles.loginWithFb,
                         styles.email,
@@ -779,8 +778,8 @@ class Registration extends Component {
                           '#fb5084',
                           '#ff6672',
                         ]}
-                        start={{x: 0, y: 1}}
-                        end={{x: 1, y: 1}}
+                        start={{ x: 0, y: 1 }}
+                        end={{ x: 1, y: 1 }}
                         style={styles.linearGradient}>
                         <TouchableOpacity
                           onPress={() => {
@@ -875,8 +874,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="メールでログイン"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 0})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 0 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -894,7 +893,7 @@ class Registration extends Component {
                         style={styles.process5TextInput}
                         value={this.state.emailAddress}
                         onChangeText={emailAddress =>
-                          this.setState({emailAddress})
+                          this.setState({ emailAddress })
                         }
                       />
                     </View>
@@ -911,8 +910,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="Eメールを確認します"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 1})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 1 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -933,7 +932,7 @@ class Registration extends Component {
                         keyboardType="numeric"
                         style={styles.process5TextInput}
                         value={this.state.otpCode}
-                        onChangeText={otpCode => this.setState({otpCode})}
+                        onChangeText={otpCode => this.setState({ otpCode })}
                       />
                     </View>
                   </View>
@@ -949,8 +948,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 1})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 1 })}
                 activeBack={true}
               />
               {/* <View style={styles.codeContainer}>
@@ -967,7 +966,7 @@ class Registration extends Component {
                   locale="ja"
                   date={this.state.birthday}
                   onDateChange={date => {
-                    this.setState({birthday: date});
+                    this.setState({ birthday: date });
                   }}
                 />
               </View>
@@ -981,25 +980,25 @@ class Registration extends Component {
                   <Avatar
                     size={150}
                     rounded
-                    icon={{name: 'user', type: 'font-awesome'}}
+                    icon={{ name: 'user', type: 'font-awesome' }}
                     onPress={() => this.imagePickerForDateValidationImage()}
                     activeOpacity={0.7}
                     containerStyle={styles.centerContainer}
                     showEditButton
-                    source={{uri: this.state.DateProfImageUri}}
+                    source={{ uri: this.state.DateProfImageUri }}
                   />
                 ) : (
-                  <Avatar
-                    size={150}
-                    rounded
-                    icon={{name: 'user', type: 'font-awesome'}}
-                    onPress={() => this.imagePickerForDateValidationImage()}
-                    activeOpacity={0.7}
-                    containerStyle={styles.centerContainer}
-                    showEditButton
-                    source={require('../../../assets/documents.png')}
-                  />
-                )}
+                    <Avatar
+                      size={150}
+                      rounded
+                      icon={{ name: 'user', type: 'font-awesome' }}
+                      onPress={() => this.imagePickerForDateValidationImage()}
+                      activeOpacity={0.7}
+                      containerStyle={styles.centerContainer}
+                      showEditButton
+                      source={require('../../../assets/documents.png')}
+                    />
+                  )}
                 {this.state.photoDocument ? (
                   <View style={styles.verifyIcon}>
                     <Icon name="check-circle" size={30} color={'green'} />
@@ -1010,7 +1009,7 @@ class Registration extends Component {
                 <View style={styles.ageVerificationContainer}>
                   <TouchableOpacity
                     style={styles.ageVerificationSkipButon}
-                    onPress={() => this.setState({registrationStage: 3})}>
+                    onPress={() => this.setState({ registrationStage: 3 })}>
                     <Text>スキップする </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
@@ -1034,8 +1033,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 2})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 2 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1045,15 +1044,15 @@ class Registration extends Component {
                       <Avatar
                         rounded
                         size="xlarge"
-                        source={{uri: this.state.profileImage}}
+                        source={{ uri: this.state.profileImage }}
                       />
                     ) : (
-                      <Avatar
-                        rounded
-                        size="xlarge"
-                        source={require('../../../assets/panda.png')}
-                      />
-                    )}
+                        <Avatar
+                          rounded
+                          size="xlarge"
+                          source={require('../../../assets/panda.png')}
+                        />
+                      )}
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>
@@ -1073,7 +1072,7 @@ class Registration extends Component {
                         this.tag = tag;
                       }}
                       onItemPress={item => {
-                        this.setState({selectedCityName: item.id});
+                        this.setState({ selectedCityName: item.id });
                       }}
                       onMaxError={() => {
                         Alert.alert(
@@ -1097,8 +1096,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 3})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 3 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1108,15 +1107,15 @@ class Registration extends Component {
                       <Avatar
                         rounded
                         size="xlarge"
-                        source={{uri: this.state.profileImage}}
+                        source={{ uri: this.state.profileImage }}
                       />
                     ) : (
-                      <Avatar
-                        rounded
-                        size="xlarge"
-                        source={require('../../../assets/panda.png')}
-                      />
-                    )}
+                        <Avatar
+                          rounded
+                          size="xlarge"
+                          source={require('../../../assets/panda.png')}
+                        />
+                      )}
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>あなたの性別は ?</Text>
@@ -1187,8 +1186,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="ニックネームを設定"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 4})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 4 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1208,7 +1207,7 @@ class Registration extends Component {
                         placeholder={'ニックネーム'}
                         style={styles.process5TextInput}
                         value={this.state.nickName}
-                        onChangeText={nickName => this.setState({nickName})}
+                        onChangeText={nickName => this.setState({ nickName })}
                       />
                     </View>
                   </View>
@@ -1226,8 +1225,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="ニックネームを設定"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 5})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 5 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1252,7 +1251,7 @@ class Registration extends Component {
                     </View>
                     <View style={styles.tabOption}>
                       <TouchableOpacity
-                        onPress={() => this.setState({process5Selected: 0})}
+                        onPress={() => this.setState({ process5Selected: 0 })}
                         style={
                           this.state.process5Selected == 0
                             ? styles.tabOptionSelect
@@ -1268,7 +1267,7 @@ class Registration extends Component {
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => this.setState({process5Selected: 1})}
+                        onPress={() => this.setState({ process5Selected: 1 })}
                         style={
                           this.state.process5Selected == 1
                             ? styles.tabOptionSelect
@@ -1285,7 +1284,7 @@ class Registration extends Component {
                       </TouchableOpacity>
                     </View>
 
-                    <View style={(styles.container, {flexDirection: 'row'})}>
+                    <View style={(styles.container, { flexDirection: 'row' })}>
                       <TouchableOpacity style={styles.tagsUnselect}>
                         <Text>飲める人</Text>
                       </TouchableOpacity>
@@ -1317,8 +1316,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 4})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 4 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1328,15 +1327,15 @@ class Registration extends Component {
                       <Avatar
                         rounded
                         size="xlarge"
-                        source={{uri: this.state.profileImage}}
+                        source={{ uri: this.state.profileImage }}
                       />
                     ) : (
-                      <Avatar
-                        rounded
-                        size="xlarge"
-                        source={require('../../../assets/panda.png')}
-                      />
-                    )}
+                        <Avatar
+                          rounded
+                          size="xlarge"
+                          source={require('../../../assets/panda.png')}
+                        />
+                      )}
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>
@@ -1352,7 +1351,7 @@ class Registration extends Component {
                       style={styles.hourlyRate}
                       placeholder="時給を円で入力してください"
                       keyboardType={'numeric'}
-                      onChangeText={hourlyRate => this.setState({hourlyRate})}
+                      onChangeText={hourlyRate => this.setState({ hourlyRate })}
                       defaultValue={this.state.hourlyRate}
                     />
                   </View>
@@ -1370,8 +1369,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: '6a'})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: '6a' })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1381,15 +1380,15 @@ class Registration extends Component {
                       <Avatar
                         rounded
                         size="xlarge"
-                        source={{uri: this.state.profileImage}}
+                        source={{ uri: this.state.profileImage }}
                       />
                     ) : (
-                      <Avatar
-                        rounded
-                        size="xlarge"
-                        source={require('../../../assets/panda.png')}
-                      />
-                    )}
+                        <Avatar
+                          rounded
+                          size="xlarge"
+                          source={require('../../../assets/panda.png')}
+                        />
+                      )}
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>
@@ -1399,7 +1398,7 @@ class Registration extends Component {
                   <View style={styles.chosseOption}>
                     <View style={styles.chosseOptionRow}>
                       <TouchableOpacity
-                        onPress={() => this.setState({interViewCall: 1})}
+                        onPress={() => this.setState({ interViewCall: 1 })}
                         style={
                           this.state.interViewCall == 1
                             ? styles.optionSectionSelected
@@ -1415,7 +1414,7 @@ class Registration extends Component {
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
-                        onPress={() => this.setState({interViewCall: 0})}
+                        onPress={() => this.setState({ interViewCall: 0 })}
                         style={
                           this.state.interViewCall == 0
                             ? styles.optionSectionSelected
@@ -1436,7 +1435,7 @@ class Registration extends Component {
               </SafeAreaView>
               <SetpByStepProcess
                 title="次へ 5/5"
-                action={() => this.setState({registrationStage: 7})}
+                action={() => this.setState({ registrationStage: 7 })}
               />
             </View>
           ) : null}
@@ -1446,8 +1445,8 @@ class Registration extends Component {
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="プロファイルを設定"
-                acion={() => this.setState({registrationStage: 0})}
-                acionBackKey={() => this.setState({registrationStage: 6})}
+                acion={() => this.setState({ registrationStage: 0 })}
+                acionBackKey={() => this.setState({ registrationStage: 6 })}
                 activeBack={true}
               />
               <SafeAreaView style={styles.container}>
@@ -1474,20 +1473,20 @@ class Registration extends Component {
                         <Avatar
                           rounded
                           size="xlarge"
-                          source={{uri: this.state.profileImage}}
+                          source={{ uri: this.state.profileImage }}
                         />
                       ) : (
-                        <Avatar
-                          size={150}
-                          rounded
-                          icon={{name: 'user', type: 'font-awesome'}}
-                          onPress={() => this.imagePickerForProfileImage()}
-                          activeOpacity={0.7}
-                          containerStyle={styles.centerContainer}
-                          showEditButton
-                          source={require('../../../assets/panda.png')}
-                        />
-                      )}
+                          <Avatar
+                            size={150}
+                            rounded
+                            icon={{ name: 'user', type: 'font-awesome' }}
+                            onPress={() => this.imagePickerForProfileImage()}
+                            activeOpacity={0.7}
+                            containerStyle={styles.centerContainer}
+                            showEditButton
+                            source={require('../../../assets/panda.png')}
+                          />
+                        )}
                     </View>
                   </View>
                 </ScrollView>

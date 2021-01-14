@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UpdateNiceTweetStatus from '../UpdateNiceTweetStatus';
 import styles from './styles';
@@ -11,9 +11,6 @@ class Tweet extends Component {
       data: [],
     };
   }
-  componentDidMount() {}
-  componentDidUpdate() {}
-  componentWillUnmount() {}
 
   updateAPICall = id => {
     this.props.updateNice(id);
@@ -24,7 +21,7 @@ class Tweet extends Component {
     return formated;
   };
   gotoProfileDetails = user => {
-    this.props.navigation.navigate('UserDetails', {userData: user});
+    this.props.navigation.navigate('UserDetails', { userData: user });
   };
   render() {
     return (
@@ -34,7 +31,7 @@ class Tweet extends Component {
             style={styles.backgroundImage}
             onPress={() => this.props.onPressUserProfile()}>
             <Image
-              source={{uri: this.props.ownerImage}}
+              source={{ uri: this.props.ownerImage }}
               style={styles.avatar}
             />
           </TouchableOpacity>
@@ -72,7 +69,7 @@ class Tweet extends Component {
                 <Text>{this.props.post}</Text>
                 {this.props.attachmentUrl ? (
                   <Image
-                    source={{uri: this.props.attachmentUrl}}
+                    source={{ uri: this.props.attachmentUrl }}
                     style={styles.attachment}
                   />
                 ) : null}

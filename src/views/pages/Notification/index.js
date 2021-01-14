@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {View, Text, TouchableOpacity, FlatList, Image} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DashBoardHeader from '../../components/DashBoardHeader';
 import styles from './styles';
@@ -10,9 +10,9 @@ import {
   callHistory,
 } from '../../../services/AuthService';
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
 
 class Notification extends Component {
   constructor(props) {
@@ -26,14 +26,12 @@ class Notification extends Component {
     this.getAllNotification();
     this.getCallHistory();
   }
-  componentDidUpdate() {}
-  componentWillUnmount() {}
   actionOnPress = data => {
     console.log(data);
     this.makeNotificationRead(data.id);
     if (data.tap_action == 'user_profile' || data.tap_action == 'nice') {
       this.props.navigation.navigate('UserDetails', {
-        userData: {id: data.user_id},
+        userData: { id: data.user_id },
       });
     } else if (data.tap_action == 'tweet') {
       this.props.navigation.navigate('SingleTweetDetails', {
@@ -45,7 +43,7 @@ class Notification extends Component {
     try {
       const response = await unreadNotification(id);
       this.getAllNotification();
-    } catch {}
+    } catch { }
   };
   getAllNotification = async () => {
     const response = await getNotification();
@@ -54,21 +52,21 @@ class Notification extends Component {
     }
   };
   getCallHistory = async () => {
-    let data = {user_id: 3};
+    let data = { user_id: 3 };
     const response = await callHistory(data);
     if (response.isSuccess) {
       let history = response.result.call_history;
-      this.setState({callHistory: history});
+      this.setState({ callHistory: history });
       console.log('Call History', history);
     }
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({ item }) => {
     var callIcon = 'https://img.icons8.com/color/48/000000/video-call.png';
     return (
       <TouchableOpacity>
         <View style={styles.row}>
-          <Image source={{uri: item.image}} style={styles.pic} />
+          <Image source={{ uri: item.image }} style={styles.pic} />
           <View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt}>{item.name}</Text>
@@ -77,7 +75,7 @@ class Notification extends Component {
               <Image
                 style={[
                   styles.icon,
-                  {marginLeft: 15, marginRight: 5, width: 14, height: 14},
+                  { marginLeft: 15, marginRight: 5, width: 14, height: 14 },
                 ]}
                 source={{
                   uri: 'https://img.icons8.com/small/14/000000/double-tick.png',
@@ -89,8 +87,8 @@ class Notification extends Component {
             </View>
           </View>
           <Image
-            style={[styles.icon, {marginRight: 50}]}
-            source={{uri: callIcon}}
+            style={[styles.icon, { marginRight: 50 }]}
+            source={{ uri: callIcon }}
           />
         </View>
       </TouchableOpacity>
@@ -117,7 +115,7 @@ class Notification extends Component {
         <View>
           <View style={styles.tabOption}>
             <TouchableOpacity
-              onPress={() => this.setState({TabOptionSelected: 0})}
+              onPress={() => this.setState({ TabOptionSelected: 0 })}
               style={
                 this.state.TabOptionSelected == 0
                   ? styles.tabOptionSelect
@@ -133,7 +131,7 @@ class Notification extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.setState({TabOptionSelected: 1})}
+              onPress={() => this.setState({ TabOptionSelected: 1 })}
               style={
                 this.state.TabOptionSelected == 1
                   ? styles.tabOptionSelect
@@ -159,7 +157,7 @@ class Notification extends Component {
                         style={styles.container}
                         onPress={() => this.actionOnPress(Notification)}>
                         <Image
-                          source={{uri: Notification.user.image_url}}
+                          source={{ uri: Notification.user.image_url }}
                           style={styles.avatar}
                         />
                         <View style={styles.content}>
@@ -190,100 +188,98 @@ class Notification extends Component {
                   );
                 })
               ) : (
-                <View style={styles.NONotificationContainer}>
-                  <Text>システム通知なし !</Text>
-                </View>
-              )
+                  <View style={styles.NONotificationContainer}>
+                    <Text>システム通知なし !</Text>
+                  </View>
+                )
             ) : (
-              this.state.callHistory.map(Notification => {
-                return (
-                  <View key={shortid.generate()} style={styles.root}>
-                    <TouchableOpacity style={styles.container}>
-                      <Image
-                        source={{
-                          uri: this.isHostCall(Notification.host_id)
-                            ? Notification.guest_profile_pic
-                            : Notification.host_profile_pic,
-                        }}
-                        style={styles.avatar}
-                      />
-                      <View style={styles.content}>
-                        <View style={styles.mainContentStyle}>
-                          <View style={styles.text}>
-                            <Text style={styles.name}>
-                              {this.isHostCall(Notification.host_id)
-                                ? `You host a call with ${
-                                    Notification.guest_name
+                this.state.callHistory.map(Notification => {
+                  return (
+                    <View key={shortid.generate()} style={styles.root}>
+                      <TouchableOpacity style={styles.container}>
+                        <Image
+                          source={{
+                            uri: this.isHostCall(Notification.host_id)
+                              ? Notification.guest_profile_pic
+                              : Notification.host_profile_pic,
+                          }}
+                          style={styles.avatar}
+                        />
+                        <View style={styles.content}>
+                          <View style={styles.mainContentStyle}>
+                            <View style={styles.text}>
+                              <Text style={styles.name}>
+                                {this.isHostCall(Notification.host_id)
+                                  ? `You host a call with ${Notification.guest_name
                                   }`
-                                : `You were a guest of ${
-                                    Notification.host_name
+                                  : `You were a guest of ${Notification.host_name
                                   }`}
-                            </Text>
-                          </View>
-                          <View style={styles.text}>
-                            <Text style={styles.timeAgo}>
-                              <Text>
-                                (
+                              </Text>
+                            </View>
+                            <View style={styles.text}>
+                              <Text style={styles.timeAgo}>
+                                <Text>
+                                  (
                                 {Notification.actual_calling_time
-                                  ? Notification.actual_calling_time
-                                  : 0}
+                                    ? Notification.actual_calling_time
+                                    : 0}
                                 m /{' '}
-                                {Notification.total_time
-                                  ? Notification.total_time
-                                  : 0}
+                                  {Notification.total_time
+                                    ? Notification.total_time
+                                    : 0}
                                 m)
                               </Text>
-                            </Text>
-                            <Icon
-                              color={
-                                Notification.is_accepted === '0'
-                                  ? 'red'
-                                  : 'green'
-                              }
-                              name="video-camera"
-                              size={25}
-                            />
+                              </Text>
+                              <Icon
+                                color={
+                                  Notification.is_accepted === '0'
+                                    ? 'red'
+                                    : 'green'
+                                }
+                                name="video-camera"
+                                size={25}
+                              />
+                            </View>
                           </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
-                    <View style={styles.separator} />
-                  </View>
-                );
-
-                /* <TouchableOpacity key={x.id}>
-                    <View style={styles.row}>
-                      <Image
-                        source={{
-                          uri:
-                            'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png',
-                        }}
-                        style={styles.pic}
-                      />
-                      <View>
-                        <View style={styles.nameContainer}>
-                          <Text style={styles.nameTxt}>
-                            Nazmul Tanvir ({' '}
-                            {x.actual_calling_time ? x.actual_calling_time : 0}m
-                            / {x.total_time ? x.total_time : 0}m)
-                          </Text>
-                        </View>
-                        <View style={styles.end}>
-                          <Icon name="calendar-o" size={16} />
-                          <Text style={styles.time}>
-                            {x.date} {x.created_at}
-                          </Text>
-                        </View>
-                      </View>
-                      <Icon
-                        color={x.is_accepted === '0' ? 'red' : 'green'}
-                        name="video-camera"
-                        size={25}
-                      />
+                      </TouchableOpacity>
+                      <View style={styles.separator} />
                     </View>
-                  </TouchableOpacity> */
-              })
-            )}
+                  );
+
+                  /* <TouchableOpacity key={x.id}>
+                      <View style={styles.row}>
+                        <Image
+                          source={{
+                            uri:
+                              'https://www.pngkit.com/png/full/301-3012694_account-user-profile-avatar-comments-fa-user-circle.png',
+                          }}
+                          style={styles.pic}
+                        />
+                        <View>
+                          <View style={styles.nameContainer}>
+                            <Text style={styles.nameTxt}>
+                              Nazmul Tanvir ({' '}
+                              {x.actual_calling_time ? x.actual_calling_time : 0}m
+                              / {x.total_time ? x.total_time : 0}m)
+                            </Text>
+                          </View>
+                          <View style={styles.end}>
+                            <Icon name="calendar-o" size={16} />
+                            <Text style={styles.time}>
+                              {x.date} {x.created_at}
+                            </Text>
+                          </View>
+                        </View>
+                        <Icon
+                          color={x.is_accepted === '0' ? 'red' : 'green'}
+                          name="video-camera"
+                          size={25}
+                        />
+                      </View>
+                    </TouchableOpacity> */
+                })
+              )}
           </View>
         </View>
       </DashBoardHeader>

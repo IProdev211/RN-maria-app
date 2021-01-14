@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from './styles';
-import {TouchableOpacity, Image, View, Text} from 'react-native';
-import {Badge} from 'react-native-elements';
+import { TouchableOpacity, Image, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
+
 class ProfileGirdElementCastGrid extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
   rowPressAction = id => {
     this.props.navigation.push('UserDetailsCast', {
@@ -56,7 +56,7 @@ class ProfileGirdElementCastGrid extends Component {
           <Text style={styles.bandageText}>{this.props.data.user_class}</Text>
         </View>
         <View style={styles.textViewHolder}>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.circle} />
             <Text numberOfLines={1} style={styles.textOnImage}>
               {this.props.data.usr_nickname}{' '}

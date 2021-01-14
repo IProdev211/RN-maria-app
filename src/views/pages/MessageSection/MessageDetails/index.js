@@ -11,7 +11,7 @@ import {
   TouchableHighlight,
   Button,
 } from 'react-native';
-import { GiftedChat, Bubble, Message, MessageText } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, Message, } from 'react-native-gifted-chat';
 import ImageResizer from 'react-native-image-resizer';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -64,6 +64,7 @@ class Search extends Component {
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
+    this.renderMessage = this.renderMessage.bind(this);
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
 
     this._isAlright = null;

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -12,13 +12,13 @@ import {
 } from 'react-native';
 import shortid from 'shortid';
 import Geolocation from '@react-native-community/geolocation';
-import {showMessage} from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 import Carousel from 'react-native-snap-carousel';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {TagSelect} from 'react-native-tag-select';
+import { TagSelect } from 'react-native-tag-select';
 import Pusher from 'pusher-js/react-native';
-import {Col, Row, Grid} from 'react-native-easy-grid';
+import { Col, Grid } from 'react-native-easy-grid';
 import HeaderAfterLogin from '../../components/DashBoardHeader';
 import CustomCard from '../../components/CustomCard';
 import SetpByStepProcess from '../../components/SetpByStepProcess';
@@ -27,9 +27,9 @@ import Modal from 'react-native-modal';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 //redux
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {duckOperations} from '../../../redux/Main/duck';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { duckOperations } from '../../../redux/Main/duck';
 
 import {
   wantInterView,
@@ -43,9 +43,9 @@ import {
 
 import ButtonCustom from '../../components/ButtonCustom';
 
-import {sliderWidth, sliderItemWidth} from './styles';
+import { sliderWidth, sliderItemWidth } from './styles';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -154,7 +154,7 @@ class Dashboard extends Component {
         this.getGetAllUsersByLatLong(data);
       },
       error => console.log('Error', JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   };
 
@@ -165,7 +165,7 @@ class Dashboard extends Component {
       (response.result.search_result &&
         response.result.search_result.length > 0)
     ) {
-      this.setState({allUser: response.result.search_result});
+      this.setState({ allUser: response.result.search_result });
     }
   };
 
@@ -195,7 +195,7 @@ class Dashboard extends Component {
         });
         this.props.addNewCastInfo(castInfo);
       }
-    } catch {}
+    } catch { }
   };
 
   componentWillUnmount() {
@@ -212,7 +212,7 @@ class Dashboard extends Component {
             text: 'キャンセル',
             style: 'cancel',
           },
-          {text: 'はい', onPress: () => BackHandler.exitApp()},
+          { text: 'はい', onPress: () => BackHandler.exitApp() },
         ],
       );
       return true;
@@ -250,14 +250,14 @@ class Dashboard extends Component {
           });
         });
       }
-    } catch {}
+    } catch { }
   };
 
   closeCallNotification = () => {
-    this.setState({callNotification: false});
+    this.setState({ callNotification: false });
   };
   openCallNotification = () => {
-    this.setState({callNotification: false});
+    this.setState({ callNotification: false });
     this.props.navigation.navigate('videoSession', {
       channel: this.state.callerChannel,
       type: 'guest',
@@ -276,7 +276,7 @@ class Dashboard extends Component {
     try {
       const response = await singleUserUpdatedMessage(to);
       this.props.updateCurrentMessage(response.result.message);
-    } catch {}
+    } catch { }
   };
 
   openModal = entityName => {
@@ -289,11 +289,11 @@ class Dashboard extends Component {
   };
 
   changeStateValue = () => {
-    this.setState({changeSateModal: !this.state.changeSateModal});
+    this.setState({ changeSateModal: !this.state.changeSateModal });
   };
 
   UpdateStateValue = x => {
-    this.setState({selectedSate: x});
+    this.setState({ selectedSate: x });
   };
 
   getDataOfMOdal = entityName => {
@@ -322,19 +322,19 @@ class Dashboard extends Component {
 
   getTitleOfModal = entityName => {
     if (entityName == 'when_call') {
-      this.setState({openModalTitle: 'いつ呼びますか ?'});
+      this.setState({ openModalTitle: 'いつ呼びますか ?' });
     } else if (entityName == 'cast_location') {
-      this.setState({openModalTitle: ''});
+      this.setState({ openModalTitle: '' });
     } else if (entityName == 'cast_time') {
-      this.setState({openModalTitle: '何時間呼びますか ?'});
+      this.setState({ openModalTitle: '何時間呼びますか ?' });
     } else if (entityName == 'cast_type') {
-      this.setState({openModalTitle: 'キャストユーザータイプを選択'});
+      this.setState({ openModalTitle: 'キャストユーザータイプを選択' });
     } else if (entityName == 'people_per_cast') {
-      this.setState({openModalTitle: 'キャストの人数を決める。'});
+      this.setState({ openModalTitle: 'キャストの人数を決める。' });
     }
   };
 
-  renderListComponent = ({item}) => {
+  renderListComponent = ({ item }) => {
     let imageUrl = item.usr_profile_photo
       ? item.usr_profile_photo
         ? item.usr_profile_photo.picture_url
@@ -342,7 +342,7 @@ class Dashboard extends Component {
       : null;
     return (
       <TouchableWithoutFeedback onPress={() => this.gotoUserDetailsPage(item)}>
-        <View style={{height: 255}}>
+        <View style={{ height: 255 }}>
           <ProfileGirdElementOnlyImage
             userClass={item.user_class}
             name={item.usr_nickname}
@@ -355,7 +355,7 @@ class Dashboard extends Component {
   };
 
   gotoUserDetailsPage = item => {
-    this.props.navigation.navigate('UserDetails', {userData: item});
+    this.props.navigation.navigate('UserDetails', { userData: item });
   };
 
   getSelectedStateStatus = x => {
@@ -379,11 +379,11 @@ class Dashboard extends Component {
       }
     }
     valueData.people_per_cast = data.people_per_cast;
-    this.setState({TemCastData: data, FinalCastDataValue: valueData});
+    this.setState({ TemCastData: data, FinalCastDataValue: valueData });
   };
 
   closeModal = () => {
-    this.setState({modalStatus: false});
+    this.setState({ modalStatus: false });
   };
 
   updateCastData = value => {
@@ -396,13 +396,13 @@ class Dashboard extends Component {
       data[`${this.state.selected_cast_type}`] = value.value;
       valueData[`${this.state.selected_cast_type}`] = value.value;
     }
-    this.setState({TemCastData: data, FinalCastDataValue: valueData});
+    this.setState({ TemCastData: data, FinalCastDataValue: valueData });
   };
 
   getLocationData = () => {
     let data =
       this.props.castTypeInformations &&
-      this.props.castTypeInformations.all_cast_location
+        this.props.castTypeInformations.all_cast_location
         ? this.props.castTypeInformations.all_cast_location
         : [];
     let selectedState = this.state.selectedSate
@@ -455,13 +455,13 @@ class Dashboard extends Component {
           FinalCastDataValue: finaDataValue,
         });
       }
-      this.setState({modalStatus: false});
+      this.setState({ modalStatus: false });
     } else {
       let tempData = this.state.TemCastData;
       let finalData = this.state.FinalCastData;
       finalData[this.state.selected_cast_type] =
         tempData[this.state.selected_cast_type];
-      this.setState({modalStatus: false, FinalCastData: finalData});
+      this.setState({ modalStatus: false, FinalCastData: finalData });
     }
   };
 
@@ -482,7 +482,7 @@ class Dashboard extends Component {
       'キャストインタビューリクエスト',
       'キャストインタビューリクエストを管理者に送信して確認してもよろしいですか？',
       [
-        {text: 'はい', onPress: () => this.sendInterViewRquest()},
+        { text: 'はい', onPress: () => this.sendInterViewRquest() },
         {
           text: 'キャンセル',
           style: 'cancel',
@@ -503,7 +503,7 @@ class Dashboard extends Component {
           type: 'success',
         });
       }
-    } catch {}
+    } catch { }
   };
 
   locationPicker = loc => {
@@ -518,16 +518,16 @@ class Dashboard extends Component {
   };
 
   getAllUsersByLocation = async loc => {
-    const {userLet, userLong} = this.state;
+    const { userLet, userLong } = this.state;
     try {
       const data = {
         location: loc,
       };
       const response = await GetAllUsersByLocation(data);
       if (response.isSuccess && response.result.users.length > 0) {
-        this.setState({allUser: response.result.users});
+        this.setState({ allUser: response.result.users });
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   getPackageInfo = () => {
@@ -577,7 +577,7 @@ class Dashboard extends Component {
 
   openModalChooseCity = () => {
     console.log('updatd ');
-    this.setState({changeSateModal: true});
+    this.setState({ changeSateModal: true });
   };
 
   render() {
@@ -585,11 +585,11 @@ class Dashboard extends Component {
       <HeaderAfterLogin
         navigation={this.props.navigation}
         locationPicker={this.locationPicker}>
-        <View style={{paddingBottom: 40}}>
+        <View style={{ paddingBottom: 40 }}>
           <CustomCard>
             <View style={styles.searchConatiner}>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.headerText}>キャストを呼ぶー条件設定</Text>
                 {this.state.allUser.length > 0 ? (
                   <Text>近くのキャスト {this.state.allUser.length}人</Text>
@@ -626,7 +626,7 @@ class Dashboard extends Component {
                     </TouchableOpacity>
                   </Col>
                 </Grid>
-                <Grid style={{marginTop: 8}}>
+                <Grid style={{ marginTop: 8 }}>
                   <Col>
                     <TouchableOpacity
                       onPress={() => this.openModal('people_per_cast')}
@@ -654,7 +654,7 @@ class Dashboard extends Component {
                     </TouchableOpacity>
                   </Col>
                 </Grid>
-                <Grid style={{marginTop: 8}}>
+                <Grid style={{ marginTop: 8 }}>
                   <Col>
                     <TouchableOpacity
                       onPress={() => this.openModal('cast_type')}
@@ -669,7 +669,7 @@ class Dashboard extends Component {
                   </Col>
                 </Grid>
               </View>
-              <View style={{flex: 1, paddingTop: 55}}>
+              <View style={{ flex: 1, paddingTop: 55 }}>
                 <SetpByStepProcess
                   title="次に進む (1/4)"
                   action={() => this.submitCastCreatepage()}
@@ -681,7 +681,7 @@ class Dashboard extends Component {
           {this.state.allUser.length > 0 ? (
             <CustomCard>
               <Carousel
-                containerCustomStyle={{backgroundColor: 'pink'}}
+                containerCustomStyle={{ backgroundColor: 'pink' }}
                 contentContainerCustomStyle={{
                   backgroundColor: '#fff',
                   height: 250,
@@ -747,7 +747,7 @@ class Dashboard extends Component {
               ) : null}
             </View> */}
             <View>
-              <View style={{flexDirection: 'column'}}>
+              <View style={{ flexDirection: 'column' }}>
                 {this.state.selected_cast_type == 'cast_type' ? (
                   <View>
                     <View>
@@ -760,7 +760,7 @@ class Dashboard extends Component {
                         <View key={shortid.generate()}>
                           <TouchableWithoutFeedback
                             onPress={() =>
-                              this.setState({selectedPackage: x.id})
+                              this.setState({ selectedPackage: x.id })
                             }>
                             <View
                               style={
@@ -813,11 +813,11 @@ class Dashboard extends Component {
                   <View style={styles.SubRow}>
                     <TouchableWithoutFeedback
                       onPress={() => this.changeCastPerPerson(-1)}>
-                      <AntDesign name="minuscircleo" size={30} color={this.state.TemCastData.people_per_cast === 2 ? "#aaa" : "#000" } />
+                      <AntDesign name="minuscircleo" size={30} color={this.state.TemCastData.people_per_cast === 2 ? "#aaa" : "#000"} />
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback
                       onPress={() => this.changeCastPerPerson(1)}>
-                      <View style={{paddingLeft: 30}}>
+                      <View style={{ paddingLeft: 30 }}>
                         <AntDesign name="pluscircleo" size={30} color="#000" />
                       </View>
                     </TouchableWithoutFeedback>
@@ -871,7 +871,7 @@ class Dashboard extends Component {
                       style={styles.addCityInput}
                       value={this.state.AddedCityName}
                       onChangeText={AddedCityName =>
-                        this.setState({AddedCityName})
+                        this.setState({ AddedCityName })
                       }
                     />
                     {/* <TouchableWithoutFeedback
@@ -885,41 +885,41 @@ class Dashboard extends Component {
               </View>
             ) : null}
             {this.state.selected_cast_type == 'when_call' ||
-            this.state.selected_cast_type == 'cast_time' ? (
-              <View style={styles.SubRow}>
-                {this.state.openModalData.map((x, index) => {
-                  return (
-                    <TouchableWithoutFeedback
-                      key={shortid.generate()}
-                      onPress={() => this.updateCastData(x)}>
-                      <View
-                        style={
-                          this.isSlectedValue(
-                            this.state.selected_cast_type,
-                            x.value,
-                          )
-                            ? styles.CallTimeButtonSelected
-                            : styles.CallTimeButton
-                        }>
-                        <Text
+              this.state.selected_cast_type == 'cast_time' ? (
+                <View style={styles.SubRow}>
+                  {this.state.openModalData.map((x, index) => {
+                    return (
+                      <TouchableWithoutFeedback
+                        key={shortid.generate()}
+                        onPress={() => this.updateCastData(x)}>
+                        <View
                           style={
                             this.isSlectedValue(
                               this.state.selected_cast_type,
                               x.value,
                             )
-                              ? styles.CallTimeButtonTextSelected
-                              : styles.CallTimeButtonText
+                              ? styles.CallTimeButtonSelected
+                              : styles.CallTimeButton
                           }>
-                          {x.value}
-                        </Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  );
-                })}
-              </View>
-            ) : null}
+                          <Text
+                            style={
+                              this.isSlectedValue(
+                                this.state.selected_cast_type,
+                                x.value,
+                              )
+                                ? styles.CallTimeButtonTextSelected
+                                : styles.CallTimeButtonText
+                            }>
+                            {x.value}
+                          </Text>
+                        </View>
+                      </TouchableWithoutFeedback>
+                    );
+                  })}
+                </View>
+              ) : null}
 
-            <View style={{flex: 1, marginTop: 55}}>
+            <View style={{ flex: 1, marginTop: 55 }}>
               <SetpByStepProcess
                 hideIcon={true}
                 title="保存する"
@@ -945,64 +945,64 @@ class Dashboard extends Component {
                   <TouchableWithoutFeedback>
                     <View>
                       {this.props.castTypeInformations &&
-                      this.props.castTypeInformations.all_cast_location
+                        this.props.castTypeInformations.all_cast_location
                         ? this.props.castTypeInformations.all_cast_location.map(
-                            x => {
-                              return (
-                                <View
-                                  key={shortid.generate}
-                                  style={{
-                                    flexDirection: 'column',
-                                    alignItems: 'flex-end',
-                                  }}>
-                                  <TouchableWithoutFeedback
-                                    key={x.id}
-                                    onPress={() => this.UpdateStateValue(x)}>
-                                    <View
-                                      style={
-                                        this.getSelectedStateStatus(x)
-                                          ? styles.Selected
-                                          : styles.NonSelected
-                                      }>
-                                      <Text>{x.state_name}</Text>
-                                    </View>
-                                  </TouchableWithoutFeedback>
-                                  {x.cities &&
-                                    x.cities.map(y => {
-                                      return (
-                                        <TouchableWithoutFeedback
-                                          key={y.id}
-                                          onPress={() =>
-                                            this.UpdateStateValue(y)
+                          x => {
+                            return (
+                              <View
+                                key={shortid.generate}
+                                style={{
+                                  flexDirection: 'column',
+                                  alignItems: 'flex-end',
+                                }}>
+                                <TouchableWithoutFeedback
+                                  key={x.id}
+                                  onPress={() => this.UpdateStateValue(x)}>
+                                  <View
+                                    style={
+                                      this.getSelectedStateStatus(x)
+                                        ? styles.Selected
+                                        : styles.NonSelected
+                                    }>
+                                    <Text>{x.state_name}</Text>
+                                  </View>
+                                </TouchableWithoutFeedback>
+                                {x.cities &&
+                                  x.cities.map(y => {
+                                    return (
+                                      <TouchableWithoutFeedback
+                                        key={y.id}
+                                        onPress={() =>
+                                          this.UpdateStateValue(y)
+                                        }>
+                                        <View
+                                          style={
+                                            this.getSelectedStateStatus(y)
+                                              ? styles.SelectedCity
+                                              : styles.NonSelectedCity
                                           }>
-                                          <View
-                                            style={
-                                              this.getSelectedStateStatus(y)
-                                                ? styles.SelectedCity
-                                                : styles.NonSelectedCity
-                                            }>
-                                            <Text
-                                              style={{
-                                                alignSelf: 'flex-end',
-                                                paddingRight: 15,
-                                              }}>
-                                              {y.city_name}
-                                            </Text>
-                                          </View>
-                                        </TouchableWithoutFeedback>
-                                      );
-                                    })}
-                                </View>
-                              );
-                            },
-                          )
+                                          <Text
+                                            style={{
+                                              alignSelf: 'flex-end',
+                                              paddingRight: 15,
+                                            }}>
+                                            {y.city_name}
+                                          </Text>
+                                        </View>
+                                      </TouchableWithoutFeedback>
+                                    );
+                                  })}
+                              </View>
+                            );
+                          },
+                        )
                         : null}
                     </View>
                   </TouchableWithoutFeedback>
                 </TouchableHighlight>
               </ScrollView>
 
-              <View style={{flex: 1, marginTop: 55}}>
+              <View style={{ flex: 1, marginTop: 55 }}>
                 <SetpByStepProcess
                   hideIcon={true}
                   title="保存する"
@@ -1025,17 +1025,17 @@ class Dashboard extends Component {
           <View style={styles.content}>
             <View style={styles.centerImage}>
               <Image
-                style={{width: 200, height: 140}}
+                style={{ width: 200, height: 140 }}
                 source={require('../../../assets/profile/maria_logo.png')}
               />
             </View>
             <View style={styles.thanksConatiner}>
-              <Text style={{textAlign: 'center', fontSize: 12}}>
+              <Text style={{ textAlign: 'center', fontSize: 12 }}>
                 {this.state.callerName}{' '}
                 があなたをキャストするためのコミュニケーションを求めています
               </Text>
             </View>
-            <View style={{marginTop: 55, paddingTop: 30}}>
+            <View style={{ marginTop: 55, paddingTop: 30 }}>
               <SetpByStepProcess
                 hideIcon={true}
                 title="通話を受け入れる"

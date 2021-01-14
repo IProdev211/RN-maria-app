@@ -14,9 +14,6 @@ class CustomCardWithTitle extends Component {
       modalSelector: false,
     };
   }
-  componentDidMount() { }
-  componentDidUpdate() { }
-  componentWillUnmount() { }
   changeCityModal = () => {
     this.setState({ modalSelector: !this.state.modalSelector });
   };
