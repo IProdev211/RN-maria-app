@@ -24,10 +24,9 @@ class Message extends Component {
     };
     this.getAllMessage = this.getAllMessage.bind(this);
   }
-  
+
   componentDidMount() {
     this.focusListener = this.props.navigation.addListener('focus', () => {
-      console.log('--------------------------- checked')
       this.getAllMessage();
     }
     );

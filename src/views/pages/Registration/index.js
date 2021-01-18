@@ -88,6 +88,7 @@ class Registration extends Component {
       photoDocument: false,
     };
   }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     GoogleSignin.configure({
@@ -372,7 +373,6 @@ class Registration extends Component {
         }
       } else {
         this.setState({ loading: false });
-        console.log(response);
         showMessage({
           message:
             'アカウントは管理者によってブロックされています。詳細については、管理者にお問い合わせください。',
@@ -487,7 +487,6 @@ class Registration extends Component {
   signInGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      console.log('reached google sign in');
       const userInfo = await GoogleSignin.signIn();
 
       if (userInfo) {
@@ -609,7 +608,7 @@ class Registration extends Component {
     }
   };
 
-  VerifyEmailEmail = async () => {
+  VerifyEmail = async () => {
     if (!this.state.otpCode) {
       showMessage({
         message: 'メールから正しいコードを挿入してください',
@@ -766,7 +765,7 @@ class Registration extends Component {
                         </Text>
                       </View>
                     </TouchableOpacity>
-                    <View style={styles.shadowButton}>
+                    <View>
                       <LinearGradient
                         colors={[
                           '#0394fd',
@@ -785,7 +784,7 @@ class Registration extends Component {
                           onPress={() => {
                             this.loginWithFacebook();
                           }}
-                          style={[styles.loginWithRadiunt]}>
+                          style={[styles.loginWithRadiunt, styles.shadowButton]}>
                           <View style={styles.loginWithFbIcon}>
                             <Icon name="facebook-f" size={40} color="#fff" />
                           </View>
@@ -940,7 +939,7 @@ class Registration extends Component {
               </SafeAreaView>
               <SetpByStepProcess
                 title="確認"
-                action={() => this.VerifyEmailEmail()}
+                action={() => this.VerifyEmail()}
               />
             </View>
           ) : null}
