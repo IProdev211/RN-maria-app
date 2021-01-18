@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions, Platform} from 'react-native';
-import {ifIphoneX} from 'react-native-iphone-x-helper';
+import { Dimensions } from 'react-native';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 export default EStyleSheet.flatten(
   EStyleSheet.create({

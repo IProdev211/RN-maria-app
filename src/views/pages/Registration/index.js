@@ -38,6 +38,8 @@ import {
   GraphRequestManager,
   LoginManager,
 } from 'react-native-fbsdk';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
+import jwt_decode from 'jwt-decode';
 import {
   LoginApi,
   wantInterView,
@@ -101,7 +103,6 @@ class Registration extends Component {
     });
     SplashScreen.hide();
   }
-
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
@@ -253,7 +254,6 @@ class Registration extends Component {
         console.log('User tapped custom button: ', response.customButton);
       } else {
         const source = { uri: response.uri };
-        console.log(response);
         this.setState({
           profileImage: source.uri,
           process6ImagePath: response.path,
@@ -344,15 +344,14 @@ class Registration extends Component {
   };
   loginApi = async (userInfo, type) => {
     this.props.changeSignInMethod(type);
-    if (userInfo && userInfo.picture.data.url) {
+    if (userInfo && userInfo.picture && userInfo.picture.data && userInfo.picture.data.url) {
       this.setState({ profileImage: userInfo.picture.data.url });
     }
     if (userInfo && userInfo.name) {
       this.setState({ nickName: userInfo.name });
     }
     try {
-      let email =
-        userInfo && userInfo.email ? userInfo.email : 'nazmurklk23@1.com';
+      let email = userInfo && userInfo.email ? userInfo.email : 'nazmurklk23@1.com';
       let data = {
         usr_email: email,
       };
@@ -395,13 +394,12 @@ class Registration extends Component {
           'id, name,  first_name, last_name, email, gender, picture.type(large)',
       },
     };
-    console.log(PROFILE_REQUEST_PARAMS);
     const profileRequest = new GraphRequest(
       '/me',
       { token, parameters: PROFILE_REQUEST_PARAMS },
       (error, result) => {
         if (error) {
-          console.log('login info has error: ' + error);
+          console.log('facebook login info has error: ' + error);
         } else {
           this.loginApi(result, 'fb');
           this.setState({ userInfo: result });
@@ -432,7 +430,6 @@ class Registration extends Component {
   };
   logoutWithFacebook = () => {
     LoginManager.logOut();
-    console.log('logged Out');
   };
 
   loginWithTwitter = () => {
@@ -442,7 +439,6 @@ class Registration extends Component {
     );
     RNTwitterSignIn.logIn()
       .then(loginData => {
-        console.log(loginData);
         const { authToken, authTokenSecret } = loginData;
         if (authToken && authTokenSecret) {
           //if successfull
@@ -453,7 +449,6 @@ class Registration extends Component {
       });
   };
   logoutWithTwitter = () => {
-    console.log('logout');
     RNTwitterSignIn.logOut();
   };
   changeDate = () => {
@@ -501,8 +496,9 @@ class Registration extends Component {
         };
         this.loginApi(data, 'google');
         this.setState({ userInfo: data });
+      } else {
+        this.setState({ userInfo });
       }
-      this.setState({ userInfo });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         showMessage({
@@ -658,6 +654,36 @@ class Registration extends Component {
     }
   };
 
+  // Sign in with Apple
+  onAppleButtonPress = async () => {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(appleAuthRequestResponse.user);
+
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // user is authenticated
+      const { email } = jwt_decode(appleAuthRequestResponse.identityToken);
+      let data = {
+        email,
+        name: appleAuthRequestResponse.fullName.nickname ? appleAuthRequestResponse.fullName.nickname : '',
+      };
+      this.loginApi(data, 'apple');
+      this.setState({ userInfo: data });
+    } else {
+      showMessage({
+        message: 'Appleログインに失敗しました。',
+        type: 'error',
+      });
+    }
+  }
+
   render() {
     return (
       <BgComponent>
@@ -765,7 +791,30 @@ class Registration extends Component {
                         </Text>
                       </View>
                     </TouchableOpacity>
-                    <View>
+                    {Platform.OS === 'ios' &&
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.onAppleButtonPress();
+                        }}
+                        style={[
+                          styles.loginWithFb,
+                          styles.google,
+                          styles.shadowButton,
+                        ]}>
+                        <View style={styles.loginWithFbIcon}>
+                          <Icon name="apple" size={35} color="black" />
+                        </View>
+                        <View style={styles.loginWithFbText}>
+                          <Text style={styles.loginWithSMSTextMain}>
+                            Appleではじめる
+                        </Text>
+                          <Text style={styles.loginWithFbTextSubBlack}>
+                            SNS上には一切表示投稿されません
+                        </Text>
+                        </View>
+                      </TouchableOpacity>
+                    }
+                    <View style={styles.shadowButton}>
                       <LinearGradient
                         colors={[
                           '#0394fd',
@@ -784,7 +833,7 @@ class Registration extends Component {
                           onPress={() => {
                             this.loginWithFacebook();
                           }}
-                          style={[styles.loginWithRadiunt, styles.shadowButton]}>
+                          style={[styles.loginWithRadiunt]}>
                           <View style={styles.loginWithFbIcon}>
                             <Icon name="facebook-f" size={40} color="#fff" />
                           </View>

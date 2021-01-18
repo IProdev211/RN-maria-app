@@ -1,7 +1,7 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions } from 'react-native';
 
-const {width: viewportWidth, height} = Dimensions.get('window');
+const { width: viewportWidth, height } = Dimensions.get('window');
 
 function wp(percentage) {
   const value = (percentage * viewportWidth) / 100;

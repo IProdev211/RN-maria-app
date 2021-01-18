@@ -87,6 +87,7 @@
 		CD12A825781B4AEE997B1C09 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		D21956C3C5A158024DBDB5C9 /* Pods-maria-mariaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria-mariaTests.release.xcconfig"; path = "Target Support Files/Pods-maria-mariaTests/Pods-maria-mariaTests.release.xcconfig"; sourceTree = "<group>"; };
 		D66807E9E7D327362736B52A /* Pods-maria.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria.release.xcconfig"; path = "Target Support Files/Pods-maria/Pods-maria.release.xcconfig"; sourceTree = "<group>"; };
+		D7CD4CAD25B5CE2E0095C160 /* maria.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = maria.entitlements; path = maria/maria.entitlements; sourceTree = "<group>"; };
 		EADCB4B9B208457F9718A0E4 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		EBB60683A27788254A8C3070 /* Pods-maria.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maria.debug.xcconfig"; path = "Target Support Files/Pods-maria/Pods-maria.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -170,6 +171,7 @@
 		13B07FAE1A68108700A75B9A /* maria */ = {
 			isa = PBXGroup;
 			children = (
+				D7CD4CAD25B5CE2E0095C160 /* maria.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -772,9 +774,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = maria/maria.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = LGYZ8D7JJG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -806,9 +809,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = maria/maria.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = LGYZ8D7JJG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -1,5 +1,4 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions, Platform} from 'react-native';
 
 export default EStyleSheet.flatten(
   EStyleSheet.create({

@@ -23,6 +23,7 @@
     "@react-navigation/native": "^5.1.4",
     "@react-navigation/stack": "^5.2.9",
     "agora-rn-uikit": "^3.0.1",
+    "jwt-decode": "^3.1.2",
     "pusher-js": "^5.1.1",
     "qs": "^6.9.4",
     "react": "16.9.0",

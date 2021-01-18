@@ -1,6 +1,6 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions, Platform} from 'react-native';
-const {height} = Dimensions.get('window');
+import { Dimensions } from 'react-native';
+const { height } = Dimensions.get('window');
 
 export default EStyleSheet.flatten(
   EStyleSheet.create({
