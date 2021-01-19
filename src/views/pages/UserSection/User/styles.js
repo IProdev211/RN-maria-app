@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 export default EStyleSheet.flatten(
@@ -218,6 +218,9 @@ export default EStyleSheet.flatten(
       color: '$primaryBgColor',
       fontWeight: 'bold',
       textAlign: 'center',
+    },
+    spinnerTextStyle: {
+      color: '#fff',
     },
   }),
 );

@@ -568,7 +568,7 @@ class Registration extends Component {
     });
   };
   loginWithEmail = async () => {
-    if (!this.emailValidation(this.state.emailAddress)) {
+    if (!this.emailValidation(this.state.emailAddress.trim())) {
       showMessage({
         message: '正しいメールアドレスを入力してください',
         type: 'warning',
@@ -950,7 +950,7 @@ class Registration extends Component {
               </SafeAreaView>
               <SetpByStepProcess
                 title="参加する"
-                action={() => this.loginWithEmailCheckInternetStatus()}
+                action={this.loginWithEmailCheckInternetStatus}
               />
             </View>
           ) : null}

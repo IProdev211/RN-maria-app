@@ -73,7 +73,6 @@ class User extends Component {
       userName: user.usr_nickname,
       profileImage,
     });
-    console.log(user);
   };
   LogingOut = async () => {
     Alert.alert(
@@ -112,21 +111,21 @@ class User extends Component {
   postHourlyRate = async () => {
     try {
       const data = { usr_hourly_rate: this.state.hourlyRate };
-      console.log(data, 'hourly rate data');
-      const response = await GetPostHourlyRate(data);
+
+      await GetPostHourlyRate(data);
+
       this.setState({ isVisible: false });
       this.getUserHR();
-    } catch (ex) { }
+    } catch (error) { }
   };
 
   getUserHR = async () => {
     try {
       const response = await getUserDetails();
-      console.log(response, 'Response');
       if (response.result.success) {
         this.setState({ hourlyRateget: response.result.success.usr_hourly_rate });
       }
-    } catch (ex) { }
+    } catch (error) { }
   };
 
   //need to fix deposite api
@@ -138,7 +137,7 @@ class User extends Component {
     //   couponBalance: deposite.coupon_balance ? deposite.coupon_balance : 0,
     // });
   };
-  WithdrawMoney = () => {
+  withdrawMoney = () => {
     if (this.props.userInfo.points < 10000) {
       Alert.alert(
         '警告',
@@ -198,8 +197,8 @@ class User extends Component {
   };
 
   render() {
-    console.log('User Info', this.state.hourlyRateget);
     const { userInfo, isVisible } = this.state;
+
     return (
       <HeaderAfterLogin
         title="マイページ"
@@ -251,7 +250,7 @@ class User extends Component {
                 <View style={styles.topOptionsContainer}>
                   <View style={styles.topOptions}>
                     <MetarialIcon
-                      onPress={() => this.WithdrawMoney()}
+                      onPress={this.withdrawMoney}
                       name="bank"
                       size={48}
                       color="#fff"
@@ -288,23 +287,14 @@ class User extends Component {
                       }}>
                       <Text style={styles.addButtonPoints}>
                         編集{'  '}
-                        <Icon
-                          name="edit"
-                          size={15}
-                          color={golbalConstants.mainColor}
-                        />
+                        <Icon name="edit" size={15} color={golbalConstants.mainColor} />
                       </Text>
                     </TouchableOpacity>
                   </View>
                   <View style={styles.pointColumn}>
-                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>
-                      {' '}
-                      ポイント{' '}
-                    </Text>
-                    <Text style={styles.pointColumnHeaderNumber}>
-                      {this.props.userInfo ? this.props.userInfo.points : 0}
-                    </Text>
-                    <TouchableOpacity onPress={() => this.WithdrawMoney()}>
+                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
+                    <Text style={styles.pointColumnHeaderNumber}>{this.props.userInfo ? this.props.userInfo.points : 0}</Text>
+                    <TouchableOpacity onPress={this.withdrawMoney}>
                       <Text style={styles.addButtonPoints}>
                         撤退{'  '}
                         <Icon
@@ -356,16 +346,11 @@ class User extends Component {
                       {this.props.userInfo ? this.props.userInfo.points : 0}
                     </Text>
                     <TouchableOpacity
-                      onPress={() =>
-                        this.props.navigation.navigate('UserDeposite')
-                      }>
+                      onPress={() => this.props.navigation.navigate('UserDeposite')}
+                    >
                       <Text style={styles.addButtonPoints}>
                         Add{' '}
-                        <Icon
-                          name="money"
-                          size={15}
-                          color={golbalConstants.mainColor}
-                        />
+                        <Icon name="money" size={15} color={golbalConstants.mainColor} />
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -439,71 +424,51 @@ class User extends Component {
                     </Text>
                   </View>
                 </View> */}
-                <Modal
-                  onBackdropPress={() => this.setState({ isVisible: false })}
-                  isVisible={isVisible}>
-                  <View style={styles.hourlyRate}>
-                    <Text
-                      style={{
-                        marginBottom: 25,
-                        fontSize: 25,
-                        fontWeight: 'bold',
-                        color: golbalConstants.mainColor,
-                      }}>
-                      時給を更新する
-                  </Text>
-                    <TextInput
-                      style={styles.comments}
-                      placeholder="時給を入力してください..."
-                      onChangeText={text => {
-                        this.setState({ hourlyRate: text });
-                      }}
-                    />
-                    <View style={styles.optionHolder}>
-                      <TouchableWithoutFeedback
-                        onPress={() => {
-                          this.setState({ isVisible: false });
-                        }}>
-                        <View style={styles.options}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              fontSize: 15,
-                              fontWeight: 'bold',
-                              color: '#941700',
-                            }}>
-                            キャンセル
-                        </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                      <TouchableWithoutFeedback onPress={this.postHourlyRate}>
-                        <View
-                          style={{
-                            ...styles.options,
-                            marginLeft: 10,
-                            backgroundColor: golbalConstants.mainColor,
-                          }}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              color: 'white',
-                              fontSize: 15,
-                              fontWeight: 'bold',
-                            }}>
-                            新しいレートを送信
-                        </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                  </View>
-                </Modal>
               </View>
             )}
+          <Modal
+            onBackdropPress={() => this.setState({ isVisible: false })}
+            isVisible={isVisible}
+          >
+            <View style={styles.hourlyRate}>
+              <Text
+                style={{
+                  marginBottom: 25,
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                  color: golbalConstants.mainColor,
+                }}
+              >
+                時給を更新する
+                    </Text>
+              <TextInput
+                style={styles.comments}
+                placeholder="時給を入力してください..."
+                onChangeText={text => {
+                  this.setState({ hourlyRate: text });
+                }}
+              />
+              <View style={styles.optionHolder}>
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    this.setState({ isVisible: false });
+                  }}>
+                  <View style={styles.options}>
+                    <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', color: '#941700' }}>キャンセル</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.postHourlyRate}>
+                  <View style={{ ...styles.options, marginLeft: 10, backgroundColor: golbalConstants.mainColor }}>
+                    <Text style={{ textAlign: 'center', color: 'white', fontSize: 15, fontWeight: 'bold', }}>新しい時給を送信</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          </Modal>
         </View>
         <View style={{ marginTop: -10, paddingBottom: 50 }}>
           <CustomCard>
-            <TouchableOpacity
-              style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
+            <TouchableOpacity style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
               <View style={{ flexDirection: 'row' }}>
                 <Icon name="wpforms" size={25} color="#000" />
                 <Text style={styles.OnClikText}>ポイント履歴</Text>
@@ -550,7 +515,8 @@ class User extends Component {
           <View style={{ marginTop: 30, backgroundColor: '#fff' }}>
             <TouchableOpacity
               style={styles.SpaceBetweenContainer}
-              onPress={() => this.LogingOut()}>
+              onPress={this.LogingOut}
+            >
               <View style={{ flexDirection: 'row' }}>
                 <Icon name="sign-out" size={25} color="#000" />
                 <Text style={styles.OnClikText}>ログアウト</Text>
@@ -601,7 +567,7 @@ class User extends Component {
                   <Text>キャンセル</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => this.withdrawBlance()}>
+              <TouchableWithoutFeedback onPress={this.withdrawBlance}>
                 <View style={[styles.options, styles.withdrawMonentButtonMain]}>
                   <Text style={styles.withdrawMonentButtonColor}>
                     出金リクエスト
@@ -613,8 +579,6 @@ class User extends Component {
         </Modal>
         <Spinner
           visible={this.state.loading}
-          textContent={'読み込み中...。'}
-          textStyle={styles.spinnerTextStyle}
         />
       </HeaderAfterLogin>
     );
