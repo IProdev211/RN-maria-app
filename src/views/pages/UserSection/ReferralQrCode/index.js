@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Alert } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { refferalUser } from '../../../../services/AuthService';
@@ -56,7 +56,7 @@ class ReferralQrCode extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         title="紹介QRコードをスキャンする"
         navigation={this.props.navigation}
         notificationHide={true}
@@ -81,7 +81,7 @@ class ReferralQrCode extends Component {
           textContent={'Adding Refferal...'}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

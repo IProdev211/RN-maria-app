@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -60,7 +60,7 @@ class UserDataUpdateField extends Component {
   };
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         title={this.state.title}
         navigation={this.props.navigation}
         notificationHide={true}
@@ -111,7 +111,7 @@ class UserDataUpdateField extends Component {
           textContent={'保管中···'}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

@@ -138,13 +138,6 @@ export default EStyleSheet.flatten(
       borderRadius: 10,
       backgroundColor: '$secondaryBgColor',
     },
-    scrollView: {
-      paddingBottom: 140,
-      backgroundColor: '#F2F1ED',
-    },
-    Ccontainer: {
-      paddingBottom: 90,
-    },
     marginLeft20: {
       marginLeft: 20,
     },

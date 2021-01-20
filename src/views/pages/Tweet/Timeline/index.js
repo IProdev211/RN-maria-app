@@ -6,11 +6,10 @@ import {
   RefreshControl,
 } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
-// import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ButtonCustom from '../../../components/ButtonCustom';
 import { getAllTweet } from '../../../../services/AuthService';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import Tweet from '../../../components/Tweet';
 import styles from './styles';
 import shortid from 'shortid';
@@ -72,7 +71,7 @@ class Timeline extends Component {
   };
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         addTweet={true}
         scrollingOff={true}
@@ -125,19 +124,12 @@ class Timeline extends Component {
               </View>
             )}
         </View>
-        {/* <AnimatedLoader
-          visible={this.state.loading}
-          overlayColor="#ffffff3b"
-          source={require('../../../../assets/lottie/orange-pulse.json')}
-          animationStyle={styles.lottie}
-          speed={1}
-        /> */}
         <Spinner
           visible={this.state.loading}
           textContent={'読み込み中...'}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

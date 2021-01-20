@@ -11,7 +11,7 @@ import {
   TouchableHighlight,
   Button,
 } from 'react-native';
-import { GiftedChat, Bubble, Message, } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble, MessageText, MessageImage } from 'react-native-gifted-chat';
 import ImageResizer from 'react-native-image-resizer';
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -64,7 +64,8 @@ class Search extends Component {
     this.renderBubble = this.renderBubble.bind(this);
     this.renderFooter = this.renderFooter.bind(this);
     this.renderLoadEarlier = this.renderLoadEarlier.bind(this);
-    this.renderMessage = this.renderMessage.bind(this);
+    this.renderMessageText = this.renderMessageText.bind(this);
+    this.renderMessageImage = this.renderMessageImage.bind(this);
     this.onLoadEarlier = this.onLoadEarlier.bind(this);
 
     this._isAlright = null;
@@ -304,8 +305,21 @@ class Search extends Component {
         {...props}
         wrapperStyle={{
           left: {
-            backgroundColor: '#f0f0f0',
+            backgroundColor: '#ddd',
           },
+          right: {
+            backgroundColor: '#ccd8ff'
+          }
+        }}
+        timeTextStyle={{
+          right: {
+            color: '#999'
+          }
+        }}
+        textStyle={{
+          right: {
+            color: '#000'
+          }
         }}
       />
     );
@@ -337,19 +351,82 @@ class Search extends Component {
     )
   }
 
-  renderMessage(props, userInfo) {
+  renderMessageText(props, userInfo) {
     if (userInfo && userInfo.last_deposite_balance === '0' && props.currentMessage.user._id !== userInfo.id) {
       return (
-        <Message
-          {...props}
-          currentMessage={{ ...props.currentMessage, text: 'メッセージを確認するにはクレジットカードを登録してください。', image: null }}
-        ></Message>
+        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 200, height: 60 }}>
+          <Button
+            title="メッセージを確認する"
+            color="#ffb366"
+            onPress={() => {
+              Alert.alert(
+                '警告',
+                'メッセージを確認するためには、クレジットカードの登録が必要です。今すぐクレジットカードを登録するには、[はい]を押します。',
+                [
+                  {
+                    text: 'キャンセル',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'はい',
+                    onPress: () => {
+                      this.props.navigation.navigate('UserDeposite');
+                    },
+                  },
+                ],
+                { cancelable: false },
+              )
+            }}
+          >
+          </Button>
+        </View>
       );
     } else {
       return (
-        <Message
+        <MessageText
           {...props}
-        ></Message>
+        ></MessageText>
+      );
+    }
+  }
+
+  renderMessageImage(props, userInfo) {
+    if (userInfo && userInfo.last_deposite_balance === '0' && props.currentMessage.user._id !== userInfo.id) {
+      return (
+        <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: 200, height: 60 }}>
+          <Button
+            title="メッセージを確認する"
+            color="#ffb366"
+            onPress={() => {
+              Alert.alert(
+                '警告',
+                'メッセージを確認するためには、クレジットカードの登録が必要です。今すぐクレジットカードを登録するには、[はい]を押します。',
+                [
+                  {
+                    text: 'キャンセル',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'はい',
+                    onPress: () => {
+                      this.props.navigation.navigate('UserDeposite');
+                    },
+                  },
+                ],
+                { cancelable: false },
+              )
+            }}
+          >
+          </Button>
+        </View>
+      );
+    } else {
+      return (
+        <MessageImage
+          {...props}
+        ></MessageImage>
       );
     }
   }
@@ -619,7 +696,7 @@ class Search extends Component {
                   alignItems: 'center',
                   width: 80,
                 }}
-                onPress={() => this.openModal()}>
+                onPress={this.openModal}>
                 <Image
                   style={{
                     width: 35,
@@ -652,9 +729,8 @@ class Search extends Component {
             renderActions={this.renderCustomActions}
             renderBubble={this.renderBubble}
             placeholder="ここにメッセージを入力..."
-            renderLoadEarlier={this.renderLoadEarlier}
-            renderMessage={(props) => this.renderMessage(props, this.props.userInfo)}
-          // renderCustomView={this.renderCustomView}
+            renderMessageText={(props) => this.renderMessageText(props, this.props.userInfo)}
+            renderMessageImage={(props) => this.renderMessageImage(props, this.props.userInfo)}
           // renderFooter={this.renderFooter}
           />
         ) : (
@@ -671,8 +747,8 @@ class Search extends Component {
               renderBubble={this.renderBubble}
               placeholder="ここにメッセージを入力..."
               renderLoadEarlier={this.renderLoadEarlier}
-              renderMessage={(props) => this.renderMessage(props, this.props.userInfo)}
-            // renderCustomView={this.renderCustomView}
+              renderMessageText={(props) => this.renderMessageText(props, this.props.userInfo)}
+              renderMessageImage={(props) => this.renderMessageImage(props, this.props.userInfo)}
             // renderFooter={this.renderFooter}
             />
           )}
@@ -684,9 +760,7 @@ class Search extends Component {
           style={styles.ModalView2}>
           <View style={styles.content}>
             <Text
-              onPress={() => {
-                this.openReport();
-              }}
+              onPress={this.openReport}
               style={{
                 borderTopColor: '#aaa',
                 fontWeight: 'bold',
@@ -696,9 +770,7 @@ class Search extends Component {
               レポート
             </Text>
             <Text
-              onPress={() => {
-                this.openBlock();
-              }}
+              onPress={this.openBlock}
               style={{ padding: 10, fontWeight: 'bold' }}>
               ブロック
             </Text>
@@ -850,12 +922,12 @@ class Search extends Component {
               value={this.state.reportedIssue}
             />
             <View style={styles.optionHolderReport}>
-              <TouchableWithoutFeedback onPress={() => this.openReport()}>
+              <TouchableWithoutFeedback onPress={this.openReport}>
                 <View style={styles.optionHolderReportoptions}>
                   <Text style={styles.blockCancel}>キャンセル</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => this.reportUser()}>
+              <TouchableWithoutFeedback onPress={this.reportUser}>
                 <View
                   style={[
                     styles.optionHolderReportoptions,
@@ -891,7 +963,7 @@ class Search extends Component {
                   <Text style={styles.blockCancel}>キャンセル</Text>
                 </View>
               </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => this.blockUser()}>
+              <TouchableWithoutFeedback onPress={this.blockUser}>
                 <View style={[styles.options2, styles.blockButton]}>
                   <Text style={styles.blockButtonText}>ブロック</Text>
                 </View>
@@ -906,7 +978,7 @@ class Search extends Component {
             mode={'date'}
             is24Hour={true}
             display="default"
-            onChange={() => this.onChangeDate()}
+            onChange={this.onChangeDate}
           />
         )}
       </View>

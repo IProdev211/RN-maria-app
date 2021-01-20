@@ -2,7 +2,7 @@ import styles from './styles';
 import React, { Component } from 'react';
 import Stars from 'react-native-stars';
 import { View, Text, Image, TextInput, BackHandler } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getSignleUserInfo, postReview } from '../../../../services/AuthService';
 import SplashScreen from 'react-native-splash-screen';
@@ -39,7 +39,6 @@ class UserReviewCast extends Component {
     this.getUserInformation();
     BackHandler.addEventListener('hardwareBackPress', this.backKeyAction);
   }
-  componentDidUpdate() { }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.backKeyAction);
   }
@@ -128,7 +127,7 @@ class UserReviewCast extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         backNavigation={false}
         title={'レビューセッション'}>
@@ -222,7 +221,7 @@ class UserReviewCast extends Component {
           textContent={this.state.loadingText}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

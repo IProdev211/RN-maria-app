@@ -395,8 +395,8 @@ class CreateNewCast extends Component {
                   <Text style={styles.paddingTop5}>
                     ご利用時間が深夜o-'-,5時を含む場合、キャスト1名当たり別途4
                     000P
-                    の深夜手当が発生致しまtタクシー代をキャストに渡す必要はあり
-                    ませんn
+                    の深夜手当が発生致しまタクシー代をキャストに渡す必要はあり
+                    ません
                   </Text>
                 </View>
                 <Divider style={styles.dividerStle} />
@@ -404,7 +404,7 @@ class CreateNewCast extends Component {
                   <Text style={styles.process3Title}>決済はオートチャージ</Text>
                   <Text style={styles.paddingTop5}>
                     お支払いは、登録いただいたクレジットカードから自動的に
-                    3000P(1 P=1 .1円）単位でオートチャージされます。
+                    3000P(1P=1.1円）単位でオートチャージされます。
                   </Text>
                 </View>
               </View>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, Linking } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 
 //redux
@@ -28,7 +28,7 @@ class ReferralQrCodeView extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         title="あなたの紹介コード"
         navigation={this.props.navigation}
         notificationHide={true}
@@ -42,7 +42,7 @@ class ReferralQrCodeView extends Component {
             }}
           />
         </View>
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

@@ -2,7 +2,7 @@ import styles from './styles';
 import React, { Component } from 'react';
 import Stars from 'react-native-stars';
 import { View, Text, Image, TextInput } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //redux
@@ -37,7 +37,7 @@ class UserReview extends Component {
   render() {
     console.log(this.state, 34);
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         backNavigation={true}
         title={'ユーザーレビュー'}>
@@ -114,7 +114,7 @@ class UserReview extends Component {
             </View>
           </TouchableOpacity>
         </View>
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

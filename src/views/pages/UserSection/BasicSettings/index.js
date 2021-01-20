@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, TextInput, TouchableWithoutFeedback, Text, ScrollView } from 'react-native';
 import Modal from 'react-native-modal';
 import { Divider, CheckBox, Button } from 'react-native-elements';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { showMessage } from 'react-native-flash-message';
@@ -138,7 +138,7 @@ class BasicSettings extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         title={this.state.title}
         navigation={this.props.navigation}
         notificationHide={true}
@@ -314,7 +314,7 @@ class BasicSettings extends Component {
             </View>
           </Modal>
         </View>
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

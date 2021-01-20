@@ -606,26 +606,26 @@ class UserDetails extends Component {
         ) : null}
         {this.state.userData ? (
           <View style={styles.BottomFixedButton}>
-            {this.state.userData && this.state.userData.is_nice == 0 ? (
+            {this.state.userData && this.state.userData.is_nice == 0 ?
               <SetpByStepProcess
                 title="いいね"
                 action={() => this.giveNiceToUser()}
                 hideIcon={true}
               />
-            ) : (
-                <View style={styles.CallingButtonCOntainer}>
-                  <TouchableOpacity
-                    style={styles.ButtonChat}
-                    onPress={() => this.gotoUserDetailsPage()}>
-                    <Text style={styles.ButtonChatText}>チャット</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.ButtonChat}
-                    onPress={() => this.ReViewUser()}>
-                    <Text style={styles.ButtonChatText}>レビュー</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+              :
+              <View style={styles.CallingButtonCOntainer}>
+                <TouchableOpacity
+                  style={styles.ButtonChat}
+                  onPress={() => this.gotoUserDetailsPage()}>
+                  <Text style={styles.ButtonChatText}>チャット</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.ButtonChat}
+                  onPress={() => this.ReViewUser()}>
+                  <Text style={styles.ButtonChatText}>レビュー</Text>
+                </TouchableOpacity>
+              </View>
+            }
           </View>
         ) : null}
         <Modal

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-// import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getSignleTweet } from '../../../../services/AuthService';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import Tweet from '../../../components/Tweet';
 import styles from './styles';
 
@@ -65,7 +64,7 @@ class SingleTweetDetails extends Component {
   };
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         addTweet={true}
         backNavigation={true}
@@ -98,19 +97,12 @@ class SingleTweetDetails extends Component {
               </View>
             )}
         </View>
-        {/* <AnimatedLoader
-          visible={this.state.loading}
-          overlayColor="#ffffff3b"
-          source={require('../../../../assets/lottie/orange-pulse.json')}
-          animationStyle={styles.lottie}
-          speed={1}
-        /> */}
         <Spinner
           visible={this.state.loading}
           textContent={'読み込み中...'}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

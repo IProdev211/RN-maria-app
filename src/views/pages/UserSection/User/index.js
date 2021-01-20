@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import CustomCard from '../../../components/CustomCard';
@@ -200,7 +200,7 @@ class User extends Component {
     const { userInfo, isVisible } = this.state;
 
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         title="マイページ"
         navigation={this.props.navigation}
         NotificationHide={false}
@@ -234,7 +234,7 @@ class User extends Component {
             <Text style={styles.UserNameText}>{this.state.userName}</Text>
           </View>
 
-          {userInfo && Number(userInfo.usr_type) === 1 ? (
+          {userInfo && Number(userInfo.usr_type) === 1 ?
             <View>
               <View style={styles.coinContainerTop}>
                 <TouchableOpacity
@@ -308,54 +308,51 @@ class User extends Component {
                 </View>
               </View>
             </View>
-          ) : (
-              <View>
-                <View style={styles.coinContainerTop}>
-                  <TouchableOpacity
-                    style={styles.topOptionsContainer}
-                    onPress={() => {
-                      this.props.navigation.navigate('Message');
-                    }}>
-                    <View style={styles.topOptions}>
-                      <MetarialIcon name="email-outline" size={30} color="#fff" />
-                    </View>
-                    <Text style={styles.topOptionsText}>メッセージ</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.topOptionsContainer}
-                    onPress={() =>
-                      this.props.navigation.navigate('UserDeposite')
-                    }>
-                    <View style={styles.topOptions}>
-                      <MetarialIcon
-                        name="credit-card-plus"
-                        size={30}
-                        color="#fff"
-                      />
-                    </View>
-                    <Text style={styles.topOptionsText}>ポイントを追加</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.pointContainter}>
-                  <View style={styles.pointColumn}>
-                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>
-                      {' '}
-                    ポイント{' '}
-                    </Text>
-                    <Text style={styles.pointColumnHeaderNumber}>
-                      {this.props.userInfo ? this.props.userInfo.points : 0}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => this.props.navigation.navigate('UserDeposite')}
-                    >
-                      <Text style={styles.addButtonPoints}>
-                        Add{' '}
-                        <Icon name="money" size={15} color={golbalConstants.mainColor} />
-                      </Text>
-                    </TouchableOpacity>
+            :
+            <View>
+              <View style={styles.coinContainerTop}>
+                <TouchableOpacity
+                  style={styles.topOptionsContainer}
+                  onPress={() => {
+                    this.props.navigation.navigate('Message');
+                  }}>
+                  <View style={styles.topOptions}>
+                    <MetarialIcon name="email-outline" size={30} color="#fff" />
                   </View>
+                  <Text style={styles.topOptionsText}>メッセージ</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.topOptionsContainer}
+                  onPress={() =>
+                    this.props.navigation.navigate('UserDeposite')
+                  }>
+                  <View style={styles.topOptions}>
+                    <MetarialIcon
+                      name="credit-card-plus"
+                      size={30}
+                      color="#fff"
+                    />
+                  </View>
+                  <Text style={styles.topOptionsText}>ポイントを追加</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.pointContainter}>
+                <View style={styles.pointColumn}>
+                  <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
+                  <Text style={styles.pointColumnHeaderNumber}>
+                    {this.props.userInfo ? this.props.userInfo.points : 0}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('UserDeposite')}
+                  >
+                    <Text style={styles.addButtonPoints}>
+                      Add{'  '}
+                      <Icon name="money" size={15} color={golbalConstants.mainColor} />
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-                {/* <View
+              </View>
+              {/* <View
                   style={{
                     flexDirection: 'row',
                     borderBottomWidth: 1,
@@ -424,8 +421,8 @@ class User extends Component {
                     </Text>
                   </View>
                 </View> */}
-              </View>
-            )}
+            </View>
+          }
           <Modal
             onBackdropPress={() => this.setState({ isVisible: false })}
             isVisible={isVisible}
@@ -440,7 +437,7 @@ class User extends Component {
                 }}
               >
                 時給を更新する
-                    </Text>
+              </Text>
               <TextInput
                 style={styles.comments}
                 placeholder="時給を入力してください..."
@@ -580,7 +577,7 @@ class User extends Component {
         <Spinner
           visible={this.state.loading}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

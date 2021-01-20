@@ -19,7 +19,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TagSelect } from 'react-native-tag-select';
 import Pusher from 'pusher-js/react-native';
 import { Col, Grid } from 'react-native-easy-grid';
-import HeaderAfterLogin from '../../components/DashBoardHeader';
+import DashBoardHeader from '../../components/DashBoardHeader';
 import CustomCard from '../../components/CustomCard';
 import SetpByStepProcess from '../../components/SetpByStepProcess';
 import ProfileGirdElementOnlyImage from '../../components/profileGirdElementOnlyImage';
@@ -582,7 +582,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         locationPicker={this.locationPicker}>
         <View style={{ paddingBottom: 40 }}>
@@ -1044,7 +1044,7 @@ class Dashboard extends Component {
             </View>
           </View>
         </Modal>
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

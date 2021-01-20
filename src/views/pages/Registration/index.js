@@ -27,7 +27,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import LinearGradient from 'react-native-linear-gradient';
-// import InstagramLogin from 'react-native-instagram-login';
 import golbalConstants from '../../Common/GlobalStyles/constants';
 import SplashScreen from 'react-native-splash-screen';
 import ImageResizer from 'react-native-image-resizer';
@@ -533,10 +532,10 @@ class Registration extends Component {
       let data = {
         city_name: this.state.addCity,
       };
-      this.setState({ Spinner: true });
+      this.setState({ loading: true });
       try {
         const response = await addNewCity(data);
-        this.setState({ Spinner: false, addCity: '' });
+        this.setState({ loading: false, addCity: '' });
         showMessage({
           message: '都市が追加されました上記から選択してください',
           type: 'success',
@@ -545,7 +544,7 @@ class Registration extends Component {
           this.props.addCites(response.result.city_list);
         }
       } catch {
-        this.setState({ Spinner: false, addCity: '' });
+        this.setState({ loading: false, addCity: '' });
         showMessage({
           message: 'この都市を追加できません。別の都市をお試しください',
           type: 'error',

@@ -7,12 +7,16 @@ import {
   FlatList,
   Image,
   RefreshControl,
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import { Badge } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import { allMessage, deleteMessage } from '../../../../services/AuthService';
 import styles from './styles';
+
+const { height } = Dimensions.get('window');
 
 class Message extends Component {
   constructor(props) {
@@ -33,7 +37,7 @@ class Message extends Component {
   }
 
   componentWillUnmount() {
-    this.focusListener.remove();
+    this.focusListener();
   }
 
   getAllMessage = async () => {
@@ -44,18 +48,15 @@ class Message extends Component {
         let data = response.result.user_all_message;
         this.setState({ data });
       }
-      console.log(response);
     } catch {
       this.setState({ isFetching: false });
     }
   };
   deleteMessageNote = async message => {
-    console.log(message);
     try {
       const response = await deleteMessage(message.index);
       if (response.isSuccess) {
         this.getAllMessage();
-        console.log('deleteMessageNote');
       }
     } catch { }
   };
@@ -66,7 +67,8 @@ class Message extends Component {
         backNavigation={true}
         notificationHide={true}
         scrollingOff={true}
-        title="お知らせ">
+        title="お知らせ"
+      >
         <View>
           <View style={styles.tabOption}>
             <TouchableOpacity
@@ -102,17 +104,19 @@ class Message extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-          <View>
-            {!this.state.TabOptionSelected ? (
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.isFetching}
+                onRefresh={() => this.getAllMessage()}
+              />
+            }
+            style={styles.scrollViewHeight}
+          >
+            {!this.state.TabOptionSelected ?
               <FlatList
                 style={styles.root}
                 data={this.state.data}
-                refreshControl={
-                  <RefreshControl
-                    refreshing={this.state.isFetching}
-                    onRefresh={() => this.getAllMessage()}
-                  />
-                }
                 extraData={this.state}
                 ItemSeparatorComponent={() => {
                   return <View style={styles.separator} />;
@@ -125,8 +129,7 @@ class Message extends Component {
                     <Swipeout
                       right={[
                         {
-                          text: 'Delete',
-                          backgroundColor: 'red',
+                          text: '削除',
                           underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
                           onPress: () => {
                             this.deleteMessageNote(item);
@@ -134,7 +137,8 @@ class Message extends Component {
                         },
                       ]}
                       autoClose={true}
-                      backgroundColor="transparent">
+                      backgroundColor="transparent"
+                    >
                       <TouchableOpacity
                         onPress={() =>
                           this.props.navigation.push('MessageDetails', {
@@ -184,12 +188,12 @@ class Message extends Component {
                   );
                 }}
               />
-            ) : (
-                <View style={styles.NONotificationContainer}>
-                  <Text>システム通知なし !</Text>
-                </View>
-              )}
-          </View>
+              :
+              <View style={styles.NONotificationContainer}>
+                <Text>システム通知なし !</Text>
+              </View>
+            }
+          </ScrollView>
         </View>
       </DashBoardHeader>
     );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { postCoupon, getDepositeAll } from '../../../../services/AuthService';
 import { Table, Row, Rows } from 'react-native-table-component';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 
 //redux
@@ -53,7 +53,7 @@ class UserCoupon extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         backNavigation={true}
         title={'Coupon'}>
@@ -118,7 +118,7 @@ class UserCoupon extends Component {
             <Rows data={this.state.tableData} textStyle={styles.text} />
           </Table>
         </View>
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

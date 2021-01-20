@@ -7,7 +7,6 @@ export default EStyleSheet.flatten(
     tabOption: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
-      // marginBottom: 20,
     },
     tabOptionSelect: {
       backgroundColor: '#FEF5DE',
@@ -40,9 +39,11 @@ export default EStyleSheet.flatten(
       paddingHorizontal: 10,
       marginRight: 10,
     },
+    scrollViewHeight: {
+      height: height - 24 - 140
+    },
     root: {
       backgroundColor: '#f1f2f3',
-      height,
     },
     container: {
       padding: 16,

@@ -9,7 +9,7 @@ import {
   createOrderInGmo,
   paymentOrderInGmo,
 } from '../../../../services/AuthService';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './style';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { CreditCardInput } from 'react-native-credit-card-input';
@@ -33,7 +33,7 @@ class UserDeposite extends Component {
       cardNumber: '',
       cardName: '',
       amount: '',
-      pointsAmount: null,
+      pointsAmount: '',
       orderAmmount: null,
       loading: false,
       buyingStage: 0,
@@ -81,18 +81,19 @@ class UserDeposite extends Component {
   };
 
   orderPoints = async () => {
-    let data = {
-      points: this.state.pointsAmount,
-    };
-    this.setState({ loading: true });
-    try {
-      const response = await orderPointsToBuy(data);
-      console.log(response);
-      if (response.isSuccess) {
-        this.creatOrderInGMO(response.result[0]);
+    if (this.state.pointsAmount.length !== 0) {
+      let data = {
+        points: this.state.pointsAmount,
+      };
+      this.setState({ loading: true });
+      try {
+        const response = await orderPointsToBuy(data);
+        if (response.isSuccess) {
+          this.creatOrderInGMO(response.result[0]);
+        }
+      } catch {
+        this.setState({ loading: false });
       }
-    } catch {
-      this.setState({ loading: false });
     }
   };
 
@@ -165,7 +166,6 @@ class UserDeposite extends Component {
           type: 'error',
         });
       }
-
       return;
     } else {
       let data = {
@@ -243,15 +243,19 @@ class UserDeposite extends Component {
   };
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         backNavigation={true}
-        title={'お支払い情報の登録'}>
+        title={'お支払い情報の登録'}
+      >
         <View style={styles.mainContainer}>
-          {this.state.buyingStage == 0 ? (
+          {this.state.buyingStage == 0 &&
             <View>
               <Text style={styles.PointsInputText}>
                 購入したいポイント数を入力してください。
+              </Text>
+              <Text style={styles.PointsInputText}>
+                クレジットカードのみ登録したい場合には０を入力してください。
               </Text>
               <TextInput
                 style={styles.cardNumber}
@@ -266,8 +270,8 @@ class UserDeposite extends Component {
                 <Text style={styles.pointCalculationText}> ポイントを購入</Text>
               </TouchableOpacity>
             </View>
-          ) : null}
-          {this.state.buyingStage == 1 ? (
+          }
+          {this.state.buyingStage == 1 &&
             <View>
               <Text style={styles.PointsInputText}>
                 ポイントの購入リクエストが承認されました。
@@ -283,8 +287,8 @@ class UserDeposite extends Component {
                 </Text>
               </TouchableOpacity>
             </View>
-          ) : null}
-          {this.state.buyingStage == 2 ? (
+          }
+          {this.state.buyingStage == 2 &&
             <View>
               <Text style={styles.PointsInputText}>
                 支払いを行うには、すべてのクレジットカード情報を入力してください
@@ -298,8 +302,8 @@ class UserDeposite extends Component {
                 <Text style={styles.pointCalculationText}>支払う</Text>
               </TouchableOpacity>
             </View>
-          ) : null}
-          {this.state.buyingStage == 3 ? (
+          }
+          {this.state.buyingStage == 3 &&
             <View>
               <Text style={styles.PointsInputText}>
                 {this.state.pointsAmount}
@@ -314,7 +318,7 @@ class UserDeposite extends Component {
                 <Text style={styles.pointCalculationText}>支払う</Text>
               </TouchableOpacity>
             </View>
-          ) : null}
+          }
         </View>
         {/* <View style={{padding: 25, flexDirection: 'row', alignItems: 'center'}}>
           <View style={{marginRight: 15}}>
@@ -392,7 +396,7 @@ class UserDeposite extends Component {
           textContent={'注文処理'}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

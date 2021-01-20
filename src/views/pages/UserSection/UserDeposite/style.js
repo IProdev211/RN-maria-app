@@ -18,7 +18,6 @@ export default EStyleSheet.flatten(
       backgroundColor: '#e4ecf2',
       height: 50,
     },
-
     cardNumber: {
       width: screenWidth - 40,
       fontSize: 16,
@@ -97,6 +96,9 @@ export default EStyleSheet.flatten(
       color: 'white',
       fontSize: 15,
       fontWeight: 'bold',
+    },
+    spinnerTextStyle: {
+      color: '#FFF',
     },
   }),
 );

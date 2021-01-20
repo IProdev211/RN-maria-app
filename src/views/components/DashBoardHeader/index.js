@@ -4,7 +4,6 @@ import {
   Text,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   TouchableHighlight,
@@ -14,11 +13,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Modal from 'react-native-modal';
 import styles from './styles';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
 import { CheckBox } from 'react-native-elements';
 import shortid from 'shortid';
 import { GetCities } from '../../../services/AuthService';
-import { Icon, withBadge } from 'react-native-elements';
 import golbalConstants from '../../Common/GlobalStyles/constants';
 
 //redux
@@ -70,14 +67,15 @@ class DashBoardHeader extends Component {
   };
 
   render() {
-    const BadgedIcon = withBadge(this.getUnreadNotification())(Icon);
     return (
       <View>
         <StatusBar
           backgroundColor={golbalConstants.statusBar}
           barStyle={golbalConstants.barStyle}
         />
-        {this.props.headerOff ? null : (
+        {this.props.headerOff ?
+          null
+          :
           <View style={styles.container}>
             <View style={styles.headerContainer}>
               {this.props.title ? (
@@ -127,21 +125,21 @@ class DashBoardHeader extends Component {
                     </TouchableOpacity>
                   )}
               <View style={{ flexDirection: 'row' }}>
-                {this.props.notificationHide ? null : (
+                {!this.props.notificationHide &&
                   <TouchableOpacity
                     style={styles.marginLeft20}
                     onPress={() =>
                       this.props.navigation.navigate('Notification')
                     }>
                     <Icon1 name="bell-o" size={25} color="#fff" />
-                    {this.getUnreadNotification() > 0 ? (
+                    {this.getUnreadNotification() > 0 &&
                       <Text style={styles.notificationNumber}>
                         {this.getUnreadNotification()}
                       </Text>
-                    ) : null}
+                    }
                   </TouchableOpacity>
-                )}
-                {!this.props.Refferal ? null : (
+                }
+                {this.props.Refferal &&
                   <TouchableOpacity
                     style={styles.marginLeft20}
                     onPress={() =>
@@ -149,45 +147,43 @@ class DashBoardHeader extends Component {
                     }>
                     <Icon1 name="qrcode" size={25} color="#fff" />
                   </TouchableOpacity>
-                )}
-                {this.props.settingMenu ? (
+                }
+                {this.props.settingMenu &&
                   <TouchableOpacity
                     style={styles.marginLeft20}
                     onPress={() => this.props.navigation.push('Settings')}>
                     <AntDesign name="setting" size={25} color="#fff" />
                   </TouchableOpacity>
-                ) : null}
-                {this.props.addTweet ? (
+                }
+                {this.props.addTweet &&
                   <TouchableOpacity
                     style={styles.marginLeft20}
                     onPress={() => this.props.navigation.push('AddTweet')}>
                     <Entypo name="feather" size={25} color="#fff" />
                   </TouchableOpacity>
-                ) : null}
-                {this.props.rightButton ? (
+                }
+                {this.props.rightButton &&
                   <TouchableOpacity
                     style={styles.marginLeft20}
-                    onPress={() => this.props.rightButtonAction()}>
+                    onPress={() => this.props.rightButtonAction()}
+                  >
                     <Text style={styles.titleStyleWithBackRight}>
                       {this.props.rightButton}
                     </Text>
                   </TouchableOpacity>
-                ) : null}
+                }
               </View>
             </View>
           </View>
-        )}
+        }
 
-        {this.props.scrollingOff ? (
+        {this.props.scrollingOff ?
           <View>{this.props.children}</View>
-        ) : (
-            <SafeAreaView style={styles.Ccontainer}>
-              <ScrollView style={styles.scrollView}>
-                {this.props.children}
-                <View style={{ marginVertical: 100 }} />
-              </ScrollView>
-            </SafeAreaView>
-          )}
+          :
+          <ScrollView>
+            {this.props.children}
+          </ScrollView>
+        }
 
         {this.state.cityName.length > 0 && (
           <Modal

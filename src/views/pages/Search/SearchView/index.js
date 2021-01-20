@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import ProfileGirdElement from '../../../components/profileGirdElement';
 import CustomCard from '../../../components/CustomCard';
 import Carousel from 'react-native-snap-carousel';
@@ -87,7 +87,7 @@ class Search extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin navigation={this.props.navigation} SearchPage={true}>
+      <DashBoardHeader navigation={this.props.navigation} SearchPage={true}>
         <View>
           {this.state.newUser && this.state.newUser.length > 1 ? (
             <CustomCard>
@@ -142,7 +142,7 @@ class Search extends Component {
               )}
           </CustomCard>
         </View>
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

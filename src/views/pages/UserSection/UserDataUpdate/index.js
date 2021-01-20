@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import ImageResizer from 'react-native-image-resizer';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -154,7 +154,7 @@ class UserDataUpdate extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         title="マイページ"
         navigation={this.props.navigation}
         backNavigation={true}>
@@ -286,7 +286,7 @@ class UserDataUpdate extends Component {
           </View>
         </TouchableOpacity>
         <View style={{ paddingBottom: 50 }} />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

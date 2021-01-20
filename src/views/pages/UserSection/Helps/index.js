@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import SettingTitle from '../../../components/SettingTitle';
 //redux
 import { bindActionCreators } from 'redux';
@@ -15,7 +15,7 @@ class Settings extends Component {
   }
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         backNavigation={true}
         navigation={this.props.navigation}
         title="ヘルプ">
@@ -24,7 +24,7 @@ class Settings extends Component {
           {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
         </View>
         <View style={{ paddingTop: 50 }} />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

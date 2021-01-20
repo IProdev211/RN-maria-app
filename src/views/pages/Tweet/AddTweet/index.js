@@ -3,7 +3,7 @@ import { View, Image, Text, TouchableOpacity } from 'react-native';
 import Textarea from 'react-native-textarea';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import HeaderAfterLogin from '../../../components/DashBoardHeader';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
@@ -12,7 +12,6 @@ import {
   getUserDetails,
 } from '../../../../services/AuthService';
 import { showMessage } from 'react-native-flash-message';
-// import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 class AddTweet extends Component {
@@ -155,7 +154,7 @@ class AddTweet extends Component {
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         navigation={this.props.navigation}
         title="つぶやきを投稿 "
         notificationHide={true}
@@ -212,19 +211,12 @@ class AddTweet extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        {/* <AnimatedLoader
-          visible={this.state.loading}
-          overlayColor="#ffffff3b"
-          source={require('../../../../assets/lottie/orange-pulse.json')}
-          animationStyle={styles.lottie}
-          speed={1}
-        /> */}
         <Spinner
           visible={this.state.loading}
           textContent={'読み込み中...'}
           textStyle={styles.spinnerTextStyle}
         />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

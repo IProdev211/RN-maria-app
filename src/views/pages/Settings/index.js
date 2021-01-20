@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Switch, Text } from 'react-native';
-import HeaderAfterLogin from '../../components/DashBoardHeader';
+import DashBoardHeader from '../../components/DashBoardHeader';
 import SettingTitle from '../../components/SettingTitle';
 import SettingElement from '../../components/SettingElement';
 import golbalConstants from '../../Common/GlobalStyles/constants';
@@ -49,7 +49,6 @@ class Settings extends Component {
   }
   componentDidMount() {
     this.getNessearyInfo();
-    console.log(this.props.userInfo);
   }
 
   getNessearyInfo = () => {
@@ -61,21 +60,18 @@ class Settings extends Component {
     try {
       const response = await getEmailSettings();
       this.setState({ emailSetting: response.result.success });
-      console.log('email setting', this.state.emailSetting);
     } catch { }
   };
   getAppSetiing = async () => {
     try {
       const response = await getAppSettings();
       this.setState({ appSettings: response.result.success });
-      console.log('appSettings setting', this.state.appSettings);
     } catch { }
   };
   getPrivacySetiing = async () => {
     try {
       const response = await getPrivacySettings();
       this.setState({ privacySetting: response.result.success });
-      console.log('privacySetting setting', this.state.privacySetting);
     } catch { }
   };
   changeValueSetting = (enitiy, type) => {
@@ -107,33 +103,28 @@ class Settings extends Component {
   };
 
   updateEmaillSetting = async data => {
-    console.log(data);
     try {
       const response = await updateEmailSetting(data);
-      console.log(response);
     } catch { }
   };
   updateAppSetting = async data => {
-    console.log(data);
     try {
       const response = await updateAppSetting(data);
-      console.log(response);
     } catch { }
   };
   updateprivacySetting = async data => {
-    console.log(data);
     try {
       const response = await updatePrivacySetting(data);
-      console.log(response);
     } catch { }
   };
 
   render() {
     return (
-      <HeaderAfterLogin
+      <DashBoardHeader
         backNavigation={true}
         navigation={this.props.navigation}
-        title="各種設定">
+        title="各種設定"
+      >
         <View style={{ backgroundColor: '#fff' }}>
           <SettingTitle text="アプリ通知設定" />
           <SettingElement text="ギフトアイコンを購入する。">
@@ -358,8 +349,7 @@ class Settings extends Component {
 
           {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
         </View>
-        <View style={{ paddingTop: 50 }} />
-      </HeaderAfterLogin>
+      </DashBoardHeader>
     );
   }
 }

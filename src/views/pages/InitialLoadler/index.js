@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-community/async-storage';
-// import AnimatedLoader from 'react-native-animated-loader';
 import Spinner from 'react-native-loading-spinner-overlay';
 import styles from './styles';
 
