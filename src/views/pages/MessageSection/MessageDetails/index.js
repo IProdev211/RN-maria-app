@@ -603,7 +603,7 @@ class Search extends Component {
     if (!this.state.reportedIssue) {
       Alert.alert(
         'ウォーニング',
-        '問題を報告してください。空欄にすることはできません。',
+        '問題を通報してください。空欄にすることはできません。',
         [
           {
             text: 'オーケー',
@@ -623,7 +623,7 @@ class Search extends Component {
       this.setState({ isReportModalPopUp: false });
       Alert.alert(
         '成功',
-        '報告書が管理者に転送されました。処理結果について後でお知らせします。',
+        '通報書が管理者に転送されました。処理結果について後でお知らせします。',
         [
           {
             text: 'オーケー',
@@ -747,12 +747,12 @@ class Search extends Component {
                 borderBottomWidth: 0.5,
                 padding: 10,
               }}>
-              レポート
+              通報する
             </Text>
             <Text
               onPress={this.openBlock}
               style={{ padding: 10, fontWeight: 'bold' }}>
-              ブロック
+              ブロックする
             </Text>
             <Text
               style={{
@@ -894,11 +894,11 @@ class Search extends Component {
           onBackdropPress={this.openReport}
           isVisible={this.state.isReportModalPopUp}>
           <View style={styles.hourlyRate}>
-            <Text style={styles.reportText}>レポート</Text>
-            <Text style={styles.reasonText}>報告の理由</Text>
+            <Text style={styles.reportText}>通報</Text>
+            <Text style={styles.reasonText}>通報の理由</Text>
             <TextInput
               style={styles.comments}
-              placeholder="レポートの理由を入力してください..."
+              placeholder="通報の理由を入力してください..."
               onChangeText={text => this.setState({ reportedIssue: text })}
               value={this.state.reportedIssue}
             />
@@ -914,13 +914,13 @@ class Search extends Component {
                     styles.optionHolderReportoptions,
                     styles.blockButton,
                   ]}>
-                  <Text style={styles.blockButtonText}>レポート</Text>
+                  <Text style={styles.blockButtonText}>通報する</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
             <View>
               <Text style={{ color: '#777', fontSize: 11 }}>
-                *報告する場合は、相手にメッセージを送ることができます。
+                *通報する場合は、相手にメッセージを送ることができます。
               </Text>
             </View>
           </View>
@@ -946,7 +946,7 @@ class Search extends Component {
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={this.blockUser}>
                 <View style={[styles.options2, styles.blockButton]}>
-                  <Text style={styles.blockButtonText}>ブロック</Text>
+                  <Text style={styles.blockButtonText}>ブロックする</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
