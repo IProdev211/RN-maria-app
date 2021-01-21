@@ -41,12 +41,19 @@ class Message extends Component {
   }
 
   getAllMessage = async () => {
+    this.setState({ isFetching: true });
+
     try {
       const response = await allMessage();
       this.setState({ isFetching: false });
       if (response.isSuccess) {
         let data = response.result.user_all_message;
-        this.setState({ data });
+        const messageData = data.filter(message => {
+          if (!message.blocked) {
+            return message;
+          }
+        });
+        this.setState({ data: messageData });
       }
     } catch {
       this.setState({ isFetching: false });
@@ -146,7 +153,8 @@ class Message extends Component {
                             user_pic: Notification.user_pic,
                             user_name: Notification.user_name,
                           })
-                        }>
+                        }
+                      >
                         <View style={styles.container}>
                           <Image
                             source={{ uri: Notification.user_pic }}

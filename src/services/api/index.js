@@ -40,8 +40,6 @@ export const getApi = async (action, headers = {}) => {
 export const postApi = async (action, headers = {}, body = {}) => {
   try {
     const userToken = await AsyncStorage.getItem('userToken');
-    let formData = new FormData();
-    formData.append('name', 'John');
     let requestHeaders = _.pickBy(
       {
         ...(userToken

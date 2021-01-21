@@ -492,7 +492,6 @@ class Search extends Component {
       modalStatus: false,
     });
   };
-
   openBlock = () => {
     this.setState({ isBlockModalPopUp: !this.state.isBlockModalPopUp });
     this.setState({
@@ -591,41 +590,24 @@ class Search extends Component {
 
   blockUser = async () => {
     this.setState({ isBlockModalPopUp: false });
-    Alert.alert(
-      '警告',
-      'このユーザーからのメッセージの送信をブロックしますか？ はいの場合は大丈夫です。',
-      [
-        {
-          text: 'オーケー',
-          onPress: () => this.callBlockAPI(),
-        },
-        {
-          text: 'キャンセル',
-          onPress: () => this.setState({ isGiftOpen: false }),
-        },
-      ],
-      { cancelable: false },
-    );
-  };
-  callBlockAPI = async () => {
-    this.props.navigation.goBack();
     let data = {
       blocked_user: this.props.route.params.user_id,
     };
     try {
       const response = await BlockUser(data);
-      console.log(response);
+      this.props.navigation.goBack();
     } catch { }
   };
+
   reportUser = async () => {
     if (!this.state.reportedIssue) {
       Alert.alert(
         'ウォーニング',
-        '問題を報告してください。空欄にすることはできません',
+        '問題を報告してください。空欄にすることはできません。',
         [
           {
             text: 'オーケー',
-            onPress: () => console.log('closed'),
+            onPress: () => console.log('okay'),
           },
         ],
         { cancelable: false },
@@ -641,7 +623,7 @@ class Search extends Component {
       this.setState({ isReportModalPopUp: false });
       Alert.alert(
         '成功',
-        'レポートが管理者に確認されました。後でアクションについて通知します。',
+        '報告書が管理者に転送されました。処理結果について後でお知らせします。',
         [
           {
             text: 'オーケー',
@@ -683,9 +665,6 @@ class Search extends Component {
                   size={30}
                   color="#fff"
                 />
-                {/* <Text style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginLeft: 10 }}>
-                  メッセージ
-              </Text> */}
               </TouchableOpacity>
 
               <Text style={styles.titleStyleWithBack}>{user_name}</Text>
@@ -715,7 +694,7 @@ class Search extends Component {
             </View>
           </TouchableOpacity>
         </View>
-        {dateData ? (
+        {dateData ?
           <GiftedChat
             messages={this.props.currentChat ? this.props.currentChat.data : []}
             onSend={this.onSend}
@@ -733,31 +712,32 @@ class Search extends Component {
             renderMessageImage={(props) => this.renderMessageImage(props, this.props.userInfo)}
           // renderFooter={this.renderFooter}
           />
-        ) : (
-            <GiftedChat
-              messages={this.props.currentChat ? this.props.currentChat.data : []}
-              onSend={this.onSend}
-              loadEarlier={this.state.loadEarlier}
-              onLoadEarlier={this.onLoadEarlier}
-              isLoadingEarlier={this.state.isLoadingEarlier}
-              user={{
-                _id: this.props.userInfo.id,
-              }}
-              renderActions={this.renderCustomActions}
-              renderBubble={this.renderBubble}
-              placeholder="ここにメッセージを入力..."
-              renderLoadEarlier={this.renderLoadEarlier}
-              renderMessageText={(props) => this.renderMessageText(props, this.props.userInfo)}
-              renderMessageImage={(props) => this.renderMessageImage(props, this.props.userInfo)}
-            // renderFooter={this.renderFooter}
-            />
-          )}
+          :
+          <GiftedChat
+            messages={this.props.currentChat ? this.props.currentChat.data : []}
+            onSend={this.onSend}
+            loadEarlier={this.state.loadEarlier}
+            onLoadEarlier={this.onLoadEarlier}
+            isLoadingEarlier={this.state.isLoadingEarlier}
+            user={{
+              _id: this.props.userInfo.id,
+            }}
+            renderActions={this.renderCustomActions}
+            renderBubble={this.renderBubble}
+            placeholder="ここにメッセージを入力..."
+            renderLoadEarlier={this.renderLoadEarlier}
+            renderMessageText={(props) => this.renderMessageText(props, this.props.userInfo)}
+            renderMessageImage={(props) => this.renderMessageImage(props, this.props.userInfo)}
+          // renderFooter={this.renderFooter}
+          />
+        }
 
         <Modal
           onBackdropPress={this.openModal}
           isVisible={this.state.modalStatus}
           swipeDirection={['up', 'left', 'right', 'down']}
-          style={styles.ModalView2}>
+          style={styles.ModalView2}
+        >
           <View style={styles.content}>
             <Text
               onPress={this.openReport}
@@ -791,7 +771,8 @@ class Search extends Component {
           onBackdropPress={this.openGift}
           isVisible={this.state.isGiftOpen}
           swipeDirection={['up', 'left', 'right', 'down']}
-          style={styles.ModalView2}>
+          style={styles.ModalView2}
+        >
           <View style={styles.content}>
             <Text style={styles.giftModalTitle}>
               このキャスターにギフトを送る
@@ -948,17 +929,17 @@ class Search extends Component {
         {/* Block Modal */}
         <Modal
           onBackdropPress={this.openBlock}
-          isVisible={this.state.isBlockModalPopUp}>
+          isVisible={this.state.isBlockModalPopUp}
+        >
           <View style={styles.blockModal}>
             <Text style={styles.blockUserTextContainer}>
-              ブロックしてもよろしいですか？
+              このユーザーを本当にブロックしますか？
             </Text>
             <Text style={styles.blockUserText}>
-              ブロックすると、相手にメッセージを送ることができなくなります。
+              ブロック後のメッセージ交換はできません。管理者と連携することで通信を回復できます。
             </Text>
             <View style={styles.optionHolder}>
-              <TouchableWithoutFeedback
-                onPress={() => this.setState({ isBlockModalPopUp: false })}>
+              <TouchableWithoutFeedback onPress={this.openBlock}>
                 <View style={{ ...styles.options2, marginLeft: 15 }}>
                   <Text style={styles.blockCancel}>キャンセル</Text>
                 </View>

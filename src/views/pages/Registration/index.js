@@ -574,7 +574,7 @@ class Registration extends Component {
       });
     } else {
       let data = {
-        usr_email: this.state.emailAddress.toLowerCase(),
+        usr_email: this.state.emailAddress.trim().toLowerCase(),
       };
       this.setState({ loading: true });
       try {
