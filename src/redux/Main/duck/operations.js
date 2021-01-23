@@ -21,9 +21,9 @@ const pushCurrentMessage = (info, to, from) => {
     return dispatch(actions.pushedCurrentMessage(info, to, from));
   };
 };
-const addCites = city => {
+const updateCityList = city => {
   return dispatch => {
-    return dispatch(actions.AddedCities(city));
+    return dispatch(actions.updateCityList(city));
   };
 };
 const SearchFilteredData = data => {
@@ -68,7 +68,7 @@ export default {
   addUserInfo,
   updateCurrentMessage,
   pushCurrentMessage,
-  addCites,
+  updateCityList,
   SearchFilteredData,
   addTagValue,
   allNotifications,

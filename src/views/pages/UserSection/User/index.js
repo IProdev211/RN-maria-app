@@ -26,8 +26,8 @@ import Modal from 'react-native-modal';
 import golbalConstants from '../../../Common/GlobalStyles/constants';
 
 //redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { duckOperations } from '../../../../redux/Main/duck';
 
 class User extends Component {
@@ -35,9 +35,6 @@ class User extends Component {
     super(props);
     this.state = {
       data: [],
-      userInfo: null,
-      profileImage: null,
-      userName: '',
       isVisible: false,
       hourlyRate: '',
       hourlyRateget: null,
@@ -50,30 +47,12 @@ class User extends Component {
       withdrawBlance: '',
       loading: false,
     };
-    this.getUserInformation = this.getUserInformation.bind(this);
   }
   componentDidMount() {
-    this.getUserInformation();
     this.getUserHR();
     this.depositeAndCouponBalance();
   }
-  componentDidUpdate() {
-    // this.getUserInformation();
-  }
-  componentWillUnmount() {
-    // this.getUserInformation();
-  }
-  getUserInformation = async () => {
-    let user = this.props.userInfo;
-    let profileImage = user.is_profile_pic
-      ? user.is_profile_pic
-      : user.usr_profile_photo[0].picture_url;
-    this.setState({
-      userInfo: user,
-      userName: user.usr_nickname,
-      profileImage,
-    });
-  };
+
   LogingOut = async () => {
     Alert.alert(
       'ログアウト',
@@ -93,7 +72,7 @@ class User extends Component {
   loggingOutDataRemove = async () => {
     this.setState({ loading: true });
     try {
-      const response = await AsyncStorage.clear();
+      await AsyncStorage.clear();
       if (this.props.signInMethodType === 'google') {
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
@@ -197,41 +176,36 @@ class User extends Component {
   };
 
   render() {
-    const { userInfo, isVisible } = this.state;
+    const { isVisible } = this.state;
+    const { userInfo, navigation } = this.props;
 
     return (
       <DashBoardHeader
         title="マイページ"
-        navigation={this.props.navigation}
+        navigation={navigation}
         NotificationHide={false}
         Refferal={true}
-        settingMenu={true}>
+        settingMenu={true}
+      >
         <View style={{ backgroundColor: '#FEF6E1' }}>
           <View style={styles.ProfileContainer}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('UserDataUpdate')}>
-              {this.state.profileImage ? (
+            <TouchableOpacity onPress={() => navigation.navigate('UserDataUpdate')} >
+              {userInfo.usr_profile_photo[0].picture_url ?
                 <Image
                   style={styles.profilePicImage}
-                  source={{
-                    uri: this.props.userInfo.is_profile_pic
-                      ? this.props.userInfo.is_profile_pic
-                      : this.state.profileImage,
-                  }}
+                  source={{ uri: userInfo.is_profile_pic ? userInfo.is_profile_pic : userInfo.usr_profile_photo[0].picture_url }}
                 />
-              ) : (
-                  <Image
-                    style={styles.profilePicImage}
-                    source={require('../../../../assets/panda.png')}
-                  />
-                )}
-
+                :
+                <Image
+                  style={styles.profilePicImage}
+                  source={require('../../../../assets/panda.png')}
+                />
+              }
               <View style={styles.editIcon}>
                 <Icon name="pencil" size={18} color="#fff" />
               </View>
             </TouchableOpacity>
-
-            <Text style={styles.UserNameText}>{this.state.userName}</Text>
+            <Text style={styles.UserNameText}>{userInfo.usr_nickname}</Text>
           </View>
 
           {userInfo && Number(userInfo.usr_type) === 1 ?
@@ -240,7 +214,7 @@ class User extends Component {
                 <TouchableOpacity
                   style={styles.topOptionsContainer}
                   onPress={() => {
-                    this.props.navigation.navigate('Message');
+                    navigation.navigate('Message');
                   }}>
                   <View style={styles.topOptions}>
                     <MetarialIcon name="email-outline" size={50} color="#fff" />
@@ -262,7 +236,7 @@ class User extends Component {
                   <View style={styles.topOptions}>
                     <MetarialIcon
                       onPress={() => {
-                        this.props.navigation.navigate('UserCoupon');
+                        navigation.navigate('UserCoupon');
                       }}
                       name="ticket"
                       size={50}
@@ -293,7 +267,7 @@ class User extends Component {
                   </View>
                   <View style={styles.pointColumn}>
                     <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
-                    <Text style={styles.pointColumnHeaderNumber}>{this.props.userInfo ? this.props.userInfo.points : 0}</Text>
+                    <Text style={styles.pointColumnHeaderNumber}>{userInfo ? userInfo.points : 0}</Text>
                     <TouchableOpacity onPress={this.withdrawMoney}>
                       <Text style={styles.addButtonPoints}>
                         撤退{'  '}
@@ -313,9 +287,7 @@ class User extends Component {
               <View style={styles.coinContainerTop}>
                 <TouchableOpacity
                   style={styles.topOptionsContainer}
-                  onPress={() => {
-                    this.props.navigation.navigate('Message');
-                  }}>
+                  onPress={() => navigation.navigate('Message')}>
                   <View style={styles.topOptions}>
                     <MetarialIcon name="email-outline" size={30} color="#fff" />
                   </View>
@@ -323,9 +295,8 @@ class User extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.topOptionsContainer}
-                  onPress={() =>
-                    this.props.navigation.navigate('UserDeposite')
-                  }>
+                  onPress={() => navigation.navigate('UserDeposite')}
+                >
                   <View style={styles.topOptions}>
                     <MetarialIcon
                       name="credit-card-plus"
@@ -340,10 +311,10 @@ class User extends Component {
                 <View style={styles.pointColumn}>
                   <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
                   <Text style={styles.pointColumnHeaderNumber}>
-                    {this.props.userInfo ? this.props.userInfo.points : 0}
+                    {userInfo ? userInfo.points : 0}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => this.props.navigation.navigate('UserDeposite')}
+                    onPress={() => navigation.navigate('UserDeposite')}
                   >
                     <Text style={styles.addButtonPoints}>
                       Add{'  '}
@@ -473,7 +444,7 @@ class User extends Component {
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity>
             {/* <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('UserReview')}
+              onPress={() => navigation.navigate('UserReview')}
               style={[styles.SpaceBetweenContainer, {borderBottomWidth: 0.5}]}>
               <View style={{flexDirection: 'row'}}>
                 <Icon name="comment-o" size={25} color="#000" />
@@ -482,7 +453,7 @@ class User extends Component {
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity> */}
             {/* <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('UserDeposite')}
+              onPress={() => navigation.navigate('UserDeposite')}
               style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
               <View style={{ flexDirection: 'row' }}>
                 <Icon name="question-circle-o" size={25} color="#000" />
@@ -491,7 +462,7 @@ class User extends Component {
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity> */}
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Helps')}
+              onPress={() => navigation.navigate('Helps')}
               style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
               <View style={{ flexDirection: 'row' }}>
                 <Icon name="question-circle-o" size={25} color="#000" />
@@ -500,7 +471,7 @@ class User extends Component {
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity>
             {/* <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('ReferralQrCode')}
+              onPress={() => navigation.navigate('ReferralQrCode')}
               style={[styles.SpaceBetweenContainer, {borderBottomWidth: 0.5}]}>
               <View style={{flexDirection: 'row'}}>
                 <Icon name="share-alt" size={25} color="#000" />

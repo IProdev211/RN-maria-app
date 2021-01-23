@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import ImageResizer from 'react-native-image-resizer';
-import DashBoardHeader from '../../../components/DashBoardHeader';
 import ImagePicker from 'react-native-image-picker';
-import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { showMessage } from 'react-native-flash-message';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import {
   getUserDetails,
   uploadProfileImage,
   setProfilePicture,
   removeProfileImage
 } from '../../../../services/AuthService';
+import styles from './styles';
 
 //redux
 import { bindActionCreators } from 'redux';
@@ -25,36 +26,22 @@ class UserDataUpdate extends Component {
     this.state = {
       data: [],
       profileImage: null,
-      userName: '',
       selectedImageIndex: 0,
-      userData: null,
+      loading: false
     };
   }
 
   componentDidMount() {
-    this.getUserInformation();
-  }
-
-  getUserInformation = async () => {
-    try {
-      let response = await getUserDetails();
-      if (response.isSuccess) {
-        let user = response.result.success;
-        let profileImage = user.is_profile_pic
-          ? user.is_profile_pic
-          : user.usr_profile_photo[0].picture_url;
-        this.setState({
-          userName: response.result.success.usr_nickname,
-          profileImage,
-          userData: response.result.success,
-        });
-        this.props.addUserInfo(user);
+    for (let i = 0; i < this.props.userInfo.usr_profile_photo.length; i++) {
+      if (this.props.userInfo.usr_profile_photo[i].picture_url == this.props.userInfo.is_profile_pic) {
+        this.setState({ selectedImageIndex: i });
       }
-      this.forceUpdate();
-    } catch (errors) {
-      this.setState({ loading: false });
     }
-  };
+
+    this.setState({
+      profileImage: this.props.userInfo.is_profile_pic ? this.props.userInfo.is_profile_pic : this.props.userInfo.usr_profile_photo[0].picture_url,
+    });
+  }
 
   UploadProfileImageFromMobile = () => {
     const options = {
@@ -75,7 +62,6 @@ class UserDataUpdate extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri };
         this.uploadImagesIos(response);
       }
     });
@@ -104,10 +90,15 @@ class UserDataUpdate extends Component {
         `files.${fileType ? fileType : 'png'}`,
       );
       if (response && response.isSuccess) {
-        this.getUserInformation();
-      } else {
-        this.setState({ loading: false });
+        let response = await getUserDetails();
+        if (response.isSuccess) {
+          let user = response.result.success;
+          let profileImage = user.is_profile_pic ? user.is_profile_pic : user.usr_profile_photo[0].picture_url;
+          this.setState({ profileImage });
+          this.props.addUserInfo(user);
+        }
       }
+      this.setState({ loading: false });
     } catch (errors) {
       this.setState({ loading: false });
       showMessage({
@@ -119,7 +110,6 @@ class UserDataUpdate extends Component {
 
   selctedImage = async (x, id) => {
     this.setState({
-      selectedProfileImage: x.picture_url,
       selectedImageIndex: id,
       profileImage: x.picture_url,
     });
@@ -129,7 +119,10 @@ class UserDataUpdate extends Component {
     try {
       const response = await setProfilePicture(data);
       if (response.isSuccess) {
-        this.getUserInformation();
+        let response = await getUserDetails();
+        if (response.isSuccess) {
+          this.props.addUserInfo(response.result.success);
+        }
       }
     } catch { }
   };
@@ -139,10 +132,12 @@ class UserDataUpdate extends Component {
       this.setState({ loading: true });
       let response = await removeProfileImage(id);
       if (response && response.isSuccess) {
-        this.getUserInformation();
-      } else {
-        this.setState({ loading: false });
+        let response = await getUserDetails();
+        if (response.isSuccess) {
+          this.props.addUserInfo(response.result.success);
+        }
       }
+      this.setState({ loading: false });
     } catch (errors) {
       this.setState({ loading: false });
       showMessage({
@@ -153,33 +148,41 @@ class UserDataUpdate extends Component {
   }
 
   render() {
+    const { userInfo, navigation } = this.props;
+    let count = 0;
+    Object.keys(userInfo.basic_info).map(key => {
+      if (userInfo.basic_info[key] !== '0') {
+        count++;
+      }
+    })
+
     return (
       <DashBoardHeader
-        title="マイページ"
-        navigation={this.props.navigation}
-        backNavigation={true}>
+        title="プロフィール編集"
+        navigation={navigation}
+        backNavigation={true}
+      >
         <View style={{ backgroundColor: '#FEF6E1', paddingBottom: 20 }}>
           <View style={styles.ProfileContainer}>
             <View>
-              {this.state.profileImage ? (
+              {this.state.profileImage ?
                 <Image
                   style={styles.profilePicImage}
                   source={{ uri: this.state.profileImage }}
                 />
-              ) : (
-                  <Image
-                    style={styles.profilePicImage}
-                    source={require('../../../../assets/panda.png')}
-                  />
-                )}
+                :
+                <Image
+                  style={styles.profilePicImage}
+                  source={require('../../../../assets/panda.png')}
+                />
+              }
             </View>
-            <Text style={styles.UserNameText}>{this.state.userName}</Text>
+            <Text style={styles.UserNameText}>{userInfo.usr_nickname}</Text>
           </View>
           <View style={styles.ImageContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {this.state.userData &&
-                this.state.userData.usr_profile_photo.length > 0
-                ? this.state.userData.usr_profile_photo.map((x, index) => {
+              {userInfo && userInfo.usr_profile_photo.length > 0 &&
+                userInfo.usr_profile_photo.map((x, index) => {
                   let ImageUrl = x.picture_url;
                   return (
                     <View key={index}>
@@ -195,9 +198,7 @@ class UserDataUpdate extends Component {
                         <Image
                           style={[
                             styles.imageStyle,
-                            this.state.selectedImageIndex == index
-                              ? styles.SelectedImage
-                              : styles.UnSelectedImage,
+                            this.state.selectedImageIndex == index ? styles.SelectedImage : styles.UnSelectedImage,
                           ]}
                           source={{ uri: ImageUrl }}
                         />
@@ -205,32 +206,33 @@ class UserDataUpdate extends Component {
                     </View>
                   );
                 })
-                : null}
-              {this.state.userData &&
-                this.state.userData.usr_profile_photo.length <= 9 ? (
-                  <TouchableOpacity
-                    style={styles.addNewPhoto}
-                    key="9098"
-                    onPress={() => this.UploadProfileImageFromMobile()}>
-                    <Icon name="plus" size={25} color="#fff" />
-                  </TouchableOpacity>
-                ) : null}
+              }
+              {userInfo && userInfo.usr_profile_photo.length <= 9 &&
+                <TouchableOpacity
+                  style={styles.addNewPhoto}
+                  key="9098"
+                  onPress={() => this.UploadProfileImageFromMobile()}
+                >
+                  <Icon name="plus" size={25} color="#fff" />
+                </TouchableOpacity>
+              }
             </ScrollView>
           </View>
         </View>
         <TouchableOpacity
           style={styles.oNpressEvent}
           onPress={() =>
-            this.props.navigation.push('UserDataUpdateField', {
+            navigation.navigate('UserDataUpdateField', {
               field: 'usr_nickname',
-              title: '氏名を更新する',
-              value: this.state.userData.usr_nickname,
+              title: 'ニックネーム',
+              value: userInfo.usr_nickname,
             })
-          }>
+          }
+        >
           <Text>ニックネーム</Text>
           <View style={styles.onPressEventRight}>
             <Text style={styles.onPressEventRightText}>
-              {this.state.userData ? this.state.userData.usr_nickname : ''}
+              {userInfo ? userInfo.usr_nickname : ''}
             </Text>
             <Icon name="angle-right" size={25} color="#000" />
           </View>
@@ -241,14 +243,14 @@ class UserDataUpdate extends Component {
         <TouchableOpacity
           style={styles.oNpressEvent}
           onPress={() =>
-            this.props.navigation.navigate('UserDataUpdateField', {
+            navigation.navigate('UserDataUpdateField', {
               field: 'todays_message',
-              title: '今日のメッセージ',
-              value: this.state.userData.todays_message,
+              title: '今日のひとこと',
+              value: userInfo.todays_message,
             })
           }>
           <Text style={{ maxWidth: '80%' }}>
-            {this.state.userData ? this.state.userData.todays_message : null}
+            {userInfo ? userInfo.todays_message : null}
           </Text>
           <View style={styles.onPressEventRight}>
             <Icon name="angle-right" size={25} color="#000" />
@@ -260,36 +262,40 @@ class UserDataUpdate extends Component {
         <TouchableOpacity
           style={styles.oNpressEvent}
           onPress={() =>
-            this.props.navigation.navigate('UserDataUpdateField', {
+            navigation.navigate('UserDataUpdateField', {
               field: 'self_introduction',
-              title: '氏名を更新する',
-              value: this.state.userData.self_introduction,
+              title: '自己紹介',
+              value: userInfo.self_introduction,
             })
           }>
           <Text style={{ maxWidth: '80%', height: 150 }}>
-            {this.state.userData ? this.state.userData.self_introduction : null}
+            {userInfo ? userInfo.self_introduction : null}
           </Text>
           <View style={styles.onPressEventRight}>
             <Icon name="angle-right" size={25} color="#000" />
           </View>
         </TouchableOpacity>
         <View style={styles.subTextInfo}>
-          <Text>基本情報</Text>
+          <Text>詳細プロフィール </Text>
         </View>
         <TouchableOpacity
           style={styles.oNpressEvent}
-          onPress={() => this.props.navigation.navigate('BasicSettings')}>
-          <Text>ニックネーム</Text>
+          onPress={() => navigation.navigate('BasicSettings')}
+        >
+          <Text>基本情報</Text>
           <View style={styles.onPressEventRight}>
-            <Text style={styles.onPressEventRightText}>3/10</Text>
+            <Text style={styles.onPressEventRightText}>{count}/10</Text>
             <Icon name="angle-right" size={25} color="#000" />
           </View>
         </TouchableOpacity>
-        <View style={{ paddingBottom: 50 }} />
+        <View style={{ paddingBottom: 51 }} />
+
+        <Spinner visible={this.state.loading} />
       </DashBoardHeader>
     );
   }
 }
+
 function mapStateToProps(state, props) {
   return {
     userInfo: state.mainReducers.main.userInfo,

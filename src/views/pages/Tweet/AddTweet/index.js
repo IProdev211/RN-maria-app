@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import Textarea from 'react-native-textarea';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import DashBoardHeader from '../../../components/DashBoardHeader';
-import styles from './styles';
+import { showMessage } from 'react-native-flash-message';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   uploadTweetImage,
   createTweet,
-  getUserDetails,
 } from '../../../../services/AuthService';
-import { showMessage } from 'react-native-flash-message';
-import Spinner from 'react-native-loading-spinner-overlay';
+import DashBoardHeader from '../../../components/DashBoardHeader';
+import styles from './styles';
 
 class AddTweet extends Component {
   constructor(props) {
@@ -24,11 +24,7 @@ class AddTweet extends Component {
       imageType: '',
       tweet_picture: null,
       loading: false,
-      todays_message: '',
     };
-  }
-  componentDidMount() {
-    this.getUserInformation();
   }
 
   imagePickerForTweetImage = () => {
@@ -132,25 +128,6 @@ class AddTweet extends Component {
       });
     }
   };
-  getUserInformation = async () => {
-    try {
-      let response = await getUserDetails();
-      if (response.isSuccess) {
-        console.log(response);
-        let profileImage =
-          response.result.success.usr_profile_photo[0].picture_url;
-        let userName = response.result.success.usr_nickname;
-        let todays_message = response.result.success.todays_message;
-        this.setState({
-          userName,
-          profileImage,
-          todays_message,
-        });
-      }
-    } catch (errors) {
-      this.setState({ loading: false });
-    }
-  };
 
   render() {
     return (
@@ -163,8 +140,8 @@ class AddTweet extends Component {
           <View style={styles.container}>
             <Image
               source={{
-                uri: this.state.profileImage
-                  ? this.state.profileImage
+                uri: this.props.userInfo.is_profile_pic
+                  ? this.props.userInfo.is_profile_pic
                   : 'https://bootdey.com/img/Content/avatar/avatar1.png',
               }}
               style={styles.avatar}
@@ -172,9 +149,9 @@ class AddTweet extends Component {
             <View style={styles.content}>
               <View>
                 <View style={styles.text}>
-                  <Text style={styles.name}> {this.state.userName}</Text>
+                  <Text style={styles.name}> {this.props.userInfo.usr_nickname}</Text>
                 </View>
-                <Text>{this.state.todays_message}</Text>
+                <Text>{this.props.userInfo.todays_message}</Text>
               </View>
             </View>
           </View>
@@ -221,4 +198,10 @@ class AddTweet extends Component {
   }
 }
 
-export default AddTweet;
+function mapStateToProps(state, props) {
+  return {
+    userInfo: state.mainReducers.main.userInfo,
+  };
+}
+
+export default connect(mapStateToProps, null)(AddTweet);

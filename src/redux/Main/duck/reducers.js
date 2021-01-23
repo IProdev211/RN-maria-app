@@ -40,7 +40,7 @@ const main = (state = dataState, action) => {
       return Object.assign({}, state, {
         currentChat: previousStateChate,
       });
-    case types.ADD_CITIES:
+    case types.UPDATE_CITY_LIST:
       return Object.assign({}, state, {
         allCity: action.payload.city,
       });

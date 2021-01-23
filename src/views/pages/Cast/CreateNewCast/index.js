@@ -3,12 +3,16 @@ import { View, Alert, Text } from 'react-native';
 import { Divider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import DashBoardHeader from '../../../components/DashBoardHeader';
-import { getCitys } from '../../../../services/AuthService';
 import { TagSelect } from 'react-native-tag-select';
-import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import DashBoardHeader from '../../../components/DashBoardHeader';
 import SetpByStepProcess from '../../../components/SetpByStepProcess';
+import styles from './styles';
+
+//redux
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
 class CreateNewCast extends Component {
   constructor(props) {
@@ -80,34 +84,18 @@ class CreateNewCast extends Component {
       castProcess: 1,
     };
   }
+
   componentDidMount() {
-    this.getCitesInformations();
-  }
-  componentDidUpdate() { }
-  componentWillUnmount() { }
-  getCitesInformations = async () => {
-    try {
-      let response = await getCitys();
-      console.log(response);
-      if (response.isSuccess) {
-        let getCitys = response.result.success;
-        let upatedcity = [];
-        getCitys.map(x => {
-          let item = {
-            id: x.state_id,
-            label: x.city_name,
-            longitude: x.longitude,
-            latitude: x.latitude,
-          };
-          upatedcity.push(item);
-        });
-        this.setState({ citys: upatedcity });
+    let updatedcity = this.props.allCity.map(x => (
+      {
+        id: x.state_id,
+        label: x.city_name,
+        longitude: x.longitude,
+        latitude: x.latitude,
       }
-      this.setState({ loading: false });
-    } catch (errors) {
-      this.setState({ loading: false });
-    }
-  };
+    ));
+    this.setState({ citys: updatedcity });
+  }
 
   render() {
     return (
@@ -115,35 +103,33 @@ class CreateNewCast extends Component {
         navigation={this.props.navigation}
         backNavigation={true}
         notificationHide={true}
-        title="ぐ希望条件を教えて下さい">
-        {this.state.castProcess == 1 ? (
+        title="ぐ希望条件を教えて下さい"
+      >
+        {this.state.castProcess == 1 &&
           <View>
             <Text>HI</Text>
           </View>
-        ) : null}
+        }
 
-        {/* cuast process 3 */}
-        {this.state.castProcess == 1 ? (
+        {/* cast process 3 */}
+        {this.state.castProcess == 1 &&
           <View style={styles.container}>
             <View>
               <View style={styles.mainRow}>
                 <Text style={styles.rowTitle}>どこに呼びますか？</Text>
                 <TouchableOpacity
                   style={styles.SubRow}
-                  onPress={() =>
-                    this.setState({ showHideCity: !this.state.showHideCity })
-                  }>
+                  onPress={() => this.setState({ showHideCity: !this.state.showHideCity })}
+                >
                   <Text style={styles.SubRowText}>東京</Text>
                   <Icon
-                    name={
-                      this.state.showHideCity ? 'angle-down' : 'angle-right'
-                    }
+                    name={this.state.showHideCity ? 'angle-down' : 'angle-right'}
                     size={20}
                     color="#000"
                   />
                 </TouchableOpacity>
               </View>
-              {this.state.showHideCity ? (
+              {this.state.showHideCity &&
                 <TagSelect
                   data={this.state.citys}
                   max={1}
@@ -151,18 +137,15 @@ class CreateNewCast extends Component {
                   itemLabelStyle={styles.label}
                   itemStyleSelected={styles.itemSelected}
                   itemLabelStyleSelected={styles.labelSelected}
-                  ref={tag => {
-                    this.tag = tag;
-                  }}
+                  ref={tag => { this.tag = tag; }}
                   onMaxError={() => {
-                    console.log(this.tag);
                     Alert.alert(
                       'ウォーニング',
                       '以前の都市を破棄して新しい都市を選択してください。',
                     );
                   }}
                 />
-              ) : null}
+              }
             </View>
             <Divider style={styles.dividerStle} />
             <View style={{ paddingBottom: 15 }}>
@@ -170,27 +153,17 @@ class CreateNewCast extends Component {
                 <Text style={styles.rowTitle}>いつ呼びますか？</Text>
               </View>
               <View style={styles.SubRow}>
-                {this.state.callTime.map(x => {
-                  return (
-                    <TouchableOpacity
-                      key={x.id}
-                      style={
-                        this.state.selectedCallTime == x.id
-                          ? styles.CallTimeButtonSelected
-                          : styles.CallTimeButton
-                      }
-                      onPress={() => this.setState({ selectedCallTime: x.id })}>
-                      <Text
-                        style={
-                          this.state.selectedCallTime == x.id
-                            ? styles.CallTimeButtonTextSelected
-                            : styles.CallTimeButtonText
-                        }>
-                        {x.label}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
+                {this.state.callTime.map(x => (
+                  <TouchableOpacity
+                    key={x.id}
+                    style={this.state.selectedCallTime == x.id ? styles.CallTimeButtonSelected : styles.CallTimeButton}
+                    onPress={() => this.setState({ selectedCallTime: x.id })}
+                  >
+                    <Text style={this.state.selectedCallTime == x.id ? styles.CallTimeButtonTextSelected : styles.CallTimeButtonText}>
+                      {x.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
             <Divider style={styles.dividerStle} />
@@ -224,27 +197,17 @@ class CreateNewCast extends Component {
                 <Text style={styles.rowTitle}>何時問呼びますか？</Text>
               </View>
               <View style={styles.SubRow}>
-                {this.state.callTimeAfter.map(x => {
-                  return (
-                    <TouchableOpacity
-                      key={x.id}
-                      style={
-                        this.state.selectedCallTimeAfter == x.id
-                          ? styles.CallTimeButtonSelected
-                          : styles.CallTimeButton
-                      }
-                      onPress={() => this.setState({ selectedCallTime: x.id })}>
-                      <Text
-                        style={
-                          this.state.selectedCallTimeAfter == x.id
-                            ? styles.CallTimeButtonTextSelected
-                            : styles.CallTimeButtonText
-                        }>
-                        {x.label}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
+                {this.state.callTimeAfter.map(x => (
+                  <TouchableOpacity
+                    key={x.id}
+                    style={this.state.selectedCallTimeAfter == x.id ? styles.CallTimeButtonSelected : styles.CallTimeButton}
+                    onPress={() => this.setState({ selectedCallTime: x.id })}
+                  >
+                    <Text style={this.state.selectedCallTimeAfter == x.id ? styles.CallTimeButtonTextSelected : styles.CallTimeButtonText}>
+                      {x.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
             <Divider style={styles.dividerStle} />
@@ -255,34 +218,19 @@ class CreateNewCast extends Component {
                 </Text>
               </View>
               <View>
-                {this.state.CastPackage.map(x => {
-                  return (
-                    <TouchableOpacity
-                      style={
-                        this.state.selectedPackage == x.id
-                          ? styles.packageButtonS
-                          : styles.packageButton
-                      }
-                      onPress={() => this.setState({ selectedPackage: x.id })}>
-                      <Text
-                        style={
-                          this.state.selectedPackage == x.id
-                            ? styles.packageButtonTextS
-                            : styles.packageButtonText
-                        }>
-                        {x.package}
-                      </Text>
-                      <Text
-                        style={
-                          this.state.selectedPackage == x.id
-                            ? styles.packageButtonTextS
-                            : styles.packageButtonText
-                        }>
-                        {x.price}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
+                {this.state.CastPackage.map(x => (
+                  <TouchableOpacity
+                    style={this.state.selectedPackage == x.id ? styles.packageButtonS : styles.packageButton}
+                    onPress={() => this.setState({ selectedPackage: x.id })}
+                  >
+                    <Text style={this.state.selectedPackage == x.id ? styles.packageButtonTextS : styles.packageButtonText}>
+                      {x.package}
+                    </Text>
+                    <Text style={this.state.selectedPackage == x.id ? styles.packageButtonTextS : styles.packageButtonText}>
+                      {x.price}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
             <View style={{ paddingVertical: 30 }}>
@@ -294,10 +242,23 @@ class CreateNewCast extends Component {
               </View>
             </View>
           </View>
-        ) : null}
+        }
       </DashBoardHeader>
     );
   }
 }
 
-export default CreateNewCast;
+function mapStateToProps(state, props) {
+  return {
+    allCity: state.mainReducers.main.allCity
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(duckOperations, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CreateNewCast);

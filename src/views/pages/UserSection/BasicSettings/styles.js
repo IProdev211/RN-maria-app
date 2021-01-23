@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {Dimensions, Platform} from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 export default EStyleSheet.flatten(
   EStyleSheet.create({
@@ -108,7 +108,7 @@ export default EStyleSheet.flatten(
     marginTop30: {
       marginTop: 30,
     },
-    oNpressEvent: {
+    menuList: {
       backgroundColor: '#fff',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -158,6 +158,9 @@ export default EStyleSheet.flatten(
       position: 'absolute',
       right: 0,
       top: 15,
+    },
+    spinnerTextStyle: {
+      color: '#fff',
     },
   }),
 );

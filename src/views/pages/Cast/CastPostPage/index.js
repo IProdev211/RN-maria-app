@@ -20,7 +20,6 @@ import Modal from 'react-native-modal';
 import { showMessage } from 'react-native-flash-message';
 
 import {
-  getCitys,
   getCastUser,
   postCastUser,
   sendMessageToAdmin,
@@ -41,10 +40,6 @@ class CreateNewCast extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      citys: [],
-      showHideCity: 1,
-      SuituationType: '',
-      selectedPackage: 0,
       castProcess: 1,
       selectedCastType: 1,
       searchedUser: [],
@@ -59,35 +54,12 @@ class CreateNewCast extends Component {
     };
   }
   componentDidMount() {
-    this.getCitesInformations();
     BackHandler.addEventListener('hardwareBackPress', this.backKeyAction);
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.backKeyAction);
   }
-  getCitesInformations = async () => {
-    try {
-      let response = await getCitys();
-      if (response.isSuccess) {
-        let getCitys = response.result.success;
-        let upatedcity = [];
-        getCitys.map((x, index) => {
-          let item = {
-            id: index,
-            label: x.city_name,
-            longitude: x.longitude,
-            latitude: x.latitude,
-          };
-          upatedcity.push(item);
-        });
-        this.setState({ citys: upatedcity });
-      }
-      this.setState({ loading: false });
-    } catch (errors) {
-      this.setState({ loading: false });
-    }
-  };
   getTagsData = () => {
     let tag = '';
     let tags = [];
@@ -130,7 +102,6 @@ class CreateNewCast extends Component {
     try {
       const response = await getCastUser(data);
       if (response.isSuccess) {
-        console.log(response);
         let users = response.result.users;
         this.setState({ searchedUser: users, castProcess: 2 });
         this.setState({ loading: false });
@@ -269,8 +240,9 @@ class CreateNewCast extends Component {
         notificationHide={true}
         scrollingOff={true}
         customNavigation={() => this.backKeyAction()}
-        title="キャストを呼ぶ">
-        {this.state.castProcess == 1 ? (
+        title="キャストを呼ぶ"
+      >
+        {this.state.castProcess == 1 &&
           <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <View>
@@ -303,8 +275,8 @@ class CreateNewCast extends Component {
               />
             </View>
           </View>
-        ) : null}
-        {this.state.castProcess == 2 ? (
+        }
+        {this.state.castProcess == 2 &&
           <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <View>
@@ -336,7 +308,7 @@ class CreateNewCast extends Component {
                 </View> */}
               </View>
               <View style={styles.paddingTop20}>
-                {this.state.searchedUser ? (
+                {this.state.searchedUser ?
                   <FlatList
                     data={this.state.searchedUser}
                     keyExtractor={() => shortid.generate()} //has to be unique
@@ -344,11 +316,11 @@ class CreateNewCast extends Component {
                     horizontal={false}
                     numColumns={2}
                   />
-                ) : (
-                    <View style={styles.centerTextConatiner}>
-                      <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
-                    </View>
-                  )}
+                  :
+                  <View style={styles.centerTextConatiner}>
+                    <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
+                  </View>
+                }
               </View>
               <View style={styles.scrollingMargin} />
             </ScrollView>
@@ -359,8 +331,8 @@ class CreateNewCast extends Component {
               />
             </View>
           </View>
-        ) : null}
-        {this.state.castProcess == 3 ? (
+        }
+        {this.state.castProcess == 3 &&
           <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <View>
@@ -417,8 +389,8 @@ class CreateNewCast extends Component {
               />
             </View>
           </View>
-        ) : null}
-        {this.state.castProcess == 4 ? (
+        }
+        {this.state.castProcess == 4 &&
           <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <View>
@@ -496,7 +468,7 @@ class CreateNewCast extends Component {
                   <Text>選択したキャスト</Text>
                 </View>
                 <View style={styles.paddingTop20}>
-                  {this.props.castSelectedUser ? (
+                  {this.props.castSelectedUser ?
                     <FlatList
                       data={this.props.castSelectedUser}
                       keyExtractor={() => shortid.generate()} //has to be unique
@@ -504,20 +476,19 @@ class CreateNewCast extends Component {
                       horizontal={false}
                       numColumns={1}
                     />
-                  ) : (
-                      <View style={styles.centerTextConatiner}>
-                        <Text style={styles.NoUser}>
-                          ユーザーが見つかりません
+                    :
+                    <View style={styles.centerTextConatiner}>
+                      <Text style={styles.NoUser}>
+                        ユーザーが見つかりません
                       </Text>
-                      </View>
-                    )}
+                    </View>
+                  }
                 </View>
                 <Divider style={styles.dividerStle} />
                 <TouchableOpacity
                   style={styles.paddingTop20}
-                  onPress={() =>
-                    this.setState({ adminMessage: !this.state.adminMessage })
-                  }>
+                  onPress={() => this.setState({ adminMessage: !this.state.adminMessage })}
+                >
                   <View style={styles.organgeBgText}>
                     <Text>運営へのご希望があればご記入ください</Text>
                   </View>
@@ -561,7 +532,8 @@ class CreateNewCast extends Component {
               />
             </View>
           </View>
-        ) : null}
+        }
+
         <Modal
           testID={'castTimeModale'}
           isVisible={this.state.thanksModal}
@@ -586,6 +558,7 @@ class CreateNewCast extends Component {
             </View>
           </View>
         </Modal>
+
         <Modal
           testID={'sendMessageToAdmin'}
           isVisible={this.state.adminMessage}
@@ -605,7 +578,7 @@ class CreateNewCast extends Component {
                 multiline={true}
                 numberOfLines={4}
                 style={styles.adminMessage}
-                placeholder="管理者に送信するメッセージを送信してください..."
+                placeholder="管理者に送るメッセージを入力してください..."
                 onChangeText={text => this.setState({ adminMessageText: text })}
                 value={this.state.adminMessageText}
               />

@@ -66,7 +66,7 @@ class UserDetails extends Component {
       this.setState({ loading: false });
       if (response.isSuccess) {
         let data = response.result.success;
-        console.log('data.usr_profile_photo.length', data);
+        
         this.setState({
           userData: response.result.success,
           userReview: response.result.success.review_list,
@@ -258,7 +258,6 @@ class UserDetails extends Component {
   };
 
   render() {
-    console.log(this.state.userData);
     return (
       <DashBoardHeader
         navigation={this.props.navigation}

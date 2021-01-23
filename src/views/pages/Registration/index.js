@@ -541,7 +541,7 @@ class Registration extends Component {
           type: 'success',
         });
         if (response.isSuccess) {
-          this.props.addCites(response.result.city_list);
+          this.props.updateCityList(response.result.city_list);
         }
       } catch {
         this.setState({ loading: false, addCity: '' });
@@ -688,7 +688,7 @@ class Registration extends Component {
       <BgComponent>
         <View style={styles.mainWrapper}>
           {/* registartion stage 0 */}
-          {this.state.registrationStage == 0 ? (
+          {this.state.registrationStage == 0 &&
             <SafeAreaView style={styles.containerLog}>
               <ScrollView style={styles.scrollView}>
                 <View style={styles.pading20}>
@@ -915,9 +915,10 @@ class Registration extends Component {
                 </View>
               </ScrollView>
             </SafeAreaView>
-          ) : null}
+          }
+
           {/* Process 2 */}
-          {this.state.registrationStage == 1 ? (
+          {this.state.registrationStage == 1 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="メールでログイン"
@@ -952,8 +953,8 @@ class Registration extends Component {
                 action={this.loginWithEmailCheckInternetStatus}
               />
             </View>
-          ) : null}
-          {this.state.registrationStage == '1a' ? (
+          }
+          {this.state.registrationStage == '1a' &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="Eメールを確認します"
@@ -990,8 +991,8 @@ class Registration extends Component {
                 action={() => this.VerifyEmail()}
               />
             </View>
-          ) : null}
-          {this.state.registrationStage == 2 ? (
+          }
+          {this.state.registrationStage == 2 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
@@ -1073,10 +1074,11 @@ class Registration extends Component {
                 action={() => this.changeDate()}
               /> */}
             </View>
-          ) : null}
+          }
           {/* registartion stage 2 End*/}
+
           {/* registartion stage 3*/}
-          {this.state.registrationStage == 3 ? (
+          {this.state.registrationStage == 3 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
@@ -1115,12 +1117,8 @@ class Registration extends Component {
                       itemLabelStyle={styles.label}
                       itemStyleSelected={styles.itemSelected}
                       itemLabelStyleSelected={styles.labelSelected}
-                      ref={tag => {
-                        this.tag = tag;
-                      }}
-                      onItemPress={item => {
-                        this.setState({ selectedCityName: item.id });
-                      }}
+                      ref={tag => { this.tag = tag; }}
+                      onItemPress={item => this.setState({ selectedCityName: item.id })}
                       onMaxError={() => {
                         Alert.alert(
                           'ウォーニング',
@@ -1136,10 +1134,11 @@ class Registration extends Component {
                 action={() => this.selectedCityOption()}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 3 End*/}
+
           {/* registartion stage 4*/}
-          {this.state.registrationStage == 4 ? (
+          {this.state.registrationStage == 4 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
@@ -1226,10 +1225,11 @@ class Registration extends Component {
                 action={() => this.changeGenderFunction()}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 4 End*/}
+
           {/* registartion stage 5*/}
-          {this.state.registrationStage == 5 ? (
+          {this.state.registrationStage == 5 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="ニックネームを設定"
@@ -1265,10 +1265,11 @@ class Registration extends Component {
                 action={() => this.changeNickName()}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 5 End*/}
+
           {/* registartion stage 6*/}
-          {this.state.registrationStage == 6 ? (
+          {this.state.registrationStage == 6 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="ニックネームを設定"
@@ -1356,10 +1357,11 @@ class Registration extends Component {
                 action={() => this.chooseOption()}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 6 End*/}
+
           {/* registartion stage 4a*/}
-          {this.state.registrationStage == '6a' ? (
+          {this.state.registrationStage == '6a' &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
@@ -1409,10 +1411,11 @@ class Registration extends Component {
                 action={() => this.changeHourlyRate()}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 4a End*/}
+
           {/* registartion stage 4b*/}
-          {this.state.registrationStage == '6b' ? (
+          {this.state.registrationStage == '6b' &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="国番号を入力"
@@ -1485,10 +1488,11 @@ class Registration extends Component {
                 action={() => this.setState({ registrationStage: 7 })}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 4b End*/}
+
           {/* registartion stage 7*/}
-          {this.state.registrationStage == 7 ? (
+          {this.state.registrationStage == 7 &&
             <View style={styles.stageOneStyle}>
               <HeaderWithCross
                 title="プロファイルを設定"
@@ -1543,7 +1547,7 @@ class Registration extends Component {
                 action={() => this.updateProfile()}
               />
             </View>
-          ) : null}
+          }
           {/* registartion stage 7 End*/}
           {/* <InstagramLogin
             ref={ref => (this.instagramLogin = ref)}
@@ -1554,6 +1558,7 @@ class Registration extends Component {
             onLoginSuccess={e => console.log('instram', e)}
             onLoginFailure={data => console.log(data)}
           /> */}
+
           <Spinner
             visible={this.state.loading}
             textContent={'読み込み中...'}

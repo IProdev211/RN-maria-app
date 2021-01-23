@@ -159,10 +159,7 @@ const UserMenu = () => {
       initialRouteName="User">
       <Stack.Screen name="User" component={User} />
       <Stack.Screen name="UserDataUpdate" component={UserDataUpdate} />
-      <Stack.Screen
-        name="UserDataUpdateField"
-        component={UserDataUpdateField}
-      />
+      <Stack.Screen name="UserDataUpdateField" component={UserDataUpdateField} />
       <Stack.Screen name="BasicSettings" component={BasicSettings} />
       <Stack.Screen name="UserReview" component={UserReview} />
       <Stack.Screen name="Settings" component={Settings} />

@@ -48,14 +48,11 @@ class Settings extends Component {
     };
   }
   componentDidMount() {
-    this.getNessearyInfo();
-  }
-
-  getNessearyInfo = () => {
     this.getEmailSetiing();
     this.getAppSetiing();
     this.getPrivacySetiing();
-  };
+  }
+
   getEmailSetiing = async () => {
     try {
       const response = await getEmailSettings();

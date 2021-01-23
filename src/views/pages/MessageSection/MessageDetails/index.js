@@ -81,6 +81,11 @@ class Search extends Component {
       user_name: this.props.route.params.user_name,
     });
   }
+
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+  
   getUpdatedMessage = async () => {
     try {
       const response = await singleUserUpdatedMessage(

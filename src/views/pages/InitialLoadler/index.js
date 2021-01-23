@@ -36,6 +36,7 @@ class InitialLoadler extends Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
+
   checkLogIn = async () => {
     this.setState({ loading: true });
     try {
@@ -45,8 +46,8 @@ class InitialLoadler extends Component {
           SplashScreen.hide();
           this.setState({ loading: false });
         }, 500);
-        this.props.navigation.navigate('TabNavigator');
         this.UpdateNessaryInformation();
+        this.props.navigation.navigate('TabNavigator');
       } else {
         setTimeout(x => {
           SplashScreen.hide();
@@ -64,12 +65,12 @@ class InitialLoadler extends Component {
   };
 
   logOutUser = async () => {
+    await AsyncStorage.clear();
     this.props.navigation.navigate('Registration');
-    const response = await AsyncStorage.clear();
   };
 
   UpdateNessaryInformation = id => {
-    this.getAllTrags();
+    this.getAllTags();
     this.getAllNotification();
     this.getUserInfo();
     this.getAllGiftIcons();
@@ -84,7 +85,7 @@ class InitialLoadler extends Component {
     } catch { }
   };
 
-  getAllTrags = async () => {
+  getAllTags = async () => {
     try {
       const response = await getAllTags();
       this.props.addTagValue(response.result.tag_values[0]);
@@ -95,7 +96,7 @@ class InitialLoadler extends Component {
     try {
       const response = await getAllCity();
       if (response.isSuccess) {
-        this.props.addCites(response.result.city_list);
+        this.props.updateCityList(response.result.city_list);
       }
     } catch { }
   };

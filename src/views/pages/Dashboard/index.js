@@ -143,6 +143,10 @@ class Dashboard extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
+  componentWillUnmount() {
+    this._unsubscribe();
+  }
+
   getAllUsers = async () => {
     Geolocation.getCurrentPosition(
       position => {
@@ -205,8 +209,8 @@ class Dashboard extends Component {
   handleBackButton = () => {
     if ((this.props.route, this.props.navigation.isFocused())) {
       Alert.alert(
-        'アプリケーションを終了する',
-        'アプリケーションを終了しますか？はいを選択した場合、以下のオプションから選択してくださいアプリは閉じられます。',
+        'アプリ終了',
+        'アプリを本当に終了しますか？',
         [
           {
             text: 'キャンセル',

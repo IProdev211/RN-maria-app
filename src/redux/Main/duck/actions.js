@@ -32,8 +32,8 @@ const pushedCurrentMessage = (info, to, from) => ({
     from,
   },
 });
-const AddedCities = city => ({
-  type: types.ADD_CITIES,
+const updateCityList = city => ({
+  type: types.UPDATE_CITY_LIST,
   status: 'success',
   payload: {
     city,
@@ -98,7 +98,7 @@ export default {
   addedUserInfo,
   updatedCurrentMessage,
   pushedCurrentMessage,
-  AddedCities,
+  updateCityList,
   searchFilterData,
   addedTagValue,
   AllNotification,
