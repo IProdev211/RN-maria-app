@@ -46,6 +46,8 @@ class DashBoardHeader extends Component {
   };
 
   render() {
+    const { userInfo } = this.props;
+    
     return (
       <View>
         <StatusBar
@@ -77,7 +79,7 @@ class DashBoardHeader extends Component {
                     style={styles.citySelector}
                     onPress={() => this.props.navigation.navigate('SearchFilter')}
                   >
-                    <Text style={styles.citySelectorText}>キャストを検索</Text>
+                    <Text style={styles.citySelectorText}>{userInfo && Number(userInfo.usr_type) === 1 ? "ゲストを検索する" : "キャストを検索する"}</Text>
                     <View style={styles.citySelectorIcon}>
                       <Icon1
                         name="search"
@@ -220,6 +222,7 @@ class DashBoardHeader extends Component {
 
 function mapStateToProps(state, props) {
   return {
+    userInfo: state.mainReducers.main.userInfo,
     allNotification: state.mainReducers.main.allNotification,
     allCity: state.mainReducers.main.allCity
   };

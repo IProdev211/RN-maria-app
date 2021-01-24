@@ -12,18 +12,11 @@ import {
   Button,
 } from 'react-native';
 import { GiftedChat, Bubble, MessageText, MessageImage } from 'react-native-gifted-chat';
-import ImageResizer from 'react-native-image-resizer';
-import ImagePicker from 'react-native-image-picker';
+import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SetpByStepProcess from '../../../components/SetpByStepProcess';
 import shortid from 'shortid';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-//redux
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { duckOperations } from '../../../../redux/Main/duck';
-
+import Modal from 'react-native-modal';
 import {
   singleUserUpdatedMessage,
   sendMessage,
@@ -32,8 +25,13 @@ import {
   BlockUser,
   reportUser,
 } from '../../../../services/AuthService';
-import Modal from 'react-native-modal';
+import SetpByStepProcess from '../../../components/SetpByStepProcess';
 import styles from './styles';
+
+//redux
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { duckOperations } from '../../../../redux/Main/duck';
 
 class Search extends Component {
   constructor(props) {
@@ -85,7 +83,7 @@ class Search extends Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
-  
+
   getUpdatedMessage = async () => {
     try {
       const response = await singleUserUpdatedMessage(
@@ -162,40 +160,6 @@ class Search extends Component {
     this.getUpdatedMessage();
   };
 
-  uploadImages = async data => {
-    await ImageResizer.createResizedImage(data.uri, 500, 500, 'JPEG', 20, 0)
-      .then(compressedImage => {
-        this.uploadMessageImage(compressedImage, compressedImage.path);
-        console.log(compressedImage);
-      })
-      .catch(err => {
-        this.showError(err);
-      });
-  };
-
-  uploadMessageImage = async (data, path) => {
-    try {
-      let uriParts = path.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let response = await uploadMessageImage(
-        {},
-        data.uri,
-        `image/${fileType ? fileType : 'png'}`,
-        `files.${fileType ? fileType : 'png'}`,
-        this.props.route.params.user_id,
-      );
-      console.log('Image up', response);
-      if (response && response.isSuccess) {
-        console.log('Image up', response);
-      } else {
-        this.setState({ loading: false });
-      }
-    } catch (errors) {
-      console.log('Image Upload error', errors);
-      this.setState({ loading: false });
-    }
-  };
-
   onReceive(text) {
     this.setState(previousState => {
       return {
@@ -247,37 +211,25 @@ class Search extends Component {
       </View>
     );
   }
+
   sendImage = () => {
-    if (
-      this.props.userInfo &&
-      this.props.userInfo.last_deposite_balance != '0'
-    ) {
-      const options = {
-        title: 'プロフィール画像をアップロード',
-        takePhotoButtonTitle: '撮影する',
-        chooseFromLibraryButtonTitle: '写真ライブラリから',
-        cancelButtonTitle: 'キャンセル',
-        storageOptions: {
-          skipBackup: true,
-          path: 'images',
-        },
-      };
-      ImagePicker.showImagePicker(options, response => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
-        } else {
-          const source = { uri: response.uri };
-          this.uploadImage(source);
-          this.setState({
-            DateProfImageUri: source.uri,
-            DateProfImagePath: response.path,
-          });
-        }
-      });
+    if (this.props.userInfo && this.props.userInfo.last_deposite_balance != '0') {
+      Alert.alert(
+        '画像送信',
+        '送信する画像を選んでください。',
+        [
+          {
+            text: '撮影する',
+            onPress: () => this.takePhotoFromCamera(),
+            style: 'cancel',
+          },
+          {
+            text: '画像ライブラリから',
+            onPress: () => this.takePhotoFromLibrary(),
+          },
+        ],
+        { cancelable: true },
+      );
     } else {
       Alert.alert(
         '警告',
@@ -299,9 +251,87 @@ class Search extends Component {
       );
     }
   };
-  uploadImage = url => {
-    this.newUrlImageMessage(url.uri);
-    this.uploadImages(url);
+
+  takePhotoFromCamera = async () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      saveToPhotos: false,
+      maxWidth: 500,
+      maxHeight: 500
+    }
+
+    ImagePicker.launchCamera(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        this.uploadImage(response);
+        this.setState({
+          DateProfImageUri: response.uri,
+          DateProfImagePath: response.path,
+        });
+      }
+    });
+  };
+
+  takePhotoFromLibrary = async () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      maxWidth: 500,
+      maxHeight: 500
+    }
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        this.uploadImage(response);
+        this.setState({
+          DateProfImageUri: response.uri,
+          DateProfImagePath: response.path,
+        });
+      }
+    });
+  };
+
+  uploadImage = data => {
+    this.newUrlImageMessage(data.uri);
+    this.uploadMessageImage(data);
+  };
+
+  newUrlImageMessage = url => {
+    let message = {
+      createdAt: new Date(),
+      text: '',
+      image: url,
+      user: { _id: this.props.userInfo.id },
+      _id: shortid.generate(),
+    };
+    this.props.pushCurrentMessage(
+      message,
+      this.props.route.params.user_id,
+      this.props.userInfo.id,
+    );
+    this.forceUpdate();
+    setTimeout(x => {
+      this.forceUpdate();
+    }, 500);
+  };
+
+  uploadMessageImage = async (data) => {
+    try {
+      await uploadMessageImage({}, data.uri, data.type, data.fileName, this.props.route.params.user_id);
+    } catch (errors) {
+      console.log("Message's Image Upload error", errors);
+    }
   };
 
   renderBubble(props) {
@@ -556,24 +586,6 @@ class Search extends Component {
         }
       } catch { }
     }
-  };
-  newUrlImageMessage = url => {
-    let message = {
-      createdAt: new Date(),
-      text: '',
-      image: url,
-      user: { _id: this.props.userInfo.id },
-      _id: shortid.generate(),
-    };
-    this.props.pushCurrentMessage(
-      message,
-      this.props.route.params.user_id,
-      this.props.userInfo.id,
-    );
-    this.forceUpdate();
-    setTimeout(x => {
-      this.forceUpdate();
-    }, 500);
   };
   newImageMessage = url => {
     let message = {

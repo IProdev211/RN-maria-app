@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
-import ImageResizer from 'react-native-image-resizer';
-import ImagePicker from 'react-native-image-picker';
+import { View, Text, Image, ScrollView, Alert } from 'react-native';
+import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -44,17 +43,35 @@ class UserDataUpdate extends Component {
   }
 
   UploadProfileImageFromMobile = () => {
+    Alert.alert(
+      '画像アップロード',
+      'プロフィール画像をアップロードしてください。',
+      [
+        {
+          text: '撮影する',
+          onPress: () => this.takePhotoFromCamera(),
+          style: 'cancel',
+        },
+        {
+          text: '画像ライブラリから',
+          onPress: () => this.takePhotoFromLibrary(),
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  takePhotoFromCamera = async () => {
     const options = {
-      title: 'プロフィール画像をアップロード',
-      takePhotoButtonTitle: '撮影する',
-      chooseFromLibraryButtonTitle: '写真ライブラリから',
-      cancelButtonTitle: 'キャンセル',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      saveToPhotos: false,
+      maxWidth: 500,
+      maxHeight: 500
     };
-    ImagePicker.showImagePicker(options, response => {
+
+    ImagePicker.launchCamera(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -62,33 +79,34 @@ class UserDataUpdate extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        this.uploadImagesIos(response);
+        this.uploadImages(response);
       }
     });
   };
 
-  uploadImagesIos = async data => {
-    await ImageResizer.createResizedImage(data.uri, 500, 500, 'JPEG', 20, 0)
-      .then(compressedImage => {
-        this.uploadImages(compressedImage, compressedImage.path);
-      })
-      .catch(err => {
-        this.showError(err);
-      });
-    this.setState({ profileImage: data.uri });
+  takePhotoFromLibrary = async () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      maxWidth: 500,
+      maxHeight: 500
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        this.uploadImages(response);
+      }
+    });
   };
 
-  uploadImages = async (data, path) => {
+  uploadImages = async (data) => {
     try {
       this.setState({ loading: true });
-      let uriParts = path.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let response = await uploadProfileImage(
-        {},
-        data.uri,
-        `image/${fileType ? fileType : 'png'}`,
-        `files.${fileType ? fileType : 'png'}`,
-      );
+      let response = await uploadProfileImage({}, data.uri, data.type, data.fileName);
       if (response && response.isSuccess) {
         let response = await getUserDetails();
         if (response.isSuccess) {

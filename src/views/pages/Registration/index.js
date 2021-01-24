@@ -14,23 +14,17 @@ import {
 } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import DatePicker from 'react-native-date-picker';
-import BgComponent from '../../components/BgComponent';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Fontisto';
 import { Avatar } from 'react-native-elements';
-import ImagePicker from 'react-native-image-picker';
-import HeaderWithCross from '../../components/HeaderWithCross';
-import SetpByStepProcess from '../../components/SetpByStepProcess';
+import * as ImagePicker from 'react-native-image-picker';
 import NetInfo from '@react-native-community/netinfo';
 import { TagSelect } from 'react-native-tag-select';
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import LinearGradient from 'react-native-linear-gradient';
-import golbalConstants from '../../Common/GlobalStyles/constants';
 import SplashScreen from 'react-native-splash-screen';
-import ImageResizer from 'react-native-image-resizer';
-import styles from './styles';
 import {
   AccessToken,
   GraphRequest,
@@ -49,9 +43,15 @@ import {
   loginWithEmailAddress,
   verifyEmailAddress,
 } from '../../../services/AuthService';
+import BgComponent from '../../components/BgComponent';
+import HeaderWithCross from '../../components/HeaderWithCross';
+import SetpByStepProcess from '../../components/SetpByStepProcess';
+import golbalConstants from '../../Common/GlobalStyles/constants';
+import styles from './styles';
+
 //redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { duckOperations } from '../../../redux/Main/duck';
 
 const { RNTwitterSignIn } = NativeModules;
@@ -165,19 +165,56 @@ class Registration extends Component {
       this.setState({ registrationStage: '6b' });
     }
   };
+
   imagePickerForDateValidationImage = () => {
+    Alert.alert(
+      '年齢識別写真のアップロード',
+      '年齢識別写真をアップロードしてください。',
+      [
+        {
+          text: '撮影する',
+          onPress: () => this.takePhotoFromCamera('age evidence image'),
+          style: 'cancel',
+        },
+        {
+          text: '画像ライブラリから',
+          onPress: () => this.takePhotoFromLibrary('age evidence image'),
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  imagePickerForProfileImage = () => {
+    Alert.alert(
+      'プロフィール画像のアップロード',
+      'プロフィール画像をアップロードしてください。',
+      [
+        {
+          text: '撮影する',
+          onPress: () => this.takePhotoFromCamera('profile image'),
+          style: 'cancel',
+        },
+        {
+          text: '画像ライブラリから',
+          onPress: () => this.takePhotoFromLibrary('profile image'),
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  takePhotoFromCamera = async (type) => {
     const options = {
-      title: 'プロフィール画像をアップロード',
-      takePhotoButtonTitle: '撮影する',
-      chooseFromLibraryButtonTitle: '写真ライブラリから',
-      cancelButtonTitle: 'キャンセル',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      saveToPhotos: false,
+      maxWidth: 500,
+      maxHeight: 500
     };
-    ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
+
+    ImagePicker.launchCamera(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -185,81 +222,75 @@ class Registration extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri };
-        this.setState({
-          DateProfImageUri: source.uri,
-          DateProfImagePath: response.path,
-        });
-        this.setState({ photoDocument: false });
-        this.reSizeUploadImage(response);
+        if (type === 'age evidence image') {
+          this.setState({
+            DateProfImageUri: response.uri,
+            DateProfImagePath: response.path,
+            photoDocument: false
+          });
+          this.uploaduAgeEvidence(response);
+        } else if (type === 'profile image') {
+          this.setState({
+            profileImage: response.uri,
+            process6ImagePath: response.path,
+          });
+        }
       }
     });
   };
-  reSizeUploadImage = async data => {
-    await ImageResizer.createResizedImage(data.uri, 500, 500, 'JPEG', 20, 0)
-      .then(compressedImage => {
-        this.uploaduAgeEvidence(compressedImage);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+  takePhotoFromLibrary = async (type) => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      maxWidth: 500,
+      maxHeight: 500
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        if (type === 'age evidence image') {
+          this.setState({
+            DateProfImageUri: response.uri,
+            DateProfImagePath: response.path,
+            photoDocument: false
+          });
+          this.uploaduAgeEvidence(response);
+        } else if (type === 'profile image') {
+          this.setState({
+            profileImage: response.uri,
+            process6ImagePath: response.path,
+          });
+        }
+      }
+    });
   };
+
   uploaduAgeEvidence = async data => {
+    this.setState({ loading: true });
     try {
-      let uriParts = data.name.split('.');
-      let fileType = uriParts[uriParts.length - 1];
-      let response = await uploadAgeEvidence(
-        {},
-        data.uri,
-        `image/${fileType ? fileType : 'png'}`,
-        `files.${fileType ? fileType : 'png'}`,
-      );
+      let response = await uploadAgeEvidence({}, data.uri, data.type, data.fileName);
       if (response && response.isSuccess) {
         showMessage({
           message: '年齢識別写真のアップロードの成功',
           type: 'success',
         });
         this.setState({ photoDocument: true });
-      } else {
-        this.setState({ loading: false });
       }
-    } catch (errors) {
-      console.log('Image Upload error', errors);
       this.setState({ loading: false });
+    } catch (errors) {
       showMessage({
-        message: '間違ったコードを入力しました',
+        message: '失敗しました。しばらくしてからもう一度試してください。',
         type: 'error',
       });
+      this.setState({ loading: false });
     }
   };
-  imagePickerForProfileImage = () => {
-    const options = {
-      title: 'プロフィール画像をアップロード',
-      takePhotoButtonTitle: '撮影する',
-      chooseFromLibraryButtonTitle: '写真ライブラリから',
-      cancelButtonTitle: 'キャンセル',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
-    ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        const source = { uri: response.uri };
-        this.setState({
-          profileImage: source.uri,
-          process6ImagePath: response.path,
-        });
-      }
-    });
-  };
+
   updateProfile = () => {
     if (this.state.profileImage && this.state.process6ImagePath) {
       this.uploadImages(this.state.profileImage);
@@ -268,9 +299,10 @@ class Registration extends Component {
       this.updateProfileInformation();
     }
   };
+
   uploadImages = async data => {
+    this.setState({ loading: true });
     try {
-      this.setState({ loading: true });
       let uriParts = this.state.process6ImagePath.split('.');
       let fileType = uriParts[uriParts.length - 1];
       let response = await uploadProfileImage(
@@ -279,25 +311,23 @@ class Registration extends Component {
         `image/${fileType ? fileType : 'png'}`,
         `files.${fileType ? fileType : 'png'}`,
       );
-      console.log('Image up', response);
       if (response && response.isSuccess) {
-        console.log('Image up', response);
         this.setState({ userImage: response.result.success.profile_pic });
         this.updateProfileInformation();
-      } else {
-        this.setState({ loading: false });
       }
-    } catch (errors) {
-      console.log('Image Upload error', errors);
       this.setState({ loading: false });
+    } catch (errors) {
       showMessage({
-        message: '間違ったコードを入力しました',
+        message: 'プロフィール写真のアップロードに失敗しました。',
         type: 'error',
       });
+      this.setState({ loading: false });
     }
   };
+
   updateProfileInformation = async () => {
     var username = this.state.customEmail.match(/^([^@]*)@/)[1];
+    this.setState({ loading: true });
     try {
       let data = {
         usr_nickname: this.state.nickName,
@@ -312,37 +342,36 @@ class Registration extends Component {
         usr_birth_date: this.state.birthday,
         usr_hourly_rate: this.state.hourlyRate ? this.state.hourlyRate : 0,
       };
-      // console.log(data);
       // if (this.state.interViewCall) {
       //   this.InterViewRequest();
       // }
       let response = await updateUserInfo(data);
-      console.log('-- profile update : ', response, data);
       if (response.isSuccess) {
-        this.setState({ loading: false });
         this.props.navigation.navigate('InitialLoader');
         showMessage({
-          message: '4桁のコードが携帯電話に送信されました。',
+          message: '成功しました。',
           type: 'success',
         });
       } else {
-        this.setState({ loading: false });
         showMessage({
-          message: '問題が発生しました。電話番号を確認してください！',
+          message: '失敗しました。',
           type: 'error',
         });
       }
+      this.setState({ loading: false });
     } catch (errors) {
-      console.log('profile Update error', errors);
       showMessage({
         message:
-          'インターネットに接続されていません。接続を確認してください ！',
+          'インターネットに接続されていません。接続を確認してください！',
         type: 'error',
       });
+      this.setState({ loading: false });
     }
   };
+
   loginApi = async (userInfo, type) => {
     this.props.changeSignInMethod(type);
+    this.setState({ loading: true });
     if (userInfo && userInfo.picture && userInfo.picture.data && userInfo.picture.data.url) {
       this.setState({ profileImage: userInfo.picture.data.url });
     }
@@ -357,7 +386,6 @@ class Registration extends Component {
       this.setState({ customEmail: email });
       let response = await LoginApi(data);
       if (response) {
-        this.setState({ loading: false });
         showMessage({
           message: 'ログイン成功',
           type: 'success',
@@ -370,19 +398,18 @@ class Registration extends Component {
           this.setState({ registrationStage: 2 });
         }
       } else {
-        this.setState({ loading: false });
         showMessage({
-          message:
-            'アカウントは管理者によってブロックされています。詳細については、管理者にお問い合わせください。',
+          message: 'アカウントは管理者によってブロックされています。詳細については、管理者にお問い合わせください。',
           type: 'error',
         });
       }
+      this.setState({ loading: false });
     } catch (errors) {
-      console.log('profile Update error', errors);
       showMessage({
         message: 'インターネット接続を確認してください！',
         type: 'error',
       });
+      this.setState({ loading: false });
     }
   };
 
@@ -450,13 +477,13 @@ class Registration extends Component {
   logoutWithTwitter = () => {
     RNTwitterSignIn.logOut();
   };
+
   changeDate = () => {
     if (this.state.DateProfImageUri) {
       this.setState({ registrationStage: 3 });
     } else {
       showMessage({
-        message:
-          '運転免許証またはパスポートをあなたの年齢の教授にアップロードする必要があります',
+        message: 'あなたの年齢を確認するために運転免許証やパスポートをアップロードしていただく必要があります。',
         type: 'error',
       });
     }
@@ -474,10 +501,10 @@ class Registration extends Component {
       let data = {
         want_interview: 1,
       };
-      const response = await wantInterView(data);
-      console.log(response);
+      await wantInterView(data);
     } catch { }
   };
+
   signInGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -522,6 +549,7 @@ class Registration extends Component {
       }
     }
   };
+
   addNewCity = async () => {
     if (!this.state.addCity) {
       showMessage({
@@ -552,6 +580,7 @@ class Registration extends Component {
       }
     }
   };
+
   loginWithEmailCheckInternetStatus = () => {
     NetInfo.fetch().then(state => {
       if (state.isConnected) {
@@ -566,6 +595,7 @@ class Registration extends Component {
       }
     });
   };
+
   loginWithEmail = async () => {
     if (!this.emailValidation(this.state.emailAddress.trim())) {
       showMessage({
@@ -579,8 +609,6 @@ class Registration extends Component {
       this.setState({ loading: true });
       try {
         const response = await loginWithEmailAddress(data);
-        console.log('Login With Email step  one', response);
-        this.setState({ loading: false });
         if (response.isSuccess) {
           showMessage({
             message: 'メールアドレスにワンタイムパスワードを送信しました',
@@ -593,12 +621,13 @@ class Registration extends Component {
             type: 'warning',
           });
         }
-      } catch {
         this.setState({ loading: false });
+      } catch {
         showMessage({
           message: 'インターネットに接続されていません。接続を確認してください',
           type: 'error',
         });
+        this.setState({ loading: false });
       }
     }
   };
@@ -617,8 +646,6 @@ class Registration extends Component {
       this.setState({ loading: true });
       try {
         const response = await verifyEmailAddress(data);
-        this.setState({ loading: false });
-        console.log('Login With Email step  two', data, response);
         if (response) {
           if (response.status === 401) {
             showMessage({
@@ -643,12 +670,13 @@ class Registration extends Component {
             this.loginApi(data, 'email');
           }
         }
-      } catch {
         this.setState({ loading: false });
+      } catch {
         showMessage({
           message: 'インターネットに接続されていません。接続を確認してください',
           type: 'error',
         });
+        this.setState({ loading: false });
       }
     }
   };
@@ -1024,7 +1052,7 @@ class Registration extends Component {
                 </Text>
               </View>
               <View style={styles.centerContainer}>
-                {this.state.DateProfImageUri ? (
+                {this.state.DateProfImageUri ?
                   <Avatar
                     size={150}
                     rounded
@@ -1035,23 +1063,23 @@ class Registration extends Component {
                     showEditButton
                     source={{ uri: this.state.DateProfImageUri }}
                   />
-                ) : (
-                    <Avatar
-                      size={150}
-                      rounded
-                      icon={{ name: 'user', type: 'font-awesome' }}
-                      onPress={() => this.imagePickerForDateValidationImage()}
-                      activeOpacity={0.7}
-                      containerStyle={styles.centerContainer}
-                      showEditButton
-                      source={require('../../../assets/documents.png')}
-                    />
-                  )}
-                {this.state.photoDocument ? (
+                  :
+                  <Avatar
+                    size={150}
+                    rounded
+                    icon={{ name: 'user', type: 'font-awesome' }}
+                    onPress={() => this.imagePickerForDateValidationImage()}
+                    activeOpacity={0.7}
+                    containerStyle={styles.centerContainer}
+                    showEditButton
+                    source={require('../../../assets/documents.png')}
+                  />
+                }
+                {this.state.photoDocument &&
                   <View style={styles.verifyIcon}>
                     <Icon name="check-circle" size={30} color={'green'} />
                   </View>
-                ) : null}
+                }
               </View>
               <View style={styles.ageVerification}>
                 <View style={styles.ageVerificationContainer}>
@@ -1089,19 +1117,19 @@ class Registration extends Component {
               <SafeAreaView style={styles.container}>
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.profileImageSection}>
-                    {this.state.profileImage ? (
+                    {this.state.profileImage ?
                       <Avatar
                         rounded
                         size="xlarge"
                         source={{ uri: this.state.profileImage }}
                       />
-                    ) : (
-                        <Avatar
-                          rounded
-                          size="xlarge"
-                          source={require('../../../assets/panda.png')}
-                        />
-                      )}
+                      :
+                      <Avatar
+                        rounded
+                        size="xlarge"
+                        source={require('../../../assets/panda.png')}
+                      />
+                    }
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>
@@ -1520,24 +1548,24 @@ class Registration extends Component {
                       </Text>
                     </View>
                     <View style={[styles.paddingTop20, styles.centerContainer]}>
-                      {this.state.profileImage ? (
+                      {this.state.profileImage ?
                         <Avatar
                           rounded
                           size="xlarge"
                           source={{ uri: this.state.profileImage }}
                         />
-                      ) : (
-                          <Avatar
-                            size={150}
-                            rounded
-                            icon={{ name: 'user', type: 'font-awesome' }}
-                            onPress={() => this.imagePickerForProfileImage()}
-                            activeOpacity={0.7}
-                            containerStyle={styles.centerContainer}
-                            showEditButton
-                            source={require('../../../assets/panda.png')}
-                          />
-                        )}
+                        :
+                        <Avatar
+                          size={150}
+                          rounded
+                          icon={{ name: 'user', type: 'font-awesome' }}
+                          onPress={() => this.imagePickerForProfileImage()}
+                          activeOpacity={0.7}
+                          containerStyle={styles.centerContainer}
+                          showEditButton
+                          source={require('../../../assets/panda.png')}
+                        />
+                      }
                     </View>
                   </View>
                 </ScrollView>
@@ -1559,11 +1587,7 @@ class Registration extends Component {
             onLoginFailure={data => console.log(data)}
           /> */}
 
-          <Spinner
-            visible={this.state.loading}
-            textContent={'読み込み中...'}
-            textStyle={styles.spinnerTextStyle}
-          />
+          <Spinner visible={this.state.loading} />
         </View>
       </BgComponent>
     );

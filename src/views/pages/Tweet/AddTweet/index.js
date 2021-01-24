@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text, TouchableOpacity, Alert } from 'react-native';
 import Textarea from 'react-native-textarea';
-import ImagePicker from 'react-native-image-picker';
-import ImageResizer from 'react-native-image-resizer';
+import * as ImagePicker from 'react-native-image-picker';
 import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -28,18 +27,35 @@ class AddTweet extends Component {
   }
 
   imagePickerForTweetImage = () => {
+    Alert.alert(
+      '画像アップロード',
+      '画像をアップロードしてください。',
+      [
+        {
+          text: '撮影する',
+          onPress: () => this.takePhotoFromCamera(),
+          style: 'cancel',
+        },
+        {
+          text: '画像ライブラリから',
+          onPress: () => this.takePhotoFromLibrary(),
+        },
+      ],
+      { cancelable: true },
+    );
+  };
+
+  takePhotoFromCamera = async () => {
     const options = {
-      title: 'プロフィール画像をアップロード',
-      takePhotoButtonTitle: '撮影する',
-      chooseFromLibraryButtonTitle: '写真ライブラリから',
-      cancelButtonTitle: 'キャンセル',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      saveToPhotos: false,
+      maxWidth: 500,
+      maxHeight: 500
     };
-    ImagePicker.showImagePicker(options, response => {
-      console.log('Response = ', response);
+
+    ImagePicker.launchCamera(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -47,31 +63,42 @@ class AddTweet extends Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        this.uploadImagesReSizer(response);
+        this.setState({
+          TweetImage: response.uri,
+          process6ImagePath: response.path,
+          imageType: response.type,
+        });
       }
     });
   };
-  uploadImagesReSizer = async data => {
-    await ImageResizer.createResizedImage(data.uri, 500, 500, 'JPEG', 20, 0)
-      .then(compressedImage => {
-        console.log(compressedImage);
-        const source = { uri: compressedImage.uri };
+
+  takePhotoFromLibrary = async () => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: false,
+      quality: 1,
+      maxWidth: 500,
+      maxHeight: 500
+    };
+
+    ImagePicker.launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
         this.setState({
-          TweetImage: source,
-          process6ImagePath: compressedImage.path,
-          imageType: compressedImage.type,
+          TweetImage: response.uri,
+          process6ImagePath: response.path,
+          imageType: response.type,
         });
-        console.log(this.state);
-      })
-      .catch(err => {
-        this.showError(err);
-      });
+      }
+    });
   };
+
   uploadTweet = async () => {
-    this.setState({ loading: true });
     if (this.state.TweetImage) {
+      this.setState({ loading: true });
       try {
-        this.setState({ loading: true });
         let uriParts = this.state.process6ImagePath.split('.');
         let fileType = uriParts[uriParts.length - 1];
         let response = await uploadTweetImage(
@@ -81,17 +108,19 @@ class AddTweet extends Component {
           `files.${fileType ? fileType : 'png'}`,
         );
         if (response && response.isSuccess) {
-          this.setState({
-            tweet_picture: response.result.success.profile_pic,
-          });
+          this.setState({ tweet_picture: response.result.success.profile_pic });
           this.updatePost();
         } else {
+          showMessage({
+            message: '失敗しました。',
+            type: 'error',
+          });
           this.setState({ loading: false });
         }
       } catch (errors) {
         this.setState({ loading: false });
         showMessage({
-          message: '間違ったコードを入力しました',
+          message: '失敗しました。',
           type: 'error',
         });
       }
@@ -99,6 +128,7 @@ class AddTweet extends Component {
       this.updatePost();
     }
   };
+
   updatePost = async () => {
     let data = {
       tweet_content: this.state.tweet_content,
@@ -107,25 +137,24 @@ class AddTweet extends Component {
     try {
       let response = await createTweet(data);
       if (response.isSuccess) {
-        this.setState({ loading: false });
         this.props.navigation.push('TweetDetails');
         showMessage({
           message: '投稿が正常に追加されました。',
           type: 'success',
         });
       } else {
-        this.setState({ loading: false });
         showMessage({
           message: '投稿を作成できません。管理者に連絡してください！',
           type: 'error',
         });
       }
-    } catch (errors) {
       this.setState({ loading: false });
+    } catch (errors) {
       showMessage({
         message: 'インターネット接続を確認してください！',
         type: 'error',
       });
+      this.setState({ loading: false });
     }
   };
 
@@ -135,7 +164,8 @@ class AddTweet extends Component {
         navigation={this.props.navigation}
         title="つぶやきを投稿 "
         notificationHide={true}
-        backNavigation={true}>
+        backNavigation={true}
+      >
         <View style={{ flex: 1, height: '100%' }}>
           <View style={styles.container}>
             <Image
@@ -168,12 +198,12 @@ class AddTweet extends Component {
             />
           </View>
           <View>
-            {this.state.TweetImage ? (
+            {this.state.TweetImage &&
               <Image
                 style={styles.AttachMentImage}
                 source={this.state.TweetImage}
               />
-            ) : null}
+            }
           </View>
           <View style={styles.postContainer}>
             <TouchableOpacity
@@ -188,11 +218,8 @@ class AddTweet extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <Spinner
-          visible={this.state.loading}
-          textContent={'読み込み中...'}
-          textStyle={styles.spinnerTextStyle}
-        />
+
+        <Spinner visible={this.state.loading} />
       </DashBoardHeader>
     );
   }

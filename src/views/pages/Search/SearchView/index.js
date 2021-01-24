@@ -86,6 +86,8 @@ class Search extends Component {
   };
 
   render() {
+    const { userInfo } = this.props;
+
     return (
       <DashBoardHeader navigation={this.props.navigation} SearchPage={true}>
         <View>
@@ -119,7 +121,7 @@ class Search extends Component {
 
           <View style={styles.centerTextConatiner}>
             <Text style={styles.headerText}>
-              登録ゲスト様{' '}
+              {userInfo && Number(userInfo.usr_type) === 1 ? "登録ゲスト様" : "登録キャスト様"}{' '}
               {this.props.SearchFilterData
                 ? this.props.SearchFilterData.length
                 : 0}{' '}
