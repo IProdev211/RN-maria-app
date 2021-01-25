@@ -70,7 +70,7 @@ const TabNavigator = () => {
             title = 'メッセージ';
           } else if (route.name === 'Tweet') {
             iconName = focused ? 'md-time' : 'md-time';
-            title = 'つぶやく';
+            title = 'つぶやき';
           } else if (route.name === 'User') {
             title = 'マイページ';
             iconName = focused ? 'user-o' : 'user';

@@ -146,7 +146,7 @@ class Settings extends Component {
               value={this.state.appSettings.footprint ? true : false}
             />
           </SettingElement>
-          <SettingElement text="つぶやきへのいいね">
+          <SettingElement text="つぶやきのいいね">
             <Switch
               trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
@@ -272,7 +272,7 @@ class Settings extends Component {
               }
             />
           </SettingElement>
-          <SettingElement text="つぶやきへのいいね">
+          <SettingElement text="つぶやきのいいね">
             <Switch
               trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
               thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}

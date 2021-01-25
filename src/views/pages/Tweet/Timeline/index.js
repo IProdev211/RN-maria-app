@@ -76,7 +76,8 @@ class Timeline extends Component {
         addTweet={true}
         scrollingOff={true}
         notificationHide={true}
-        title="つぶやく">
+        title="つぶやき"
+      >
         <View>
           {this.state.data ? (
             <FlatList

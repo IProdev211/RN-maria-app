@@ -792,24 +792,22 @@ class Search extends Component {
         >
           <View style={styles.content}>
             <Text style={styles.giftModalTitle}>
-              このキャスターにギフトを送る
+              このキャストにギフトを送る。
             </Text>
             <View style={styles.giftContainer}>
-              {this.props.giftIcons
-                ? this.props.giftIcons.map(x => {
-                  return (
-                    <TouchableOpacity
-                      key={shortid.generate()}
-                      style={styles.giftButton}
-                      onPress={() => this.sendGift(x)}>
-                      <Image
-                        style={styles.giftItem}
-                        source={{ uri: x.icon_url }}
-                      />
-                    </TouchableOpacity>
-                  );
-                })
-                : null}
+              {this.props.giftIcons &&
+                this.props.giftIcons.map(x => (
+                  <TouchableOpacity
+                    key={shortid.generate()}
+                    style={styles.giftButton}
+                    onPress={() => this.sendGift(x)}
+                  >
+                    <Image
+                      style={styles.giftItem}
+                      source={{ uri: x.icon_url }}
+                    />
+                  </TouchableOpacity>
+                ))}
             </View>
           </View>
         </Modal>

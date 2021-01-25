@@ -525,7 +525,7 @@ class UserDetails extends Component {
                   this.state.tweets.length > 0 &&
                   this.state.tweets[0].id ? (
                     <View style={styles.basicInformationContainer}>
-                      <Text style={styles.sheduleText}>最近の役職</Text>
+                      <Text style={styles.sheduleText}>最近のつぶやき</Text>
                     </View>
                   ) : null}
                 {this.state.tweets &&

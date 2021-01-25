@@ -68,7 +68,7 @@ class SingleTweetDetails extends Component {
         navigation={this.props.navigation}
         addTweet={true}
         backNavigation={true}
-        title="つぶやく詳細"
+        title="つぶやき詳細"
         notificationHide={true}>
         <View>
           {this.state.data ? (

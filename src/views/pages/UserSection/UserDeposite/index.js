@@ -34,7 +34,7 @@ class UserDeposite extends Component {
       cardName: '',
       amount: '',
       pointsAmount: '',
-      orderAmmount: null,
+      orderAmount: null,
       loading: false,
       buyingStage: 0,
       cardInfo: null,
@@ -98,7 +98,6 @@ class UserDeposite extends Component {
   };
 
   creatOrderInGMO = async order => {
-    console.log(order);
     let data = {
       // ShopID: 'tshop00046068',
       // ShopPass: 'ra6kgbu1',
@@ -108,9 +107,8 @@ class UserDeposite extends Component {
       SitePass: '2y6rybnn',
       OrderID: order.order_id,
       JobCd: 'CAPTURE',
-      Amount: Math.ceil(order.ammount),
+      Amount: Math.ceil(order.amount),
     };
-    console.log(data);
     try {
       const response = await createOrderInGmo(data);
       if (response.isSuccess) {
@@ -121,17 +119,15 @@ class UserDeposite extends Component {
             type: 'error',
           });
           this.setState({ loading: false });
-          return;
         } else {
           this.setState({
             loading: false,
             buyingStage: 1,
-            orderAmmount: Math.ceil(order.ammount),
+            orderAmount: Math.ceil(order.amount),
             AccessID: result.AccessID,
             AccessPass: result.AccessPass,
             OrderId: order.order_id,
           });
-          console.log(result);
         }
       }
     } catch {
@@ -143,9 +139,6 @@ class UserDeposite extends Component {
     }
   };
 
-  confirmPrchase = () => {
-    this.setState({ buyingStage: 2 });
-  };
   _onChange = form => this.setState({ cardInfo: form });
 
   makePayment = async () => {
@@ -160,13 +153,7 @@ class UserDeposite extends Component {
           message: 'カード番号が無効です',
           type: 'error',
         });
-      } else if (this.state.cardInfo.status.number != 'valid') {
-        showMessage({
-          message: 'カード番号が無効です',
-          type: 'error',
-        });
       }
-      return;
     } else {
       let data = {
         AccessID: this.state.AccessID,
@@ -183,13 +170,13 @@ class UserDeposite extends Component {
         const response = await paymentOrderInGmo(data);
         if (response.isSuccess) {
           let result = response.result;
+          console.log('-------GMO----------', response)
           if (result.ErrInfo && result.ErrCode) {
             showMessage({
               message: returnErrorMessage(result.ErrInfo),
               type: 'error',
             });
             this.setState({ loading: false });
-            return;
           } else {
             if (result.Approve) {
               let info = {
@@ -201,16 +188,21 @@ class UserDeposite extends Component {
                 coupon: false,
                 status: true,
               };
-              this.setState({ loading: false });
               try {
                 const response = await confirmOrderPayment(info);
                 if (response.isSuccess) {
-                  this.setState({ loading: false, buyingStage: 3 });
                   this.getUserInfo();
                 }
+                this.setState({ loading: false, buyingStage: 3 });
               } catch {
                 this.setState({ loading: false });
               }
+            } else {
+              showMessage({
+                message: "支払いが承認されていません。カード情報をご確認ください。",
+                type: 'error',
+              });
+              this.setState({ loading: false });
             }
           }
         }
@@ -232,6 +224,7 @@ class UserDeposite extends Component {
     let dataArray = string.split('/');
     return dataArray[1] + dataArray[0];
   };
+
   getUserInfo = async () => {
     try {
       const response = await getUserDetails();
@@ -275,15 +268,14 @@ class UserDeposite extends Component {
             <View>
               <Text style={styles.PointsInputText}>
                 ポイントの購入リクエストが承認されました。
-                {this.state.pointsAmount}ポイントは{this.state.orderAmmount}
-                です。
+                {this.state.pointsAmount}ポイントは{this.state.orderAmount}¥です。
               </Text>
               <TouchableOpacity
                 style={styles.pointCalculation}
-                onPress={() => this.confirmPrchase()}>
+                onPress={() => this.setState({ buyingStage: 2 })}
+              >
                 <Text style={styles.pointCalculationText}>
-                  {' '}
-                  購入を確認します 2
+                  購入を確認します
                 </Text>
               </TouchableOpacity>
             </View>
@@ -291,15 +283,16 @@ class UserDeposite extends Component {
           {this.state.buyingStage == 2 &&
             <View>
               <Text style={styles.PointsInputText}>
-                支払いを行うには、すべてのクレジットカード情報を入力してください
+                支払いを行うには、すべてのクレジットカード情報を入力してください。
               </Text>
               <View style={{ padding: 20 }}>
                 <CreditCardInput requiresName onChange={this._onChange} />
               </View>
               <TouchableOpacity
                 style={styles.pointCalculation}
-                onPress={() => this.makePayment()}>
-                <Text style={styles.pointCalculationText}>支払う</Text>
+                onPress={() => this.makePayment()}
+              >
+                <Text style={styles.pointCalculationText}>支払</Text>
               </TouchableOpacity>
             </View>
           }
