@@ -137,4 +137,4 @@ class Timeline extends Component {
   }
 }
 
-export default withNavigationFocus(Timeline);
+export default Timeline;

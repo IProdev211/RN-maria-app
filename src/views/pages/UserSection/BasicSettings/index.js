@@ -190,7 +190,7 @@ class BasicSettings extends Component {
           rightButtonAction={() => this.updateAllDataBasicSettings()}
           backNavigation={true}
         >
-          <View style={{ paddingBottom: 20 }}>
+          <View style={{ paddingBottom: 70 }}>
             <View style={styles.subTextInfo}>
               <Text>基本情報</Text>
             </View>

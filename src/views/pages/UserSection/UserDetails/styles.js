@@ -136,7 +136,14 @@ export default EStyleSheet.flatten(
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: 130,
+      ...Platform.select({
+        ios: {
+          bottom: 130,
+        },
+        android: {
+          bottom: 74,
+        },
+      }),      
     },
     CallingButtonCOntainer: {
       backgroundColor: '#f7f7f7',

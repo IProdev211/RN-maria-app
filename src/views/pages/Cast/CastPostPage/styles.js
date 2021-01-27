@@ -1,5 +1,5 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 export default EStyleSheet.flatten(
@@ -139,7 +139,15 @@ export default EStyleSheet.flatten(
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: 147,
+      ...Platform.select({
+        android: {
+          bottom: 89,
+        },
+        ios: {
+          bottom: 147,
+        },
+      }),
+
     },
     organgeBgText: {
       borderWidth: 1,

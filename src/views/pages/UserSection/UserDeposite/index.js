@@ -99,8 +99,10 @@ class UserDeposite extends Component {
 
   creatOrderInGMO = async order => {
     let data = {
-      // ShopID: 'tshop00046068',
-      // ShopPass: 'ra6kgbu1',
+      // ShopID: 'tshop00048773',
+      // ShopPass: '457xqe6b',
+      // SiteID: 'tsite00042373',
+      // SitePass: 'axhe4dew',
       ShopID: '9200002623974',
       ShopPass: 'sw9hz7sy',
       SiteID: 'mst2000023566',

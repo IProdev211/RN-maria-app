@@ -75,7 +75,6 @@ class Registration extends Component {
       selectedCity: null,
       nickName: '',
       profileImage: '',
-      userImage: '',
       loading: false,
       userInfo: {},
       selectedCityName: '',
@@ -294,9 +293,13 @@ class Registration extends Component {
   updateProfile = () => {
     if (this.state.profileImage && this.state.process6ImagePath) {
       this.uploadImages(this.state.profileImage);
-    } else {
-      this.setState({ userImage: this.state.profileImage });
+    } else if (this.state.profileImage) {
       this.updateProfileInformation();
+    } else {
+      showMessage({
+        message: 'プロフィール画像をアップロードしてください。',
+        type: 'error',
+      });
     }
   };
 
@@ -312,7 +315,6 @@ class Registration extends Component {
         `files.${fileType ? fileType : 'png'}`,
       );
       if (response && response.isSuccess) {
-        this.setState({ userImage: response.result.success.profile_pic });
         this.updateProfileInformation();
       }
       this.setState({ loading: false });
@@ -334,11 +336,13 @@ class Registration extends Component {
         usr_city: this.state.selectedCityName,
         usr_gender: this.state.selectedGender,
         usr_profile_photo: this.state.profileImage,
-        usr_name: this.state.userInfo
-          ? this.state.userInfo.name
-            ? this.state.userInfo.name
-            : username
-          : '',
+        usr_name: this.state.userInfo ?
+          this.state.userInfo.name ?
+            this.state.userInfo.name
+            :
+            username
+          :
+          '',
         usr_birth_date: this.state.birthday,
         usr_hourly_rate: this.state.hourlyRate ? this.state.hourlyRate : 0,
       };
@@ -1036,15 +1040,13 @@ class Registration extends Component {
                     mode="date"
                     locale="ja"
                     date={this.state.birthday}
-                    onDateChange={date => {
-                      this.setState({ birthday: date });
-                    }}
+                    onDateChange={date => { this.setState({ birthday: date }); }}
                   />
                 </View>
                 <View style={styles.centerContainer}>
                   <Text style={styles.textSection5Small}>
                     パスポート/運転免許証などの年齢確認書類をアップロード
-                </Text>
+                  </Text>
                 </View>
                 <View style={styles.centerContainer}>
                   {this.state.DateProfImageUri ?
@@ -1252,7 +1254,7 @@ class Registration extends Component {
                 </ScrollView>
                 <StepByStepProcess
                   title="次へ 4/5"
-                  action={() => this.changeNickName()}
+                  action={this.changeNickName}
                 />
               </View>
             }
@@ -1460,7 +1462,6 @@ class Registration extends Component {
                       <Text style={styles.textSection5}>
                         魅力的なプロフィール写真を登録しよう！
                       </Text>
-
                       <Text style={styles.textSection5Small}>
                         プロフィール写真が登録してあるだけで、いいねしたキャストからの返信率が10倍に !
                       </Text>

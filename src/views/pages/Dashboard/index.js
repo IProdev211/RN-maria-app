@@ -771,29 +771,13 @@ class Dashboard extends Component {
                       {this.state.CastPackage.map(x => (
                         <View key={shortid.generate()}>
                           <TouchableWithoutFeedback
-                            onPress={() =>
-                              this.setState({ selectedPackage: x.id })
-                            }>
-                            <View
-                              style={
-                                this.state.selectedPackage == x.id
-                                  ? styles.packageButtonS
-                                  : styles.packageButton
-                              }>
-                              <Text
-                                style={
-                                  this.state.selectedPackage == x.id
-                                    ? styles.packageButtonTextS
-                                    : styles.packageButtonText
-                                }>
+                            onPress={() => this.setState({ selectedPackage: x.id })}
+                          >
+                            <View style={this.state.selectedPackage == x.id ? styles.packageButtonS : styles.packageButton}>
+                              <Text style={this.state.selectedPackage == x.id ? styles.packageButtonTextS : styles.packageButtonText}>
                                 {x.package}
                               </Text>
-                              <Text
-                                style={
-                                  this.state.selectedPackage == x.id
-                                    ? styles.packageButtonTextS
-                                    : styles.packageButtonText
-                                }>
+                              <Text style={this.state.selectedPackage == x.id ? styles.packageButtonTextS : styles.packageButtonText}>
                                 {x.price}
                               </Text>
                             </View>
@@ -823,7 +807,8 @@ class Dashboard extends Component {
                     </View>
                     <View style={styles.SubRow}>
                       <TouchableWithoutFeedback
-                        onPress={() => this.changeCastPerPerson(-1)}>
+                        onPress={() => this.changeCastPerPerson(-1)}
+                      >
                         <AntDesign name="minuscircleo" size={30} color={this.state.TemCastData.people_per_cast === 2 ? "#aaa" : "#000"} />
                       </TouchableWithoutFeedback>
                       <TouchableWithoutFeedback
@@ -894,25 +879,10 @@ class Dashboard extends Component {
                   {this.state.openModalData.map((x, index) => (
                     <TouchableWithoutFeedback
                       key={shortid.generate()}
-                      onPress={() => this.updateCastData(x)}>
-                      <View
-                        style={
-                          this.isSlectedValue(
-                            this.state.selected_cast_type,
-                            x.value,
-                          )
-                            ? styles.CallTimeButtonSelected
-                            : styles.CallTimeButton
-                        }>
-                        <Text
-                          style={
-                            this.isSlectedValue(
-                              this.state.selected_cast_type,
-                              x.value,
-                            )
-                              ? styles.CallTimeButtonTextSelected
-                              : styles.CallTimeButtonText
-                          }>
+                      onPress={() => this.updateCastData(x)}
+                    >
+                      <View style={this.isSlectedValue(this.state.selected_cast_type, x.value) ? styles.CallTimeButtonSelected : styles.CallTimeButton}>
+                        <Text style={this.isSlectedValue(this.state.selected_cast_type, x.value) ? styles.CallTimeButtonTextSelected : styles.CallTimeButtonText}>
                           {x.value}
                         </Text>
                       </View>

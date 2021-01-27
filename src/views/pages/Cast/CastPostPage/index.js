@@ -261,9 +261,7 @@ class CastPostPage extends Component {
                         itemLabelStyle={styles.label}
                         itemStyleSelected={styles.itemSelected}
                         itemLabelStyleSelected={styles.labelSelected}
-                        ref={tag => {
-                          this.tag = tag;
-                        }}
+                        ref={tag => { this.tag = tag; }}
                       />
                     </View>
                   </View>
