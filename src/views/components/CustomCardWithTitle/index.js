@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-} from 'react-native';
+import { View } from 'react-native';
 import styles from './styles';
 
 class CustomCardWithTitle extends Component {
@@ -21,9 +19,9 @@ class CustomCardWithTitle extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.props.title ? (
+        {this.props.title &&
           <View style={styles.titleContiner}>{this.props.title}</View>
-        ) : null}
+        }
         <View style={styles.content}>{this.props.children}</View>
       </View>
     );

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { getSignleTweet } from '../../../../services/AuthService';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import Tweet from '../../../components/Tweet';
-import styles from './styles';
 
 class SingleTweetDetails extends Component {
   constructor(props) {
@@ -18,7 +17,6 @@ class SingleTweetDetails extends Component {
   }
   getSigleAllTweet = async () => {
     let tweetId = this.props.route.params.tweetId;
-    console.log('tweetId', tweetId);
     this.setState({ loading: true });
     try {
       let data = `tweet/${tweetId}`;
@@ -64,16 +62,17 @@ class SingleTweetDetails extends Component {
   };
   render() {
     return (
-      <DashBoardHeader
-        navigation={this.props.navigation}
-        addTweet={true}
-        backNavigation={true}
-        title="つぶやき詳細"
-        notificationHide={true}>
-        <View>
-          {this.state.data ? (
-            this.state.data.reverse().map((x, index) => {
-              return (
+      <SafeAreaView>
+        <DashBoardHeader
+          navigation={this.props.navigation}
+          addTweet={true}
+          backNavigation={true}
+          title="つぶやき詳細"
+          notificationHide={true}
+        >
+          <View>
+            {this.state.data ?
+              this.state.data.reverse().map((x, index) => (
                 <Tweet
                   id={x.id}
                   key={index}
@@ -89,20 +88,18 @@ class SingleTweetDetails extends Component {
                   onPressContent={() => this.gotoDetailsPage(x.id)}
                   onPressUserProfile={() => this.profileView(x.author_id)}
                 />
-              );
-            })
-          ) : (
+              ))
+              :
               <View>
-                <Text>NO Post Found</Text>
+                <Text>投稿が見つかりません。</Text>
               </View>
-            )}
-        </View>
-        <Spinner
-          visible={this.state.loading}
-          textContent={'読み込み中...'}
-          textStyle={styles.spinnerTextStyle}
-        />
-      </DashBoardHeader>
+            }
+          </View>
+          <Spinner
+            visible={this.state.loading}
+          />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

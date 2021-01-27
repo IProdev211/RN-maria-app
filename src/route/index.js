@@ -9,7 +9,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Registration from '../views/pages/Registration';
 //Dashboard
 import Dashboard from '../views/pages/Dashboard';
-import CreateNewCast from '../views/pages/Cast/CreateNewCast';
 import CastPostPage from '../views/pages/Cast/CastPostPage';
 import UserDetailsCast from '../views/pages/UserSection/UserDetailsCast';
 import UserDetails from '../views/pages/UserSection/UserDetails';
@@ -182,7 +181,6 @@ const DashboardMenu = () => {
       initialRouteName="DashboardMain">
       <Stack.Screen name="DashboardMain" component={Dashboard} />
       <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen name="CreateNewCast" component={CreateNewCast} />
       <Stack.Screen name="CastPostPage" component={CastPostPage} />
       <Stack.Screen name="UserDetails" component={UserDetails} />
       <Stack.Screen name="MessageDetails" component={MessageDetails} />
@@ -210,6 +208,7 @@ const MainStackNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
+          gestureEnabled: false
         }}
         initialRouteName="InitialLoader">
         <Stack.Screen name="Registration" component={Registration} />

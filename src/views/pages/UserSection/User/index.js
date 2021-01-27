@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Alert,
+  SafeAreaView
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -180,59 +181,59 @@ class User extends Component {
     const { userInfo, navigation } = this.props;
 
     return (
-      <DashBoardHeader
-        title="マイページ"
-        navigation={navigation}
-        NotificationHide={false}
-        Refferal={true}
-        settingMenu={true}
-      >
-        <View style={{ backgroundColor: '#FEF6E1' }}>
-          <View style={styles.ProfileContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('UserDataUpdate')} >
-              {userInfo.usr_profile_photo[0].picture_url ?
-                <Image
-                  style={styles.profilePicImage}
-                  source={{ uri: userInfo.is_profile_pic ? userInfo.is_profile_pic : userInfo.usr_profile_photo[0].picture_url }}
-                />
-                :
-                <Image
-                  style={styles.profilePicImage}
-                  source={require('../../../../assets/panda.png')}
-                />
-              }
-              <View style={styles.editIcon}>
-                <Icon name="pencil" size={18} color="#fff" />
-              </View>
-            </TouchableOpacity>
-            <Text style={styles.UserNameText}>{userInfo.usr_nickname}</Text>
-          </View>
-
-          {userInfo && Number(userInfo.usr_type) === 1 ?
-            <View>
-              <View style={styles.coinContainerTop}>
-                <TouchableOpacity
-                  style={styles.topOptionsContainer}
-                  onPress={() => {
-                    navigation.navigate('Message');
-                  }}>
-                  <View style={styles.topOptions}>
-                    <MetarialIcon name="email-outline" size={50} color="#fff" />
-                  </View>
-                  <Text style={styles.topOptionsText}>メッセージ</Text>
-                </TouchableOpacity>
-                <View style={styles.topOptionsContainer}>
-                  <View style={styles.topOptions}>
-                    <MetarialIcon
-                      onPress={this.withdrawMoney}
-                      name="bank"
-                      size={48}
-                      color="#fff"
-                    />
-                  </View>
-                  <Text style={styles.topOptionsText}>ポイント残高</Text>
+      <SafeAreaView>
+        <DashBoardHeader
+          title="マイページ"
+          navigation={navigation}
+          NotificationHide={false}
+          Refferal={true}
+          settingMenu={true}
+        >
+          <View style={{ backgroundColor: '#FEF6E1' }}>
+            <View style={styles.ProfileContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('UserDataUpdate')} >
+                {userInfo.usr_profile_photo[0].picture_url ?
+                  <Image
+                    style={styles.profilePicImage}
+                    source={{ uri: userInfo.is_profile_pic ? userInfo.is_profile_pic : userInfo.usr_profile_photo[0].picture_url }}
+                  />
+                  :
+                  <Image
+                    style={styles.profilePicImage}
+                    source={require('../../../../assets/panda.png')}
+                  />
+                }
+                <View style={styles.editIcon}>
+                  <Icon name="pencil" size={18} color="#fff" />
                 </View>
-                {/* <View style={styles.topOptionsContainer}>
+              </TouchableOpacity>
+              <Text style={styles.UserNameText}>{userInfo.usr_nickname}</Text>
+            </View>
+
+            {userInfo && Number(userInfo.usr_type) === 1 ?
+              <View>
+                <View style={styles.coinContainerTop}>
+                  <TouchableOpacity
+                    style={styles.topOptionsContainer}
+                    onPress={() => navigation.navigate('Message')}
+                  >
+                    <View style={styles.topOptions}>
+                      <MetarialIcon name="email-outline" size={50} color="#fff" />
+                    </View>
+                    <Text style={styles.topOptionsText}>メッセージ</Text>
+                  </TouchableOpacity>
+                  <View style={styles.topOptionsContainer}>
+                    <View style={styles.topOptions}>
+                      <MetarialIcon
+                        onPress={this.withdrawMoney}
+                        name="bank"
+                        size={48}
+                        color="#fff"
+                      />
+                    </View>
+                    <Text style={styles.topOptionsText}>ポイント残高</Text>
+                  </View>
+                  {/* <View style={styles.topOptionsContainer}>
                   <View style={styles.topOptions}>
                     <MetarialIcon
                       onPress={() => {
@@ -245,85 +246,84 @@ class User extends Component {
                   </View>
                   <Text style={styles.topOptionsText}>クーポン残高</Text>
                 </View> */}
-              </View>
-              <View style={(styles.profileData, { width: '100%' })}>
-                <View style={styles.pointContainter}>
-                  <View style={styles.pointColumn}>
-                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>
-                      時給
+                </View>
+                <View style={(styles.profileData, { width: '100%' })}>
+                  <View style={styles.pointContainter}>
+                    <View style={styles.pointColumn}>
+                      <Text style={{ marginBottom: 10, textAlign: 'center' }}>
+                        時給
                     </Text>
-                    <Text style={styles.pointColumnHeaderNumber}>
-                      {this.state.hourlyRateget ? this.state.hourlyRateget : 0}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        this.setState({ isVisible: true });
-                      }}>
-                      <Text style={styles.addButtonPoints}>
-                        編集{'  '}
-                        <Icon name="edit" size={15} color={golbalConstants.mainColor} />
+                      <Text style={styles.pointColumnHeaderNumber}>
+                        {this.state.hourlyRateget ? this.state.hourlyRateget : 0}
                       </Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.pointColumn}>
-                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
-                    <Text style={styles.pointColumnHeaderNumber}>{userInfo ? userInfo.points : 0}</Text>
-                    <TouchableOpacity onPress={this.withdrawMoney}>
-                      <Text style={styles.addButtonPoints}>
-                        撤退{'  '}
-                        <Icon
-                          name="money"
-                          size={15}
-                          color={golbalConstants.mainColor}
-                        />
-                      </Text>
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => this.setState({ isVisible: true })}>
+                        <Text style={styles.addButtonPoints}>
+                          編集{'  '}
+                          <Icon name="edit" size={15} color={golbalConstants.mainColor} />
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pointColumn}>
+                      <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
+                      <Text style={styles.pointColumnHeaderNumber}>{userInfo ? userInfo.points : 0}</Text>
+                      <TouchableOpacity onPress={this.withdrawMoney}>
+                        <Text style={styles.addButtonPoints}>
+                          撤退{'  '}
+                          <Icon
+                            name="money"
+                            size={15}
+                            color={golbalConstants.mainColor}
+                          />
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-            :
-            <View>
-              <View style={styles.coinContainerTop}>
-                <TouchableOpacity
-                  style={styles.topOptionsContainer}
-                  onPress={() => navigation.navigate('Message')}>
-                  <View style={styles.topOptions}>
-                    <MetarialIcon name="email-outline" size={30} color="#fff" />
-                  </View>
-                  <Text style={styles.topOptionsText}>メッセージ</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.topOptionsContainer}
-                  onPress={() => navigation.navigate('UserDeposite')}
-                >
-                  <View style={styles.topOptions}>
-                    <MetarialIcon
-                      name="credit-card-plus"
-                      size={30}
-                      color="#fff"
-                    />
-                  </View>
-                  <Text style={styles.topOptionsText}>ポイントを追加</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.pointContainter}>
-                <View style={styles.pointColumn}>
-                  <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
-                  <Text style={styles.pointColumnHeaderNumber}>
-                    {userInfo ? userInfo.points : 0}
-                  </Text>
+              :
+              <View>
+                <View style={styles.coinContainerTop}>
                   <TouchableOpacity
+                    style={styles.topOptionsContainer}
+                    onPress={() => navigation.navigate('Message')}
+                  >
+                    <View style={styles.topOptions}>
+                      <MetarialIcon name="email-outline" size={30} color="#fff" />
+                    </View>
+                    <Text style={styles.topOptionsText}>メッセージ</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.topOptionsContainer}
                     onPress={() => navigation.navigate('UserDeposite')}
                   >
-                    <Text style={styles.addButtonPoints}>
-                      Add{'  '}
-                      <Icon name="money" size={15} color={golbalConstants.mainColor} />
-                    </Text>
+                    <View style={styles.topOptions}>
+                      <MetarialIcon
+                        name="credit-card-plus"
+                        size={30}
+                        color="#fff"
+                      />
+                    </View>
+                    <Text style={styles.topOptionsText}>ポイントを追加</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-              {/* <View
+                <View style={styles.pointContainter}>
+                  <View style={styles.pointColumn}>
+                    <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
+                    <Text style={styles.pointColumnHeaderNumber}>
+                      {userInfo ? userInfo.points : 0}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('UserDeposite')}
+                    >
+                      <Text style={styles.addButtonPoints}>
+                        Add{'  '}
+                        <Icon name="money" size={15} color={golbalConstants.mainColor} />
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     borderBottomWidth: 1,
@@ -392,58 +392,47 @@ class User extends Component {
                     </Text>
                   </View>
                 </View> */}
-            </View>
-          }
-          <Modal
-            onBackdropPress={() => this.setState({ isVisible: false })}
-            isVisible={isVisible}
-          >
-            <View style={styles.hourlyRate}>
-              <Text
-                style={{
-                  marginBottom: 25,
-                  fontSize: 25,
-                  fontWeight: 'bold',
-                  color: golbalConstants.mainColor,
-                }}
-              >
-                時給を更新する
+              </View>
+            }
+
+            <Modal
+              onBackdropPress={() => this.setState({ isVisible: false })}
+              isVisible={isVisible}
+            >
+              <View style={styles.hourlyRate}>
+                <Text style={{ marginBottom: 25, fontSize: 25, fontWeight: 'bold', color: golbalConstants.mainColor }} >
+                  時給を更新する
               </Text>
-              <TextInput
-                style={styles.comments}
-                placeholder="時給を入力してください..."
-                onChangeText={text => {
-                  this.setState({ hourlyRate: text });
-                }}
-              />
-              <View style={styles.optionHolder}>
-                <TouchableWithoutFeedback
-                  onPress={() => {
-                    this.setState({ isVisible: false });
-                  }}>
-                  <View style={styles.options}>
-                    <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', color: '#941700' }}>キャンセル</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback onPress={this.postHourlyRate}>
-                  <View style={{ ...styles.options, marginLeft: 10, backgroundColor: golbalConstants.mainColor }}>
-                    <Text style={{ textAlign: 'center', color: 'white', fontSize: 15, fontWeight: 'bold', }}>新しい時給を送信</Text>
-                  </View>
-                </TouchableWithoutFeedback>
+                <TextInput
+                  style={styles.comments}
+                  placeholder="時給を入力してください..."
+                  onChangeText={text => this.setState({ hourlyRate: text })}
+                />
+                <View style={styles.optionHolder}>
+                  <TouchableWithoutFeedback onPress={() => this.setState({ isVisible: false })}>
+                    <View style={styles.options}>
+                      <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', color: '#941700' }}>キャンセル</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                  <TouchableWithoutFeedback onPress={this.postHourlyRate}>
+                    <View style={{ ...styles.options, marginLeft: 10, backgroundColor: golbalConstants.mainColor }}>
+                      <Text style={{ textAlign: 'center', color: 'white', fontSize: 15, fontWeight: 'bold', }}>新しい時給を送信</Text>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
               </View>
-            </View>
-          </Modal>
-        </View>
-        <View style={{ marginTop: -10, paddingBottom: 50 }}>
-          <CustomCard>
-            <TouchableOpacity style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
-              <View style={{ flexDirection: 'row' }}>
-                <Icon name="wpforms" size={25} color="#000" />
-                <Text style={styles.OnClikText}>ポイント履歴</Text>
-              </View>
-              <Icon name="angle-right" size={25} color="#000" />
-            </TouchableOpacity>
-            {/* <TouchableOpacity
+            </Modal>
+          </View>
+          <View style={{ marginTop: -10, paddingBottom: 50 }}>
+            <CustomCard>
+              <TouchableOpacity style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Icon name="wpforms" size={25} color="#000" />
+                  <Text style={styles.OnClikText}>ポイント履歴</Text>
+                </View>
+                <Icon name="angle-right" size={25} color="#000" />
+              </TouchableOpacity>
+              {/* <TouchableOpacity
               onPress={() => navigation.navigate('UserReview')}
               style={[styles.SpaceBetweenContainer, {borderBottomWidth: 0.5}]}>
               <View style={{flexDirection: 'row'}}>
@@ -452,7 +441,7 @@ class User extends Component {
               </View>
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity> */}
-            {/* <TouchableOpacity
+              {/* <TouchableOpacity
               onPress={() => navigation.navigate('UserDeposite')}
               style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
               <View style={{ flexDirection: 'row' }}>
@@ -461,16 +450,17 @@ class User extends Component {
               </View>
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity> */}
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Helps')}
-              style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}>
-              <View style={{ flexDirection: 'row' }}>
-                <Icon name="question-circle-o" size={25} color="#000" />
-                <Text style={styles.OnClikText}>ヘルプ</Text>
-              </View>
-              <Icon name="angle-right" size={25} color="#000" />
-            </TouchableOpacity>
-            {/* <TouchableOpacity
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Helps')}
+                style={[styles.SpaceBetweenContainer, { borderBottomWidth: 0.5 }]}
+              >
+                <View style={{ flexDirection: 'row' }}>
+                  <Icon name="question-circle-o" size={25} color="#000" />
+                  <Text style={styles.OnClikText}>ヘルプ</Text>
+                </View>
+                <Icon name="angle-right" size={25} color="#000" />
+              </TouchableOpacity>
+              {/* <TouchableOpacity
               onPress={() => navigation.navigate('ReferralQrCode')}
               style={[styles.SpaceBetweenContainer, {borderBottomWidth: 0.5}]}>
               <View style={{flexDirection: 'row'}}>
@@ -479,76 +469,69 @@ class User extends Component {
               </View>
               <Icon name="angle-right" size={25} color="#000" />
             </TouchableOpacity> */}
-          </CustomCard>
-          <View style={{ marginTop: 30, backgroundColor: '#fff' }}>
-            <TouchableOpacity
-              style={styles.SpaceBetweenContainer}
-              onPress={this.LogingOut}
-            >
-              <View style={{ flexDirection: 'row' }}>
-                <Icon name="sign-out" size={25} color="#000" />
-                <Text style={styles.OnClikText}>ログアウト</Text>
-              </View>
-              <Icon name="angle-right" size={25} color="#000" />
-            </TouchableOpacity>
-          </View>
-          <View style={{ paddingBottom: 100 }} />
-        </View>
-        <Modal
-          onBackdropPress={() => this.setState({ WithdrawMoney: false })}
-          isVisible={this.state.WithdrawMoney}>
-          <View style={styles.withdrawMonent}>
-            <Text style={styles.withdrawMonentTitle}>出金のリクエスト</Text>
-            <TextInput
-              style={styles.withdrawMonentInput}
-              placeholder="銀行名"
-              onChangeText={text => {
-                this.setState({ bankName: text });
-              }}
-            />
-            <TextInput
-              style={styles.withdrawMonentInput}
-              placeholder="銀行支店名"
-              onChangeText={text => {
-                this.setState({ bankBranch: text });
-              }}
-            />
-            <TextInput
-              style={styles.withdrawMonentInput}
-              placeholder="銀行口座番号"
-              onChangeText={text => {
-                this.setState({ bankAccount: text });
-              }}
-            />
-            <TextInput
-              style={styles.withdrawMonentInput}
-              placeholder="残高を引き出す"
-              value={this.state.withdrawBlance}
-              onChangeText={text => {
-                this.setState({ withdrawBlance: text });
-              }}
-            />
-            <View style={styles.optionHolder}>
-              <TouchableWithoutFeedback
-                onPress={() => this.setState({ WithdrawMoney: false })}>
-                <View style={styles.withdrawMonentButton}>
-                  <Text>キャンセル</Text>
+            </CustomCard>
+            <View style={{ marginTop: 30, backgroundColor: '#fff' }}>
+              <TouchableOpacity
+                style={styles.SpaceBetweenContainer}
+                onPress={this.LogingOut}
+              >
+                <View style={{ flexDirection: 'row' }}>
+                  <Icon name="sign-out" size={25} color="#000" />
+                  <Text style={styles.OnClikText}>ログアウト</Text>
                 </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={this.withdrawBlance}>
-                <View style={[styles.options, styles.withdrawMonentButtonMain]}>
-                  <Text style={styles.withdrawMonentButtonColor}>
-                    出金リクエスト
-                  </Text>
-                </View>
-              </TouchableWithoutFeedback>
+                <Icon name="angle-right" size={25} color="#000" />
+              </TouchableOpacity>
             </View>
+            <View style={{ paddingBottom: 100 }} />
           </View>
-        </Modal>
-        <Spinner
-          visible={this.state.loading}
-        />
-      </DashBoardHeader>
+
+          <Modal
+            onBackdropPress={() => this.setState({ WithdrawMoney: false })}
+            isVisible={this.state.WithdrawMoney}
+          >
+            <View style={styles.withdrawMonent}>
+              <Text style={styles.withdrawMonentTitle}>出金のリクエスト</Text>
+              <TextInput
+                style={styles.withdrawMonentInput}
+                placeholder="銀行名"
+                onChangeText={text => this.setState({ bankName: text })}
+              />
+              <TextInput
+                style={styles.withdrawMonentInput}
+                placeholder="銀行支店名"
+                onChangeText={text => this.setState({ bankBranch: text })}
+              />
+              <TextInput
+                style={styles.withdrawMonentInput}
+                placeholder="銀行口座番号"
+                onChangeText={text => this.setState({ bankAccount: text })}
+              />
+              <TextInput
+                style={styles.withdrawMonentInput}
+                placeholder="残高を引き出す"
+                value={this.state.withdrawBlance}
+                onChangeText={text => this.setState({ withdrawBlance: text })}
+              />
+              <View style={styles.optionHolder}>
+                <TouchableWithoutFeedback onPress={() => this.setState({ WithdrawMoney: false })}>
+                  <View style={styles.withdrawMonentButton}>
+                    <Text>キャンセル</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={this.withdrawBlance}>
+                  <View style={[styles.options, styles.withdrawMonentButtonMain]}>
+                    <Text style={styles.withdrawMonentButtonColor}>
+                      出金リクエスト
+                  </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          </Modal>
+
+          <Spinner visible={this.state.loading} />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

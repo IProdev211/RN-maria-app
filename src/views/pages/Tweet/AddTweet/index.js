@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, TouchableOpacity, Alert } from 'react-native';
+import { View, Image, Text, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import Textarea from 'react-native-textarea';
 import * as ImagePicker from 'react-native-image-picker';
 import { showMessage } from 'react-native-flash-message';
@@ -18,7 +18,7 @@ class AddTweet extends Component {
     super(props);
     this.state = {
       tweet_content: '',
-      TweetImage: '',
+      TweetImage: null,
       process6ImagePath: '',
       imageType: '',
       tweet_picture: null,
@@ -160,67 +160,71 @@ class AddTweet extends Component {
 
   render() {
     return (
-      <DashBoardHeader
-        navigation={this.props.navigation}
-        title="つぶやきを投稿 "
-        notificationHide={true}
-        backNavigation={true}
-      >
-        <View style={{ flex: 1, height: '100%' }}>
-          <View style={styles.container}>
-            <Image
-              source={{
-                uri: this.props.userInfo.is_profile_pic
-                  ? this.props.userInfo.is_profile_pic
-                  : 'https://bootdey.com/img/Content/avatar/avatar1.png',
-              }}
-              style={styles.avatar}
-            />
-            <View style={styles.content}>
-              <View>
-                <View style={styles.text}>
-                  <Text style={styles.name}> {this.props.userInfo.usr_nickname}</Text>
+      <SafeAreaView>
+        <DashBoardHeader
+          navigation={this.props.navigation}
+          title="つぶやきを投稿 "
+          notificationHide={true}
+          backNavigation={true}
+        >
+          <View style={{ flex: 1, height: '100%' }}>
+            <View style={styles.container}>
+              <Image
+                source={{
+                  uri: this.props.userInfo.is_profile_pic
+                    ? this.props.userInfo.is_profile_pic
+                    : 'https://bootdey.com/img/Content/avatar/avatar1.png',
+                }}
+                style={styles.avatar}
+              />
+              <View style={styles.content}>
+                <View>
+                  <View style={styles.text}>
+                    <Text style={styles.name}> {this.props.userInfo.usr_nickname}</Text>
+                  </View>
+                  <Text>{this.props.userInfo.todays_message}</Text>
                 </View>
-                <Text>{this.props.userInfo.todays_message}</Text>
               </View>
             </View>
-          </View>
-          <View style={styles.textAreaContainer}>
-            <Textarea
-              containerStyle={styles.textareaContainer}
-              style={styles.textarea}
-              onChangeText={x => this.setState({ tweet_content: x })}
-              defaultValue={this.state.tweet_content}
-              maxLength={500}
-              placeholder={'キャストについて役職する 。。。'}
-              placeholderTextColor={'#c7c7c7'}
-              underlineColorAndroid={'transparent'}
-            />
-          </View>
-          <View>
-            {this.state.TweetImage &&
-              <Image
-                style={styles.AttachMentImage}
-                source={this.state.TweetImage}
+            <View style={styles.textAreaContainer}>
+              <Textarea
+                containerStyle={styles.textareaContainer}
+                style={styles.textarea}
+                onChangeText={x => this.setState({ tweet_content: x })}
+                defaultValue={this.state.tweet_content}
+                maxLength={500}
+                placeholder={'キャストについて役職する 。。。'}
+                placeholderTextColor={'#c7c7c7'}
+                underlineColorAndroid={'transparent'}
               />
-            }
+            </View>
+            <View>
+              {this.state.TweetImage &&
+                <Image
+                  style={styles.AttachMentImage}
+                  source={{ uri: this.state.TweetImage }}
+                />
+              }
+            </View>
+            <View style={styles.postContainer}>
+              <TouchableOpacity
+                style={styles.postAttachMent}
+                onPress={() => this.imagePickerForTweetImage()}
+              >
+                <Icon name="image" size={30} color="#000" />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.postAttachMentPost}
+                onPress={() => this.uploadTweet()}
+              >
+                <Text>役職を投稿</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.postContainer}>
-            <TouchableOpacity
-              style={styles.postAttachMent}
-              onPress={() => this.imagePickerForTweetImage()}>
-              <Icon name="image" size={30} color="#000" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.postAttachMentPost}
-              onPress={() => this.uploadTweet()}>
-              <Text>役職を投稿</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
 
-        <Spinner visible={this.state.loading} />
-      </DashBoardHeader>
+          <Spinner visible={this.state.loading} />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

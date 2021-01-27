@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, SafeAreaView } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { CreditCardInput } from 'react-native-credit-card-input';
+import { showMessage } from 'react-native-flash-message';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import {
   getUserDetails,
   getDepositeAll,
@@ -10,19 +15,14 @@ import {
   paymentOrderInGmo,
 } from '../../../../services/AuthService';
 import DashBoardHeader from '../../../components/DashBoardHeader';
-import styles from './style';
-import Spinner from 'react-native-loading-spinner-overlay';
-import { CreditCardInput } from 'react-native-credit-card-input';
-import { showMessage } from 'react-native-flash-message';
-
 import { returnErrorMessage } from '../../../Common/utilies/error_codes';
+import styles from './style';
 
 //redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { duckOperations } from '../../../../redux/Main/duck';
 
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class UserDeposite extends Component {
   constructor(props) {
@@ -170,7 +170,6 @@ class UserDeposite extends Component {
         const response = await paymentOrderInGmo(data);
         if (response.isSuccess) {
           let result = response.result;
-          console.log('-------GMO----------', response)
           if (result.ErrInfo && result.ErrCode) {
             showMessage({
               message: returnErrorMessage(result.ErrInfo),
@@ -236,160 +235,162 @@ class UserDeposite extends Component {
   };
   render() {
     return (
-      <DashBoardHeader
-        navigation={this.props.navigation}
-        backNavigation={true}
-        title={'お支払い情報の登録'}
-      >
-        <View style={styles.mainContainer}>
-          {this.state.buyingStage == 0 &&
-            <View>
-              <Text style={styles.PointsInputText}>
-                購入したいポイント数を入力してください。
+      <SafeAreaView>
+        <DashBoardHeader
+          navigation={this.props.navigation}
+          backNavigation={true}
+          title={'お支払い情報の登録'}
+        >
+          <View style={styles.mainContainer}>
+            {this.state.buyingStage == 0 &&
+              <View>
+                <Text style={styles.PointsInputText}>
+                  購入したいポイント数を入力してください。
               </Text>
-              <Text style={styles.PointsInputText}>
-                クレジットカードのみ登録したい場合には０を入力してください。
+                <Text style={styles.PointsInputText}>
+                  クレジットカードのみ登録したい場合には０を入力してください。
               </Text>
-              <TextInput
-                style={styles.cardNumber}
-                placeholder="ポイント"
-                onChangeText={text => this.setState({ pointsAmount: text })}
-                value={this.state.pointsAmount}
-                keyboardType="numeric"
-              />
-              <TouchableOpacity
-                style={styles.pointCalculation}
-                onPress={() => this.orderPoints()}>
-                <Text style={styles.pointCalculationText}> ポイントを購入</Text>
-              </TouchableOpacity>
-            </View>
-          }
-          {this.state.buyingStage == 1 &&
-            <View>
-              <Text style={styles.PointsInputText}>
-                ポイントの購入リクエストが承認されました。
+                <TextInput
+                  style={styles.cardNumber}
+                  placeholder="ポイント"
+                  onChangeText={text => this.setState({ pointsAmount: text })}
+                  value={this.state.pointsAmount}
+                  keyboardType="numeric"
+                />
+                <TouchableOpacity
+                  style={styles.pointCalculation}
+                  onPress={() => this.orderPoints()}>
+                  <Text style={styles.pointCalculationText}> ポイントを購入</Text>
+                </TouchableOpacity>
+              </View>
+            }
+            {this.state.buyingStage == 1 &&
+              <View>
+                <Text style={styles.PointsInputText}>
+                  ポイントの購入リクエストが承認されました。
                 {this.state.pointsAmount}ポイントは{this.state.orderAmount}¥です。
               </Text>
-              <TouchableOpacity
-                style={styles.pointCalculation}
-                onPress={() => this.setState({ buyingStage: 2 })}
-              >
-                <Text style={styles.pointCalculationText}>
-                  購入を確認します
+                <TouchableOpacity
+                  style={styles.pointCalculation}
+                  onPress={() => this.setState({ buyingStage: 2 })}
+                >
+                  <Text style={styles.pointCalculationText}>
+                    購入を確認します
                 </Text>
-              </TouchableOpacity>
-            </View>
-          }
-          {this.state.buyingStage == 2 &&
-            <View>
-              <Text style={styles.PointsInputText}>
-                支払いを行うには、すべてのクレジットカード情報を入力してください。
-              </Text>
-              <View style={{ padding: 20 }}>
-                <CreditCardInput requiresName onChange={this._onChange} />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={styles.pointCalculation}
-                onPress={() => this.makePayment()}
-              >
-                <Text style={styles.pointCalculationText}>支払</Text>
-              </TouchableOpacity>
-            </View>
-          }
-          {this.state.buyingStage == 3 &&
-            <View>
-              <Text style={styles.PointsInputText}>
-                {this.state.pointsAmount}
+            }
+            {this.state.buyingStage == 2 &&
+              <View>
+                <Text style={styles.PointsInputText}>
+                  支払いを行うには、すべてのクレジットカード情報を入力してください。
+              </Text>
+                <View style={{ padding: 20 }}>
+                  <CreditCardInput requiresName onChange={this._onChange} />
+                </View>
+                <TouchableOpacity
+                  style={styles.pointCalculation}
+                  onPress={() => this.makePayment()}
+                >
+                  <Text style={styles.pointCalculationText}>支払</Text>
+                </TouchableOpacity>
+              </View>
+            }
+            {this.state.buyingStage == 3 &&
+              <View>
+                <Text style={styles.PointsInputText}>
+                  {this.state.pointsAmount}
                 ポイントの購入に成功しました。キャストゲストのMariaアプリをご利用いただき、ありがとうございます。
               </Text>
-              {/* <View style={{ padding: 20 }}>
+                {/* <View style={{ padding: 20 }}>
                   <CreditCardInput onChange={this._onChange} />
                 </View> */}
-              <TouchableOpacity
-                style={styles.pointCalculation}
-                onPress={() => this.props.navigation.goBack()}>
-                <Text style={styles.pointCalculationText}>支払う</Text>
-              </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.pointCalculation}
+                  onPress={() => this.props.navigation.goBack()}>
+                  <Text style={styles.pointCalculationText}>支払う</Text>
+                </TouchableOpacity>
+              </View>
+            }
+          </View>
+          {/* <View style={{padding: 25, flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{marginRight: 15}}>
+              <Text style={{marginBottom: 5}}>預金者カード名</Text>
+              <TextInput
+                style={styles.horizontalTextField}
+                placeholder="カード名"
+                onChangeText={text => {
+                  this.onChangeHandler(text, 'cardName');
+                }}
+                value={this.state.cardName}
+              />
             </View>
-          }
-        </View>
-        {/* <View style={{padding: 25, flexDirection: 'row', alignItems: 'center'}}>
-          <View style={{marginRight: 15}}>
-            <Text style={{marginBottom: 5}}>預金者カード名</Text>
-            <TextInput
-              style={styles.horizontalTextField}
-              placeholder="カード名"
-              onChangeText={text => {
-                this.onChangeHandler(text, 'cardName');
-              }}
-              value={this.state.cardName}
-            />
+            <View>
+              <Text style={{marginBottom: 5}}>入金額</Text>
+              <TextInput
+                style={styles.horizontalTextField}
+                placeholder="入金額"
+                onChangeText={text => {
+                  this.onChangeHandler(text, 'amount');
+                }}
+                value={this.state.amount}
+              />
+            </View>
           </View>
           <View>
-            <Text style={{marginBottom: 5}}>入金額</Text>
+            <Text style={{marginLeft: 30, marginBottom: 10}}>
+              デポジットカード番号
+            </Text>
             <TextInput
-              style={styles.horizontalTextField}
-              placeholder="入金額"
+              style={styles.cardNumber}
+              placeholder="カード番号"
               onChangeText={text => {
-                this.onChangeHandler(text, 'amount');
+                this.onChangeHandler(text, 'cardNumber');
               }}
-              value={this.state.amount}
+              value={this.state.cardNumber}
             />
           </View>
-        </View>
-        <View>
-          <Text style={{marginLeft: 30, marginBottom: 10}}>
-            デポジットカード番号
-          </Text>
-          <TextInput
-            style={styles.cardNumber}
-            placeholder="カード番号"
-            onChangeText={text => {
-              this.onChangeHandler(text, 'cardNumber');
-            }}
-            value={this.state.cardNumber}
-          />
-        </View>
-        <View style={{marginLeft: 30, marginTop: 20}}>
-          <Text>*支払いにはGMO PAYMENTサービスを使用します</Text>
-        </View>
-        <View style={styles.optionHolder}>
-          <TouchableOpacity
-            style={{
-              ...styles.options,
-              backgroundColor: '#F3B91D',
-            }}>
-            <View>
-              <Text
-                onPress={this.onSubmit}
-                style={{
-                  textAlign: 'center',
-                  color: 'white',
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                }}>
-                たす
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+          <View style={{marginLeft: 30, marginTop: 20}}>
+            <Text>*支払いにはGMO PAYMENTサービスを使用します</Text>
+          </View>
+          <View style={styles.optionHolder}>
+            <TouchableOpacity
+              style={{
+                ...styles.options,
+                backgroundColor: '#F3B91D',
+              }}>
+              <View>
+                <Text
+                  onPress={this.onSubmit}
+                  style={{
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 15,
+                    fontWeight: 'bold',
+                  }}>
+                  たす
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
 
-        <View style={{margin: 20}}>
-          <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-            <Row
-              data={this.state.tableHead}
-              style={styles.head}
-              textStyle={styles.text}
-            />
-            <Rows data={this.state.tableData} textStyle={styles.text} />
-          </Table>
-        </View> */}
-        <Spinner
-          visible={this.state.loading}
-          textContent={'注文処理'}
-          textStyle={styles.spinnerTextStyle}
-        />
-      </DashBoardHeader>
+          <View style={{margin: 20}}>
+            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+              <Row
+                data={this.state.tableHead}
+                style={styles.head}
+                textStyle={styles.text}
+              />
+              <Rows data={this.state.tableData} textStyle={styles.text} />
+            </Table>
+          </View> */}
+          <Spinner
+            visible={this.state.loading}
+            textContent={'注文処理'}
+            textStyle={styles.spinnerTextStyle}
+          />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

@@ -13,21 +13,22 @@ class HeaderWithCross extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.props.activeBack ? (
+        {this.props.activeBack &&
           <TouchableOpacity
             style={styles.IconContainerBack}
-            onPress={() => this.props.acionBackKey()}>
+            onPress={() => this.props.actionBackKey()}
+          >
             <Image
               style={styles.backImage}
               source={require('../../../assets/icon/back.png')}
             />
           </TouchableOpacity>
-        ) : null}
+        }
 
         <Text style={styles.titleStyle}>{this.props.title}</Text>
         <TouchableOpacity
           style={styles.IconContainer}
-          onPress={() => this.props.acion()}>
+          onPress={() => this.props.action()}>
           <Image
             style={styles.crossImage}
             source={require('../../../assets/icon/cross.png')}

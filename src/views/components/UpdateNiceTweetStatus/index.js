@@ -47,12 +47,13 @@ class UpdateNiceTweetStatus extends Component {
     return (
       <TouchableOpacity
         style={styles.lovedSection}
-        onPress={() => this.updateNiceStatus(this.props.id)}>
-        {this.state.isLiked ? (
+        onPress={() => this.updateNiceStatus(this.props.id)}
+      >
+        {this.state.isLiked ?
           <Icon name="heart" size={30} color="#FF9C01" />
-        ) : (
-            <Icon name="heart-o" size={30} color="#FF9C01" />
-          )}
+          :
+          <Icon name="heart-o" size={30} color="#FF9C01" />
+        }
         <Text style={styles.lovedSectionText}>{this.state.nice}</Text>
       </TouchableOpacity>
     );

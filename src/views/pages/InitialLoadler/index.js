@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-community/async-storage';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -117,13 +117,15 @@ class InitialLoadler extends Component {
 
   render() {
     return (
-      <View>
-        <Spinner
-          visible={this.state.loading}
-          textContent={'読み込み中...'}
-          textStyle={styles.spinnerTextStyle}
-        />
-      </View>
+      <SafeAreaView>
+        <View>
+          <Spinner
+            visible={this.state.loading}
+            textContent={'読み込み中...'}
+            textStyle={styles.spinnerTextStyle}
+          />
+        </View>
+      </SafeAreaView>
     );
   }
 }

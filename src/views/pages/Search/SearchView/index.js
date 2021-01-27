@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, SafeAreaView } from 'react-native';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import ProfileGirdElement from '../../../components/profileGirdElement';
 import CustomCard from '../../../components/CustomCard';
@@ -89,62 +89,58 @@ class Search extends Component {
     const { userInfo } = this.props;
 
     return (
-      <DashBoardHeader navigation={this.props.navigation} SearchPage={true}>
-        <View>
-          {this.state.newUser && this.state.newUser.length > 1 ? (
-            <CustomCard>
-              <View style={styles.container}>
-                <Text style={styles.headerText}>面談通過3日以内キャスト</Text>
-              </View>
-              {this.state.newUser ? (
-                <Carousel
-                  containerCustomStyle={{ backgroundColor: 'pink' }}
-                  contentContainerCustomStyle={{
-                    backgroundColor: '#fff',
-                    height: 250,
-                  }}
-                  data={this.state.newUser}
-                  renderItem={this.renderListComponentShort}
-                  sliderWidth={sliderWidth}
-                  itemWidth={sliderItemWidth}
-                  activeSlideAlignment={'start'}
-                  inactiveSlideScale={1}
-                  inactiveSlideOpacity={1}
-                />
-              ) : (
+      <SafeAreaView>
+        <DashBoardHeader navigation={this.props.navigation} SearchPage={true}>
+          <View>
+            {this.state.newUser && this.state.newUser.length > 1 &&
+              <CustomCard>
+                <View style={styles.container}>
+                  <Text style={styles.headerText}>面談通過3日以内キャスト</Text>
+                </View>
+                {this.state.newUser ?
+                  <Carousel
+                    containerCustomStyle={{ backgroundColor: 'pink' }}
+                    contentContainerCustomStyle={{ backgroundColor: '#fff', height: 250 }}
+                    data={this.state.newUser}
+                    renderItem={this.renderListComponentShort}
+                    sliderWidth={sliderWidth}
+                    itemWidth={sliderItemWidth}
+                    activeSlideAlignment={'start'}
+                    inactiveSlideScale={1}
+                    inactiveSlideOpacity={1}
+                  />
+                  :
                   <View style={styles.centerTextConatiner}>
                     <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
                   </View>
-                )}
-            </CustomCard>
-          ) : null}
+                }
+              </CustomCard>
+            }
 
-          <View style={styles.centerTextConatiner}>
-            <Text style={styles.headerText}>
-              {userInfo && Number(userInfo.usr_type) === 1 ? "登録ゲスト様" : "登録キャスト様"}{' '}
-              {this.props.SearchFilterData
-                ? this.props.SearchFilterData.length
-                : 0}{' '}
-              人以上
+            <View style={styles.centerTextConatiner}>
+              <Text style={styles.headerText}>
+                {userInfo && Number(userInfo.usr_type) === 1 ? "登録ゲスト様" : "登録キャスト様"}{' '}
+                {this.props.SearchFilterData ? this.props.SearchFilterData.length : 0}{' '}人以上
             </Text>
-          </View>
-          <CustomCard>
-            {this.getFilterData(this.props.SearchFilterData) ? (
-              <FlatList
-                data={this.getFilterData(this.props.SearchFilterData)}
-                keyExtractor={this._keyExtractor} //has to be unique
-                renderItem={this.renderListComponent} //method to render the data in the way you want using styling u need
-                horizontal={false}
-                numColumns={2}
-              />
-            ) : (
+            </View>
+            <CustomCard>
+              {this.getFilterData(this.props.SearchFilterData) ?
+                <FlatList
+                  data={this.getFilterData(this.props.SearchFilterData)}
+                  keyExtractor={this._keyExtractor} //has to be unique
+                  renderItem={this.renderListComponent} //method to render the data in the way you want using styling u need
+                  horizontal={false}
+                  numColumns={2}
+                />
+                :
                 <View style={styles.centerTextConatiner}>
                   <Text style={styles.NoUser}>ユーザーが見つかりません</Text>
                 </View>
-              )}
-          </CustomCard>
-        </View>
-      </DashBoardHeader>
+              }
+            </CustomCard>
+          </View>
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

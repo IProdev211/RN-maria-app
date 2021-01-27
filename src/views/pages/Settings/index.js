@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Switch, Text } from 'react-native';
+import { View, Switch, Text, SafeAreaView } from 'react-native';
 import DashBoardHeader from '../../components/DashBoardHeader';
 import SettingTitle from '../../components/SettingTitle';
 import SettingElement from '../../components/SettingElement';
@@ -117,236 +117,171 @@ class Settings extends Component {
 
   render() {
     return (
-      <DashBoardHeader
-        backNavigation={true}
-        navigation={this.props.navigation}
-        title="各種設定"
-      >
-        <View style={{ backgroundColor: '#fff' }}>
-          <SettingTitle text="アプリ通知設定" />
-          <SettingElement text="ギフトアイコンを購入する。">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('give_icon_with_money', 'APP');
-              }}
-              value={this.state.appSettings.give_icon_with_money ? true : false}
-            />
-          </SettingElement>
-          <SettingElement text="足あと">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('footprint', 'APP');
-              }}
-              value={this.state.appSettings.footprint ? true : false}
-            />
-          </SettingElement>
-          <SettingElement text="つぶやきのいいね">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('good_for_tweets', 'APP');
-              }}
-              value={this.state.appSettings.good_for_tweets ? true : false}
-            />
-          </SettingElement>
-          <SettingElement text="自動延長通知 ">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('automatic_extension_notice', 'APP');
-              }}
-              value={
-                this.state.appSettings.automatic_extension_notice ? true : false
-              }
-            />
-          </SettingElement>
-          <SettingTitle text="メール通知設定" />
-          <SettingElement text="メールアドレス">
-            <View style={styles.flexDirectionRow}>
-              <Text style={styles.settingRightText}>
-                {this.props.userInfo ? this.props.userInfo.usr_email : ''}
-              </Text>
-              {/* <AntDesign name="right" size={25} color="gray" /> */}
-            </View>
-          </SettingElement>
-          <SettingTitle text="登録されているメールアドレスにメールが送られます。" />
+      <SafeAreaView>
+        <DashBoardHeader
+          backNavigation={true}
+          navigation={this.props.navigation}
+          title="各種設定"
+        >
+          <View style={{ backgroundColor: '#fff', marginBottom: 105 }}>
+            <SettingTitle text="アプリ通知設定" />
+            <SettingElement text="ギフトアイコンを購入する。">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('give_icon_with_money', 'APP')}
+                value={this.state.appSettings.give_icon_with_money ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="足あと">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('footprint', 'APP')}
+                value={this.state.appSettings.footprint ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="つぶやきのいいね">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('good_for_tweets', 'APP')}
+                value={this.state.appSettings.good_for_tweets ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="自動延長通知 ">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('automatic_extension_notice', 'APP')}
+                value={this.state.appSettings.automatic_extension_notice ? true : false}
+              />
+            </SettingElement>
+            <SettingTitle text="メール通知設定" />
+            <SettingElement text="メールアドレス">
+              <View style={styles.flexDirectionRow}>
+                <Text style={styles.settingRightText}>
+                  {this.props.userInfo ? this.props.userInfo.usr_email : ''}
+                </Text>
+                {/* <AntDesign name="right" size={25} color="gray" /> */}
+              </View>
+            </SettingElement>
+            <SettingTitle text="登録されているメールアドレスにメールが送られます。" />
 
-          {/* Email Setting */}
-          <SettingElement text="足あと">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('footprint_notification', 'EMAIL');
-              }}
-              value={
-                this.state.emailSetting.footprint_notification ? true : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="いいね ">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('how_nice_notification', 'EMAIL');
-              }}
-              value={
-                this.state.emailSetting.how_nice_notification ? true : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="メッセージ">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('message_notification', 'EMAIL');
-              }}
-              value={
-                this.state.emailSetting.message_notification ? true : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="コンシェルジュのメッセージ">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting(
-                  'concierge_message_notification',
-                  'EMAIL',
-                );
-              }}
-              value={
-                this.state.emailSetting.concierge_message_notification
-                  ? true
-                  : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="合流・解散通知">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting(
-                  'confluence_dissolution_notice',
-                  'EMAIL',
-                );
-              }}
-              value={
-                this.state.emailSetting.confluence_dissolution_notice
-                  ? true
-                  : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="自動延長通知">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('automatic_extension_notice', 'EMAIL');
-              }}
-              value={
-                this.state.emailSetting.automatic_extension_notice
-                  ? true
-                  : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="つぶやきのいいね">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting(
-                  'good_for_tweets_notification',
-                  'EMAIL',
-                );
-              }}
-              value={
-                this.state.emailSetting.good_for_tweets_notification
-                  ? true
-                  : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="運営からのお知らせ">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('news_from_management', 'EMAIL');
-              }}
-              value={
-                this.state.emailSetting.news_from_management ? true : false
-              }
-            />
-          </SettingElement>
-          {/* Email Setting */}
+            {/* Email Setting */}
+            <SettingElement text="足あと">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('footprint_notification', 'EMAIL')}
+                value={this.state.emailSetting.footprint_notification ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="いいね ">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('how_nice_notification', 'EMAIL')}
+                value={this.state.emailSetting.how_nice_notification ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="メッセージ">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('message_notification', 'EMAIL')}
+                value={this.state.emailSetting.message_notification ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="コンシェルジュのメッセージ">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('concierge_message_notification', 'EMAIL')}
+                value={this.state.emailSetting.concierge_message_notification ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="合流・解散通知">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('confluence_dissolution_notice', 'EMAIL')}
+                value={this.state.emailSetting.confluence_dissolution_notice ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="自動延長通知">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('automatic_extension_notice', 'EMAIL')}
+                value={this.state.emailSetting.automatic_extension_notice ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="つぶやきのいいね">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('good_for_tweets_notification', 'EMAIL')}
+                value={this.state.emailSetting.good_for_tweets_notification ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="運営からのお知らせ">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('news_from_management', 'EMAIL')}
+                value={this.state.emailSetting.news_from_management ? true : false}
+              />
+            </SettingElement>
+            {/* Email Setting */}
 
-          <SettingTitle text="プライベート設定" />
-          <SettingElement text="全体ランキング設定">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('overall_ranking_setting', 'PRIVACY');
-              }}
-              value={
-                this.state.privacySetting.overall_ranking_setting ? true : false
-              }
-            />
-          </SettingElement>
-          <SettingElement text="（おきにいり）ランキング">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('favorite_ranking', 'PRIVACY');
-              }}
-              value={this.state.privacySetting.favorite_ranking ? true : false}
-            />
-          </SettingElement>
-          <SettingTitle text="キャストのプロフィールに載っているマ（おきにいり）ランキングで 匿名表示になりまt" />
-          <SettingTitle text="フィーバーズ設定" />
-          <SettingElement text="タグ設定">
-            <Switch
-              trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
-              thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => {
-                this.changeValueSetting('tag_settings', 'PRIVACY');
-              }}
-              value={this.state.privacySetting.tag_settings ? true : false}
-            />
-          </SettingElement>
+            <SettingTitle text="プライベート設定" />
+            <SettingElement text="全体ランキング設定">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('overall_ranking_setting', 'PRIVACY')}
+                value={this.state.privacySetting.overall_ranking_setting ? true : false}
+              />
+            </SettingElement>
+            <SettingElement text="（おきにいり）ランキング">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('favorite_ranking', 'PRIVACY')}
+                value={this.state.privacySetting.favorite_ranking ? true : false}
+              />
+            </SettingElement>
+            <SettingTitle text="キャストのプロフィールに載っているマ（おきにいり）ランキングで 匿名表示になりまt" />
+            <SettingTitle text="フィーバーズ設定" />
+            <SettingElement text="タグ設定">
+              <Switch
+                trackColor={{ false: '#f1f2f3', true: golbalConstants.mainColor }}
+                thumbColor={this.state.isEnabled ? '#03A9F5' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => this.changeValueSetting('tag_settings', 'PRIVACY')}
+                value={this.state.privacySetting.tag_settings ? true : false}
+              />
+            </SettingElement>
 
-          {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
-        </View>
-      </DashBoardHeader>
+            {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
+          </View>
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

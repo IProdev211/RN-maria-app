@@ -35,14 +35,10 @@ class ProfileGirdElementCastGrid extends Component {
       <TouchableOpacity
         activeOpacity={0.95}
         style={styles.imageHolder}
-        onLongPress={() =>
-          this.rowPressActionLong(
-            this.props.data.id,
-            this.checkUserAlreadyAddedOrNot(),
-          )
-        }
+        onLongPress={() => this.rowPressActionLong(this.props.data.id, this.checkUserAlreadyAddedOrNot())}
         onPress={() => this.rowPressAction(this.props.data.id)}
-        elevation={5}>
+        elevation={5}
+      >
         <Image
           source={{
             uri: this.props.data.usr_profile_photo
@@ -60,31 +56,20 @@ class ProfileGirdElementCastGrid extends Component {
             <View style={styles.circle} />
             <Text numberOfLines={1} style={styles.textOnImage}>
               {this.props.data.usr_nickname}{' '}
-              {this.props.data.usr_age ? this.props.data.usr_age + '歳' : null}
+              {this.props.data.usr_age && this.props.data.usr_age + '歳'}
             </Text>
           </View>
           <Text style={styles.subText}>
-            {this.props.data.todays_message
-              ? this.props.data.todays_message.slice(0, 20)
-              : null}
+            {this.props.data.todays_message && this.props.data.todays_message.slice(0, 20)}
             ...
           </Text>
         </View>
-        <View
-          style={
-            this.checkUserAlreadyAddedOrNot()
-              ? styles.addToFavHolderS
-              : styles.addToFavHolder
-          }>
-          <Text
-            style={
-              this.checkUserAlreadyAddedOrNot()
-                ? styles.mainNameS
-                : styles.mainName
-            }>
-            {this.props.data.usr_hourly_rate
-              ? this.props.data.usr_hourly_rate.toLocaleString() + 'P / 30分'
-              : '定義しない'}
+        <View style={this.checkUserAlreadyAddedOrNot() ? styles.addToFavHolderS : styles.addToFavHolder} >
+          <Text style={this.checkUserAlreadyAddedOrNot() ? styles.mainNameS : styles.mainName} >
+            {this.props.data.usr_hourly_rate ?
+              this.props.data.usr_hourly_rate.toLocaleString() + 'P / 30分'
+              :
+              '定義しない'}
           </Text>
         </View>
       </TouchableOpacity>

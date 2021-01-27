@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import SettingTitle from '../../../components/SettingTitle';
 //redux
@@ -15,16 +15,19 @@ class Settings extends Component {
   }
   render() {
     return (
-      <DashBoardHeader
-        backNavigation={true}
-        navigation={this.props.navigation}
-        title="ヘルプ">
-        <View style={{ backgroundColor: '#fff' }}>
-          <SettingTitle text="申し訳ありません、コンテンツアップロードまで少々お待ちください。" />
-          {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
-        </View>
-        <View style={{ paddingTop: 50 }} />
-      </DashBoardHeader>
+      <SafeAreaView>
+        <DashBoardHeader
+          backNavigation={true}
+          navigation={this.props.navigation}
+          title="ヘルプ"
+        >
+          <View style={{ backgroundColor: '#fff' }}>
+            <SettingTitle text="申し訳ありません、コンテンツアップロードまで少々お待ちください。" />
+            {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
+          </View>
+          <View style={{ paddingTop: 50 }} />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

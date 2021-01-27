@@ -6,7 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TagSelect } from 'react-native-tag-select';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DashBoardHeader from '../../../components/DashBoardHeader';
-import SetpByStepProcess from '../../../components/SetpByStepProcess';
+import StepByStepProcess from '../../../components/StepByStepProcess';
 import styles from './styles';
 
 //redux
@@ -235,7 +235,7 @@ class CreateNewCast extends Component {
             </View>
             <View style={{ paddingVertical: 30 }}>
               <View style={styles.mainRow}>
-                <SetpByStepProcess
+                <StepByStepProcess
                   title="次に進む (1/4)"
                   action={() => console.log('hi')}
                 />

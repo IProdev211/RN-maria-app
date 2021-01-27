@@ -14,9 +14,8 @@ class ProfileGirdElement extends Component {
   render() {
     return (
       <TouchableWithoutFeedback
-        onPress={() => {
-          this.props.gotoUserDetailsPage(this.props.item);
-        }}>
+        onPress={() => this.props.gotoUserDetailsPage(this.props.item)}
+      >
         <View style={styles.imageHolder} elevation={5}>
           <Image
             source={{

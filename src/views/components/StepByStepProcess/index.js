@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
-const SetpByStepProcess = (props) => {
+const StepByStepProcess = (props) => {
   return (
     <TouchableOpacity
       disabled={props.disabled}
@@ -20,4 +20,4 @@ const SetpByStepProcess = (props) => {
   );
 }
 
-export default SetpByStepProcess;
+export default StepByStepProcess;

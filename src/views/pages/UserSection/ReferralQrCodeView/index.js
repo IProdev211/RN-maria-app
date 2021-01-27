@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, Linking } from 'react-native';
+import { View, Image, Linking, SafeAreaView } from 'react-native';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 
@@ -28,21 +28,24 @@ class ReferralQrCodeView extends Component {
 
   render() {
     return (
-      <DashBoardHeader
-        title="あなたの紹介コード"
-        navigation={this.props.navigation}
-        notificationHide={true}
-        backNavigation={true}
-        settingMenu={true}>
-        <View style={styles.container}>
-          <Image
-            style={styles.qrImage}
-            source={{
-              uri: this.props.userInfo ? this.props.userInfo.qr_code : null,
-            }}
-          />
-        </View>
-      </DashBoardHeader>
+      <SafeAreaView>
+        <DashBoardHeader
+          title="あなたの紹介コード"
+          navigation={this.props.navigation}
+          notificationHide={true}
+          backNavigation={true}
+          settingMenu={true}
+        >
+          <View style={styles.container}>
+            <Image
+              style={styles.qrImage}
+              source={{
+                uri: this.props.userInfo ? this.props.userInfo.qr_code : null,
+              }}
+            />
+          </View>
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import DashBoardHeader from '../../components/DashBoardHeader';
-import styles from './styles';
 import shortid from 'shortid';
 import {
   unreadNotification,
   getNotification,
   callHistory,
 } from '../../../services/AuthService';
+import DashBoardHeader from '../../components/DashBoardHeader';
+import styles from './styles';
+
 //redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -104,54 +105,37 @@ class Notification extends Component {
   };
 
   render() {
-    console.log(this.props.allNotification);
-    var callIcon = 'https://img.icons8.com/color/48/000000/video-call.png';
     return (
-      <DashBoardHeader
-        navigation={this.props.navigation}
-        backNavigation={true}
-        notificationHide={true}
-        title="お知らせ">
-        <View>
-          <View style={styles.tabOption}>
-            <TouchableOpacity
-              onPress={() => this.setState({ TabOptionSelected: 0 })}
-              style={
-                this.state.TabOptionSelected == 0
-                  ? styles.tabOptionSelect
-                  : styles.tabOptionUnselect
-              }>
-              <Text
-                style={
-                  this.state.TabOptionSelected == 0
-                    ? styles.tabOptionTextSelected
-                    : styles.tabOptionText
-                }>
-                あしあと
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => this.setState({ TabOptionSelected: 1 })}
-              style={
-                this.state.TabOptionSelected == 1
-                  ? styles.tabOptionSelect
-                  : styles.tabOptionUnselect
-              }>
-              <Text
-                style={
-                  this.state.TabOptionSelected == 1
-                    ? styles.tabOptionTextSelected
-                    : styles.tabOptionText
-                }>
-                ビデオ通話履歴
-              </Text>
-            </TouchableOpacity>
-          </View>
+      <SafeAreaView>
+        <DashBoardHeader
+          navigation={this.props.navigation}
+          backNavigation={true}
+          notificationHide={true}
+          title="お知らせ"
+        >
           <View>
-            {!this.state.TabOptionSelected ? (
-              this.props.allNotification ? (
-                this.props.allNotification.map(Notification => {
-                  return (
+            <View style={styles.tabOption}>
+              <TouchableOpacity
+                onPress={() => this.setState({ TabOptionSelected: 0 })}
+                style={this.state.TabOptionSelected == 0 ? styles.tabOptionSelect : styles.tabOptionUnselect}
+              >
+                <Text style={this.state.TabOptionSelected == 0 ? styles.tabOptionTextSelected : styles.tabOptionText}>
+                  あしあと
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.setState({ TabOptionSelected: 1 })}
+                style={this.state.TabOptionSelected == 1 ? styles.tabOptionSelect : styles.tabOptionUnselect}
+              >
+                <Text style={this.state.TabOptionSelected == 1 ? styles.tabOptionTextSelected : styles.tabOptionText}>
+                  ビデオ通話履歴
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              {!this.state.TabOptionSelected ?
+                this.props.allNotification ?
+                  this.props.allNotification.map(Notification => (
                     <View key={shortid.generate()} style={styles.root}>
                       <TouchableOpacity
                         style={styles.container}
@@ -164,9 +148,7 @@ class Notification extends Component {
                           <View style={styles.mainContentStyle}>
                             <View style={styles.text}>
                               <Text style={styles.name}>
-                                {Notification.user.nickname
-                                  ? Notification.user.nickname
-                                  : 'unknown'}
+                                {Notification.user.nickname ? Notification.user.nickname : 'unknown'}
                               </Text>
                               <Text> {Notification.notice_time}</Text>
                             </View>
@@ -174,78 +156,66 @@ class Notification extends Component {
                               <Text style={styles.timeAgo}>
                                 {Notification.content}
                               </Text>
-                              {Notification.status == 'unread' ? (
+                              {Notification.status == 'unread' &&
                                 <Text style={styles.unreadNotification}>
                                   未読
-                                </Text>
-                              ) : null}
+                                  </Text>
+                              }
                             </View>
                           </View>
                         </View>
                       </TouchableOpacity>
                       <View style={styles.separator} />
                     </View>
-                  );
-                })
-              ) : (
+                  ))
+                  :
                   <View style={styles.NONotificationContainer}>
-                    <Text>システム通知なし !</Text>
+                    <Text>システム通知なし!</Text>
+                  </View>
+                :
+                this.state.callHistory.map(Notification => (
+                  <View key={shortid.generate()} style={styles.root}>
+                    <TouchableOpacity style={styles.container}>
+                      <Image
+                        source={{
+                          uri: this.isHostCall(Notification.host_id)
+                            ? Notification.guest_profile_pic
+                            : Notification.host_profile_pic,
+                        }}
+                        style={styles.avatar}
+                      />
+                      <View style={styles.content}>
+                        <View style={styles.mainContentStyle}>
+                          <View style={styles.text}>
+                            <Text style={styles.name}>
+                              {this.isHostCall(Notification.host_id) ?
+                                `You host a call with ${Notification.guest_name}`
+                                :
+                                `You were a guest of ${Notification.host_name}`
+                              }
+                            </Text>
+                          </View>
+                          <View style={styles.text}>
+                            <Text style={styles.timeAgo}>
+                              <Text>
+                                {Notification.actual_calling_time ? Notification.actual_calling_time : 0}
+                                    m /{' '}
+                                {Notification.total_time ? Notification.total_time : 0}
+                                    m
+                              </Text>
+                            </Text>
+                            <Icon
+                              color={Notification.is_accepted === '0' ? 'red' : 'green'}
+                              name="video-camera"
+                              size={25}
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                    <View style={styles.separator} />
                   </View>
                 )
-            ) : (
-                this.state.callHistory.map(Notification => {
-                  return (
-                    <View key={shortid.generate()} style={styles.root}>
-                      <TouchableOpacity style={styles.container}>
-                        <Image
-                          source={{
-                            uri: this.isHostCall(Notification.host_id)
-                              ? Notification.guest_profile_pic
-                              : Notification.host_profile_pic,
-                          }}
-                          style={styles.avatar}
-                        />
-                        <View style={styles.content}>
-                          <View style={styles.mainContentStyle}>
-                            <View style={styles.text}>
-                              <Text style={styles.name}>
-                                {this.isHostCall(Notification.host_id)
-                                  ? `You host a call with ${Notification.guest_name
-                                  }`
-                                  : `You were a guest of ${Notification.host_name
-                                  }`}
-                              </Text>
-                            </View>
-                            <View style={styles.text}>
-                              <Text style={styles.timeAgo}>
-                                <Text>
-                                  (
-                                {Notification.actual_calling_time
-                                    ? Notification.actual_calling_time
-                                    : 0}
-                                m /{' '}
-                                  {Notification.total_time
-                                    ? Notification.total_time
-                                    : 0}
-                                m)
-                              </Text>
-                              </Text>
-                              <Icon
-                                color={
-                                  Notification.is_accepted === '0'
-                                    ? 'red'
-                                    : 'green'
-                                }
-                                name="video-camera"
-                                size={25}
-                              />
-                            </View>
-                          </View>
-                        </View>
-                      </TouchableOpacity>
-                      <View style={styles.separator} />
-                    </View>
-                  );
 
                   /* <TouchableOpacity key={x.id}>
                       <View style={styles.row}>
@@ -278,11 +248,12 @@ class Notification extends Component {
                         />
                       </View>
                     </TouchableOpacity> */
-                })
-              )}
+                )
+              }
+            </View>
           </View>
-        </View>
-      </DashBoardHeader>
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

@@ -41,14 +41,10 @@ class ProfileGirdElementCast extends Component {
       <View activeOpacity={0.95} style={styles.imageHolder} elevation={5}>
         <View style={styles.userRow}>
           <TouchableOpacity
-            onLongPress={() =>
-              this.rowPressActionLong(
-                this.props.data.id,
-                this.checkUserAlreadyAddedOrNot(),
-              )
-            }
+            onLongPress={() => this.rowPressActionLong(this.props.data.id, this.checkUserAlreadyAddedOrNot())}
             onPress={() => this.rowPressAction(this.props.data.id)}
-            style={{ flexDirection: 'row' }}>
+            style={{ flexDirection: 'row' }}
+          >
             <View style={{ width: 50, height: 50, marginRight: 15 }}>
               <Image
                 style={{ width: 50, height: 50, borderRadius: 25 }}

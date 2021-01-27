@@ -1,5 +1,4 @@
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native';
 const { height } = Dimensions.get('window');
@@ -9,9 +8,6 @@ export default EStyleSheet.flatten(
       backgroundColor: '$secondaryBgColor',
       padding: 5,
       ...Platform.select({
-        ios: {
-          paddingTop: getStatusBarHeight(),
-        },
         android: {
           paddingTop: 5,
           height: 50,

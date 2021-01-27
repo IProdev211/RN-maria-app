@@ -45,7 +45,7 @@ import {
 } from '../../../services/AuthService';
 import BgComponent from '../../components/BgComponent';
 import HeaderWithCross from '../../components/HeaderWithCross';
-import SetpByStepProcess from '../../components/SetpByStepProcess';
+import StepByStepProcess from '../../components/StepByStepProcess';
 import golbalConstants from '../../Common/GlobalStyles/constants';
 import styles from './styles';
 
@@ -714,10 +714,10 @@ class Registration extends Component {
   render() {
     return (
       <BgComponent>
-        <View style={styles.mainWrapper}>
-          {/* registartion stage 0 */}
-          {this.state.registrationStage == 0 &&
-            <SafeAreaView style={styles.containerLog}>
+        <SafeAreaView>
+          <View style={styles.mainWrapper}>
+            {/* registartion stage 0 */}
+            {this.state.registrationStage == 0 &&
               <ScrollView style={styles.scrollView}>
                 <View style={styles.pading20}>
                   <View style={styles.topLogoSection}>
@@ -942,19 +942,17 @@ class Registration extends Component {
                   </View>
                 </View>
               </ScrollView>
-            </SafeAreaView>
-          }
+            }
 
-          {/* Process 2 */}
-          {this.state.registrationStage == 1 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="メールでログイン"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 0 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* Process 2 */}
+            {this.state.registrationStage == 1 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="メールでログイン"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 0 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.padding20}>
                     <View>
@@ -975,22 +973,20 @@ class Registration extends Component {
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="参加する"
-                action={this.loginWithEmailCheckInternetStatus}
-              />
-            </View>
-          }
-          {this.state.registrationStage == '1a' &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="Eメールを確認します"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 1 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+                <StepByStepProcess
+                  title="参加する"
+                  action={this.loginWithEmailCheckInternetStatus}
+                />
+              </View>
+            }
+            {this.state.registrationStage == '1a' &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="Eメールを確認します"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 1 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.padding20}>
                     <View>
@@ -1013,108 +1009,108 @@ class Registration extends Component {
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="確認"
-                action={() => this.VerifyEmail()}
-              />
-            </View>
-          }
-          {this.state.registrationStage == 2 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="国番号を入力"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 1 })}
-                activeBack={true}
-              />
-              {/* <View style={styles.codeContainer}>
-                <View style={styles.verfiedTokenCenter}>
-                  <Text>ワットはあなたの誕生日です ?</Text>
-                </View>
-              </View> */}
-
-              {/* <View style={styles.OnPxHr} /> */}
-              <View style={styles.countrySelect}>
-                <Text>お誕生日</Text>
-                <DatePicker
-                  mode="date"
-                  locale="ja"
-                  date={this.state.birthday}
-                  onDateChange={date => {
-                    this.setState({ birthday: date });
-                  }}
+                <StepByStepProcess
+                  title="確認"
+                  action={() => this.VerifyEmail()}
                 />
               </View>
-              <View style={styles.centerContainer}>
-                <Text style={styles.textSection5Small}>
-                  パスポート/運転免許証などの年齢確認書類をアップロード
-                </Text>
-              </View>
-              <View style={styles.centerContainer}>
-                {this.state.DateProfImageUri ?
-                  <Avatar
-                    size={150}
-                    rounded
-                    icon={{ name: 'user', type: 'font-awesome' }}
-                    onPress={() => this.imagePickerForDateValidationImage()}
-                    activeOpacity={0.7}
-                    containerStyle={styles.centerContainer}
-                    showEditButton
-                    source={{ uri: this.state.DateProfImageUri }}
-                  />
-                  :
-                  <Avatar
-                    size={150}
-                    rounded
-                    icon={{ name: 'user', type: 'font-awesome' }}
-                    onPress={() => this.imagePickerForDateValidationImage()}
-                    activeOpacity={0.7}
-                    containerStyle={styles.centerContainer}
-                    showEditButton
-                    source={require('../../../assets/documents.png')}
-                  />
-                }
-                {this.state.photoDocument &&
-                  <View style={styles.verifyIcon}>
-                    <Icon name="check-circle" size={30} color={'green'} />
+            }
+            {this.state.registrationStage == 2 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="お誕生日入力"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 1 })}
+                  activeBack={true}
+                />
+                {/* <View style={styles.codeContainer}>
+                  <View style={styles.verfiedTokenCenter}>
+                    <Text>ワットはあなたの誕生日です ?</Text>
                   </View>
-                }
-              </View>
-              <View style={styles.ageVerification}>
-                <View style={styles.ageVerificationContainer}>
-                  <TouchableOpacity
-                    style={styles.ageVerificationSkipButon}
-                    onPress={() => this.setState({ registrationStage: 3 })}>
-                    <Text>スキップする </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.ageVerificationSkipVerify}
-                    onPress={() => this.changeDate()}>
-                    <Text style={styles.ageVerificationSkipVerifyText}>
-                      確認済み
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              {/* <SetpByStepProcess
-                title="次へ 1/5"
-                action={() => this.changeDate()}
-              /> */}
-            </View>
-          }
-          {/* registartion stage 2 End*/}
+                </View> */}
 
-          {/* registartion stage 3*/}
-          {this.state.registrationStage == 3 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="国番号を入力"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 2 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+                {/* <View style={styles.OnPxHr} /> */}
+                <View style={styles.countrySelect}>
+                  <Text>お誕生日</Text>
+                  <DatePicker
+                    mode="date"
+                    locale="ja"
+                    date={this.state.birthday}
+                    onDateChange={date => {
+                      this.setState({ birthday: date });
+                    }}
+                  />
+                </View>
+                <View style={styles.centerContainer}>
+                  <Text style={styles.textSection5Small}>
+                    パスポート/運転免許証などの年齢確認書類をアップロード
+                </Text>
+                </View>
+                <View style={styles.centerContainer}>
+                  {this.state.DateProfImageUri ?
+                    <Avatar
+                      size={150}
+                      rounded
+                      icon={{ name: 'user', type: 'font-awesome' }}
+                      onPress={() => this.imagePickerForDateValidationImage()}
+                      activeOpacity={0.7}
+                      containerStyle={styles.centerContainer}
+                      showEditButton
+                      source={{ uri: this.state.DateProfImageUri }}
+                    />
+                    :
+                    <Avatar
+                      size={150}
+                      rounded
+                      icon={{ name: 'user', type: 'font-awesome' }}
+                      onPress={() => this.imagePickerForDateValidationImage()}
+                      activeOpacity={0.7}
+                      containerStyle={styles.centerContainer}
+                      showEditButton
+                      source={require('../../../assets/documents.png')}
+                    />
+                  }
+                  {this.state.photoDocument &&
+                    <View style={styles.verifyIcon}>
+                      <Icon name="check-circle" size={30} color={'green'} />
+                    </View>
+                  }
+                </View>
+                <View style={styles.ageVerification}>
+                  <View style={styles.ageVerificationContainer}>
+                    <TouchableOpacity
+                      style={styles.ageVerificationSkipButon}
+                      onPress={() => this.setState({ registrationStage: 3 })}
+                    >
+                      <Text>スキップする </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.ageVerificationSkipVerify}
+                      onPress={this.changeDate}
+                    >
+                      <Text style={styles.ageVerificationSkipVerifyText}>
+                        確認済み
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                {/* <StepByStepProcess
+                  title="次へ 1/5"
+                  action={() => this.changeDate()}
+                /> */}
+              </View>
+            }
+            {/* registartion stage 2 End*/}
+
+            {/* registartion stage 3*/}
+            {this.state.registrationStage == 3 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="場所を入力"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 2 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.profileImageSection}>
                     {this.state.profileImage ?
@@ -1156,40 +1152,38 @@ class Registration extends Component {
                     />
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="次へ 2/5"
-                action={() => this.selectedCityOption()}
-              />
-            </View>
-          }
-          {/* registartion stage 3 End*/}
+                <StepByStepProcess
+                  title="次へ 2/5"
+                  action={() => this.selectedCityOption()}
+                />
+              </View>
+            }
+            {/* registartion stage 3 End*/}
 
-          {/* registartion stage 4*/}
-          {this.state.registrationStage == 4 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="国番号を入力"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 3 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* registartion stage 4*/}
+            {this.state.registrationStage == 4 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="性別を入力"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 3 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.profileImageSection}>
-                    {this.state.profileImage ? (
+                    {this.state.profileImage ?
                       <Avatar
                         rounded
                         size="xlarge"
                         source={{ uri: this.state.profileImage }}
                       />
-                    ) : (
-                        <Avatar
-                          rounded
-                          size="xlarge"
-                          source={require('../../../assets/panda.png')}
-                        />
-                      )}
+                      :
+                      <Avatar
+                        rounded
+                        size="xlarge"
+                        source={require('../../../assets/panda.png')}
+                      />
+                    }
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>あなたの性別は ?</Text>
@@ -1198,84 +1192,53 @@ class Registration extends Component {
                     <View style={styles.chosseOptionRow}>
                       <TouchableOpacity
                         onPress={() => this.changeGender(0)}
-                        style={
-                          this.state.selectedGender == 0
-                            ? styles.optionSectionSelected
-                            : styles.optionSection
-                        }>
-                        <Text
-                          style={
-                            this.state.selectedGender == 0
-                              ? styles.optionColorSelected
-                              : styles.optionColor
-                          }>
+                        style={this.state.selectedGender == 0 ? styles.optionSectionSelected : styles.optionSection}
+                      >
+                        <Text style={this.state.selectedGender == 0 ? styles.optionColorSelected : styles.optionColor}>
                           女性
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => this.changeGender(1)}
-                        style={
-                          this.state.selectedGender == 1
-                            ? styles.optionSectionSelected
-                            : styles.optionSection
-                        }>
-                        <Text
-                          style={
-                            this.state.selectedGender == 1
-                              ? styles.optionColorSelected
-                              : styles.optionColor
-                          }>
+                        style={this.state.selectedGender == 1 ? styles.optionSectionSelected : styles.optionSection}
+                      >
+                        <Text style={this.state.selectedGender == 1 ? styles.optionColorSelected : styles.optionColor}>
                           男性
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => this.changeGender(2)}
-                        style={
-                          this.state.selectedGender == 2
-                            ? styles.optionSectionSelected
-                            : styles.optionSection
-                        }>
-                        <Text
-                          style={
-                            this.state.selectedGender == 2
-                              ? styles.optionColorSelected
-                              : styles.optionColor
-                          }>
+                        style={this.state.selectedGender == 2 ? styles.optionSectionSelected : styles.optionSection}
+                      >
+                        <Text style={this.state.selectedGender == 2 ? styles.optionColorSelected : styles.optionColor}>
                           LGBT
                         </Text>
                       </TouchableOpacity>
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="次へ 3/5"
-                action={() => this.changeGenderFunction()}
-              />
-            </View>
-          }
-          {/* registartion stage 4 End*/}
+                <StepByStepProcess
+                  title="次へ 3/5"
+                  action={() => this.changeGenderFunction()}
+                />
+              </View>
+            }
+            {/* registartion stage 4 End*/}
 
-          {/* registartion stage 5*/}
-          {this.state.registrationStage == 5 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="ニックネームを設定"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 4 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* registartion stage 5*/}
+            {this.state.registrationStage == 5 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="ニックネームを設定"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 4 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.padding20}>
                     <View>
-                      <Text style={styles.textSection5}>
-                        素敵なニックネームを
-                      </Text>
-                      <Text style={styles.textSection5}>教えてください !</Text>
-                      <Text style={styles.textSection5Small}>
-                        キャストに呼ばれたい名前を教えてください。(20文字以内)
-                      </Text>
+                      <Text style={styles.textSection5}>素敵なニックネームを教えてください!</Text>
+                      <Text style={styles.textSection5Small}>キャストに呼ばれたい名前を教えてください。(20文字以内)</Text>
                     </View>
                     <View style={styles.paddingTop20}>
                       <TextInput
@@ -1287,25 +1250,23 @@ class Registration extends Component {
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="次へ 4/5"
-                action={() => this.changeNickName()}
-              />
-            </View>
-          }
-          {/* registartion stage 5 End*/}
+                <StepByStepProcess
+                  title="次へ 4/5"
+                  action={() => this.changeNickName()}
+                />
+              </View>
+            }
+            {/* registartion stage 5 End*/}
 
-          {/* registartion stage 6*/}
-          {this.state.registrationStage == 6 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="ニックネームを設定"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 5 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* registartion stage 6*/}
+            {this.state.registrationStage == 6 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="ニックネームを設定"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 5 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.padding20}>
                     <View style={styles.centerContainer}>
@@ -1328,33 +1289,17 @@ class Registration extends Component {
                     <View style={styles.tabOption}>
                       <TouchableOpacity
                         onPress={() => this.setState({ process5Selected: 0 })}
-                        style={
-                          this.state.process5Selected == 0
-                            ? styles.tabOptionSelect
-                            : styles.tabOptionUnselect
-                        }>
-                        <Text
-                          style={
-                            this.state.process5Selected == 0
-                              ? styles.tabOptionTextSelected
-                              : styles.tabOptionText
-                          }>
+                        style={this.state.process5Selected == 0 ? styles.tabOptionSelect : styles.tabOptionUnselect}
+                      >
+                        <Text style={this.state.process5Selected == 0 ? styles.tabOptionTextSelected : styles.tabOptionText}>
                           プライベート
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => this.setState({ process5Selected: 1 })}
-                        style={
-                          this.state.process5Selected == 1
-                            ? styles.tabOptionSelect
-                            : styles.tabOptionUnselect
-                        }>
-                        <Text
-                          style={
-                            this.state.process5Selected == 1
-                              ? styles.tabOptionTextSelected
-                              : styles.tabOptionText
-                          }>
+                        style={this.state.process5Selected == 1 ? styles.tabOptionSelect : styles.tabOptionUnselect}
+                      >
+                        <Text style={this.state.process5Selected == 1 ? styles.tabOptionTextSelected : styles.tabOptionText}>
                           接待
                         </Text>
                       </TouchableOpacity>
@@ -1379,51 +1324,45 @@ class Registration extends Component {
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="次へ 5/5"
-                action={() => this.chooseOption()}
-              />
-            </View>
-          }
-          {/* registartion stage 6 End*/}
+                <StepByStepProcess
+                  title="次へ 5/5"
+                  action={() => this.chooseOption()}
+                />
+              </View>
+            }
+            {/* registartion stage 6 End*/}
 
-          {/* registartion stage 4a*/}
-          {this.state.registrationStage == '6a' &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="国番号を入力"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 4 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* registartion stage 6a*/}
+            {this.state.registrationStage == '6a' &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="国番号を入力"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 4 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.profileImageSection}>
-                    {this.state.profileImage ? (
+                    {this.state.profileImage ?
                       <Avatar
                         rounded
                         size="xlarge"
                         source={{ uri: this.state.profileImage }}
                       />
-                    ) : (
-                        <Avatar
-                          rounded
-                          size="xlarge"
-                          source={require('../../../assets/panda.png')}
-                        />
-                      )}
+                      :
+                      <Avatar
+                        rounded
+                        size="xlarge"
+                        source={require('../../../assets/panda.png')}
+                      />
+                    }
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>
                       あなたの時給はいくらですか？
                     </Text>
                   </View>
-                  <View
-                    style={[
-                      styles.verfiedTokenCenter,
-                      styles.HourlyRateConatiner,
-                    ]}>
+                  <View style={[styles.verfiedTokenCenter, styles.HourlyRateConatiner]}>
                     <TextInput
                       style={styles.hourlyRate}
                       placeholder="時給を円で入力してください"
@@ -1433,40 +1372,38 @@ class Registration extends Component {
                     />
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="次へ 5/5"
-                action={() => this.changeHourlyRate()}
-              />
-            </View>
-          }
-          {/* registartion stage 4a End*/}
+                <StepByStepProcess
+                  title="次へ 5/5"
+                  action={() => this.changeHourlyRate()}
+                />
+              </View>
+            }
+            {/* registartion stage 6a End*/}
 
-          {/* registartion stage 4b*/}
-          {this.state.registrationStage == '6b' &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="国番号を入力"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: '6a' })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* registartion stage 6b*/}
+            {this.state.registrationStage == '6b' &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="国番号を入力"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: '6a' })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.profileImageSection}>
-                    {this.state.profileImage ? (
+                    {this.state.profileImage ?
                       <Avatar
                         rounded
                         size="xlarge"
                         source={{ uri: this.state.profileImage }}
                       />
-                    ) : (
-                        <Avatar
-                          rounded
-                          size="xlarge"
-                          source={require('../../../assets/panda.png')}
-                        />
-                      )}
+                      :
+                      <Avatar
+                        rounded
+                        size="xlarge"
+                        source={require('../../../assets/panda.png')}
+                      />
+                    }
                   </View>
                   <View style={styles.verfiedTokenCenter}>
                     <Text style={styles.questionColor}>
@@ -1477,58 +1414,40 @@ class Registration extends Component {
                     <View style={styles.chosseOptionRow}>
                       <TouchableOpacity
                         onPress={() => this.setState({ interViewCall: 1 })}
-                        style={
-                          this.state.interViewCall == 1
-                            ? styles.optionSectionSelected
-                            : styles.optionSection
-                        }>
-                        <Text
-                          style={
-                            this.state.interViewCall == 1
-                              ? styles.optionColorSelected
-                              : styles.optionColor
-                          }>
+                        style={this.state.interViewCall == 1 ? styles.optionSectionSelected : styles.optionSection}
+                      >
+                        <Text style={this.state.interViewCall == 1 ? styles.optionColorSelected : styles.optionColor}>
                           はい
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => this.setState({ interViewCall: 0 })}
-                        style={
-                          this.state.interViewCall == 0
-                            ? styles.optionSectionSelected
-                            : styles.optionSection
-                        }>
-                        <Text
-                          style={
-                            this.state.interViewCall == 0
-                              ? styles.optionColorSelected
-                              : styles.optionColor
-                          }>
+                        style={this.state.interViewCall == 0 ? styles.optionSectionSelected : styles.optionSection}
+                      >
+                        <Text style={this.state.interViewCall == 0 ? styles.optionColorSelected : styles.optionColor}>
                           いいえ
                         </Text>
                       </TouchableOpacity>
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="次へ 5/5"
-                action={() => this.setState({ registrationStage: 7 })}
-              />
-            </View>
-          }
-          {/* registartion stage 4b End*/}
+                <StepByStepProcess
+                  title="次へ 5/5"
+                  action={() => this.setState({ registrationStage: 7 })}
+                />
+              </View>
+            }
+            {/* registartion stage 6b End*/}
 
-          {/* registartion stage 7*/}
-          {this.state.registrationStage == 7 &&
-            <View style={styles.stageOneStyle}>
-              <HeaderWithCross
-                title="プロファイルを設定"
-                acion={() => this.setState({ registrationStage: 0 })}
-                acionBackKey={() => this.setState({ registrationStage: 6 })}
-                activeBack={true}
-              />
-              <SafeAreaView style={styles.container}>
+            {/* registartion stage 7*/}
+            {this.state.registrationStage == 7 &&
+              <View style={styles.stageOneStyle}>
+                <HeaderWithCross
+                  title="プロファイルを設定"
+                  action={() => this.setState({ registrationStage: 0 })}
+                  actionBackKey={() => this.setState({ registrationStage: 5 })}
+                  activeBack={true}
+                />
                 <ScrollView style={styles.scrollView}>
                   <View style={styles.padding20}>
                     <View>
@@ -1543,8 +1462,7 @@ class Registration extends Component {
                       </Text>
 
                       <Text style={styles.textSection5Small}>
-                        プロフィール写真が登録してあるだけで、いいねしたキャストからの
-                        返信率が10倍に !
+                        プロフィール写真が登録してあるだけで、いいねしたキャストからの返信率が10倍に !
                       </Text>
                     </View>
                     <View style={[styles.paddingTop20, styles.centerContainer]}>
@@ -1559,7 +1477,7 @@ class Registration extends Component {
                           size={150}
                           rounded
                           icon={{ name: 'user', type: 'font-awesome' }}
-                          onPress={() => this.imagePickerForProfileImage()}
+                          onPress={this.imagePickerForProfileImage}
                           activeOpacity={0.7}
                           containerStyle={styles.centerContainer}
                           showEditButton
@@ -1569,26 +1487,26 @@ class Registration extends Component {
                     </View>
                   </View>
                 </ScrollView>
-              </SafeAreaView>
-              <SetpByStepProcess
-                title="登録完了"
-                action={() => this.updateProfile()}
-              />
-            </View>
-          }
-          {/* registartion stage 7 End*/}
-          {/* <InstagramLogin
-            ref={ref => (this.instagramLogin = ref)}
-            appId="529631451057034"
-            appSecret="7f56acd7f4bb0226445e08c877109c86"
-            redirectUrl="your-redirect-Url"
-            scopes={['user_profile', 'user_media']}
-            onLoginSuccess={e => console.log('instram', e)}
-            onLoginFailure={data => console.log(data)}
-          /> */}
+                <StepByStepProcess
+                  title="登録完了"
+                  action={this.updateProfile}
+                />
+              </View>
+            }
+            {/* registartion stage 7 End*/}
+            {/* <InstagramLogin
+              ref={ref => (this.instagramLogin = ref)}
+              appId="529631451057034"
+              appSecret="7f56acd7f4bb0226445e08c877109c86"
+              redirectUrl="your-redirect-Url"
+              scopes={['user_profile', 'user_media']}
+              onLoginSuccess={e => console.log('instram', e)}
+              onLoginFailure={data => console.log(data)}
+            /> */}
 
-          <Spinner visible={this.state.loading} />
-        </View>
+            <Spinner visible={this.state.loading} />
+          </View>
+        </SafeAreaView>
       </BgComponent>
     );
   }

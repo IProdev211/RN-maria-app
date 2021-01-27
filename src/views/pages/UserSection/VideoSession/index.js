@@ -16,14 +16,11 @@ import RtcEngine, {
   RtcRemoteView,
   VideoRenderMode,
 } from 'react-native-agora';
-
-import SetpByStepProcess from '../../../components/SetpByStepProcess';
 import Modal from 'react-native-modal';
 import requestCameraAndAudioPermission from './permission';
 import { Icon, Card, Avatar, Button, CheckBox } from 'react-native-elements';
 import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
-import golbalConstants from '../../../Common/GlobalStyles/constants';
 import Pusher from 'pusher-js/react-native';
 import {
   startVideoSession,
@@ -32,6 +29,8 @@ import {
   extendVideoSession,
   getSignleUserInfo,
 } from '../../../../services/AuthService';
+import StepByStepProcess from '../../../components/StepByStepProcess';
+import golbalConstants from '../../../Common/GlobalStyles/constants';
 
 //redux
 import { bindActionCreators } from 'redux';
@@ -40,7 +39,6 @@ import { duckOperations } from '../../../../redux/Main/duck';
 
 import styles from './style';
 import shortid from 'shortid';
-import style from './style';
 class index extends Component {
   constructor(props) {
     super(props);
@@ -798,7 +796,7 @@ class index extends Component {
                       ? styles.buttonMainDanger
                       : styles.buttonMain
                   }>
-                  <Text style={style.countdownTimer}>
+                  <Text style={styles.countdownTimer}>
                     {this.state.sessionTimer}
                   </Text>
                   <Icon
@@ -850,7 +848,7 @@ class index extends Component {
                         ) : (
                             <View style={styles.customInputContainer} key={x.id}>
                               <TextInput
-                                style={style.customInputStartCall}
+                                style={styles.customInputStartCall}
                                 onChangeText={text =>
                                   this.onChangePackagePointText(text)
                                 }
@@ -892,7 +890,7 @@ class index extends Component {
                       </Text>
                       <View style={styles.customInputContainer}>
                         <TextInput
-                          style={style.customInputStartCall}
+                          style={styles.customInputStartCall}
                           onChangeText={text =>
                             this.onExtendTimePointText(text)
                           }
@@ -910,7 +908,7 @@ class index extends Component {
               </TouchableHighlight>
             </ScrollView>
             <View style={{ flex: 1, marginTop: 60 }}>
-              <SetpByStepProcess
+              <StepByStepProcess
                 hideIcon={true}
                 title={this.getTitleForSessionModal()}
                 action={() => this.startStageNext()}
@@ -935,22 +933,22 @@ class index extends Component {
             <ScrollView>
               <TouchableHighlight>
                 <View>
-                  <Text style={style.sessionDetails}>
+                  <Text style={styles.sessionDetails}>
                     Session Time : {this.state.sessionStatusGuest.total_time}{' '}
                     Minutes
                   </Text>
-                  <Text style={style.sessionDetails}>
+                  <Text style={styles.sessionDetails}>
                     Session Points : {this.state.sessionStatusGuest.total_cost}{' '}
                     Points
                   </Text>
-                  <Text style={style.sessionDetails}>
+                  <Text style={styles.sessionDetails}>
                     Session Points : {this.state.sessionActualTime} Minutes
                   </Text>
                 </View>
               </TouchableHighlight>
             </ScrollView>
             <View style={{ flex: 1, marginTop: 60 }}>
-              <SetpByStepProcess
+              <StepByStepProcess
                 hideIcon={true}
                 title="Ok"
                 action={() => this.closeNotification('callSettingModalGuest')}

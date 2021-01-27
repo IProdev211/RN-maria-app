@@ -25,7 +25,7 @@ import {
   BlockUser,
   reportUser,
 } from '../../../../services/AuthService';
-import SetpByStepProcess from '../../../components/SetpByStepProcess';
+import StepByStepProcess from '../../../components/StepByStepProcess';
 import styles from './styles';
 
 //redux
@@ -852,7 +852,7 @@ class Search extends Component {
               </TouchableHighlight>
             </ScrollView>
             <View style={{ flex: 1, marginTop: 60 }}>
-              <SetpByStepProcess
+              <StepByStepProcess
                 hideIcon={true}
                 title="Ok"
                 action={() => this.closeNotification('callSettingModalGuest')}

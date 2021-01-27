@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, Alert } from 'react-native';
+import { Text, Alert, SafeAreaView } from 'react-native';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import styles from './styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -56,32 +56,31 @@ class ReferralQrCode extends Component {
 
   render() {
     return (
-      <DashBoardHeader
-        title="紹介QRコードをスキャンする"
-        navigation={this.props.navigation}
-        notificationHide={true}
-        backNavigation={true}
-        settingMenu={true}>
-        <QRCodeScanner
-          onRead={this.onSuccess}
-          // flashMode={QRCodeScanner.Constants.FlashMode.torch}
-          topContent={
-            <Text style={styles.centerText}>
-              Please check add you Referral Qr Code
+      <SafeAreaView>
+        <DashBoardHeader
+          title="紹介QRコードをスキャンする"
+          navigation={this.props.navigation}
+          notificationHide={true}
+          backNavigation={true}
+          settingMenu={true}
+        >
+          <QRCodeScanner
+            onRead={this.onSuccess}
+            // flashMode={QRCodeScanner.Constants.FlashMode.torch}
+            topContent={
+              <Text style={styles.centerText}>
+                Please check add you Referral Qr Code
             </Text>
-          }
-          bottomContent={
-            <TouchableOpacity style={styles.buttonTouchable}>
-              <Text style={styles.buttonText} />
-            </TouchableOpacity>
-          }
-        />
-        <Spinner
-          visible={this.state.loading}
-          textContent={'Adding Refferal...'}
-          textStyle={styles.spinnerTextStyle}
-        />
-      </DashBoardHeader>
+            }
+            bottomContent={
+              <TouchableOpacity style={styles.buttonTouchable}>
+                <Text style={styles.buttonText} />
+              </TouchableOpacity>
+            }
+          />
+          <Spinner visible={this.state.loading} />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

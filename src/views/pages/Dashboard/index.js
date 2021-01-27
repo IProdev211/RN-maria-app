@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableHighlight,
   Image,
+  SafeAreaView
 } from 'react-native';
 import shortid from 'shortid';
 import Geolocation from '@react-native-community/geolocation';
@@ -21,7 +22,7 @@ import Pusher from 'pusher-js/react-native';
 import { Col, Grid } from 'react-native-easy-grid';
 import DashBoardHeader from '../../components/DashBoardHeader';
 import CustomCard from '../../components/CustomCard';
-import SetpByStepProcess from '../../components/SetpByStepProcess';
+import StepByStepProcess from '../../components/StepByStepProcess';
 import ProfileGirdElementOnlyImage from '../../components/profileGirdElementOnlyImage';
 import Modal from 'react-native-modal';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -586,153 +587,161 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <DashBoardHeader
-        navigation={this.props.navigation}
-        locationPicker={this.locationPicker}>
-        <View style={{ paddingBottom: 40 }}>
-          <CustomCard>
-            <View style={styles.searchConatiner}>
-              <View
-                style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={styles.headerText}>キャストを呼ぶー条件設定</Text>
-                {this.state.allUser.length > 0 ? (
-                  <Text>近くのキャスト {this.state.allUser.length}人</Text>
-                ) : null}
-              </View>
-              <View style={styles.inputSection}>
-                <Grid>
-                  <Col>
-                    <TouchableOpacity
-                      onPress={() => this.openModal('when_call')}
-                      style={[styles.InputContainer, styles.marginRight4]}>
-                      <View style={styles.InputIcon}>
-                        <Icon name="timetable" color="#000" size={20} />
-                      </View>
-                      <View style={styles.InputTextConatiner}>
-                        <Text>{this.state.FinalCastData.when_call}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </Col>
-                  <Col>
-                    <TouchableOpacity
-                      onPress={() => this.openModal('cast_location')}
-                      style={[styles.InputContainer, styles.marginLeft4]}>
-                      <View style={styles.InputIcon}>
-                        <Icon
-                          name="map-marker-outline"
-                          color="#000"
-                          size={20}
-                        />
-                      </View>
-                      <View style={styles.InputTextConatiner}>
-                        <Text>{this.state.FinalCastData.cast_location}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </Col>
-                </Grid>
-                <Grid style={{ marginTop: 8 }}>
-                  <Col>
-                    <TouchableOpacity
-                      onPress={() => this.openModal('people_per_cast')}
-                      style={[styles.InputContainer, styles.marginRight4]}>
-                      <View style={styles.InputIcon}>
-                        <Icon name="account" color="#000" size={20} />
-                      </View>
-                      <View style={styles.InputTextConatiner}>
-                        <Text>
-                          {this.state.FinalCastData.people_per_cast}人
-                        </Text>
-                      </View>
-                    </TouchableOpacity>
-                  </Col>
-                  <Col>
-                    <TouchableOpacity
-                      onPress={() => this.openModal('cast_time')}
-                      style={[styles.InputContainer, styles.marginLeft4]}>
-                      <View style={styles.InputIcon}>
-                        <Icon name="glass-cocktail" color="#000" size={20} />
-                      </View>
-                      <View style={styles.InputTextConatiner}>
-                        <Text>{this.state.FinalCastData.cast_time}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </Col>
-                </Grid>
-                <Grid style={{ marginTop: 8 }}>
-                  <Col>
-                    <TouchableOpacity
-                      onPress={() => this.openModal('cast_type')}
-                      style={styles.InputContainer}>
-                      <View style={styles.InputIcon}>
-                        <Icon name="diamond-stone" color="#000" size={20} />
-                      </View>
-                      <View style={styles.InputTextConatiner}>
-                        <Text>{this.getPackageInfo()}</Text>
-                      </View>
-                    </TouchableOpacity>
-                  </Col>
-                </Grid>
-              </View>
-              <View style={{ flex: 1, paddingTop: 55 }}>
-                <SetpByStepProcess
-                  title="次に進む (1/4)"
-                  action={() => this.submitCastCreatepage()}
-                />
-              </View>
-            </View>
-          </CustomCard>
-
-          {this.state.allUser.length > 0 ? (
+      <SafeAreaView>
+        <DashBoardHeader
+          navigation={this.props.navigation}
+          locationPicker={this.locationPicker}
+        >
+          <View style={{ paddingBottom: 40 }}>
             <CustomCard>
-              <Carousel
-                containerCustomStyle={{ backgroundColor: 'pink' }}
-                contentContainerCustomStyle={{
-                  backgroundColor: '#fff',
-                  height: 250,
-                }}
-                data={this.state.allUser}
-                renderItem={this.renderListComponent}
-                sliderWidth={sliderWidth}
-                itemWidth={sliderItemWidth}
-                activeSlideAlignment={'start'}
-                inactiveSlideScale={1}
-                inactiveSlideOpacity={1}
-              />
+              <View style={styles.searchConatiner}>
+                <View
+                  style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                  <Text style={styles.headerText}>キャストを呼ぶー条件設定</Text>
+                  {this.state.allUser.length > 0 &&
+                    <Text>近くのキャスト {this.state.allUser.length}人</Text>
+                  }
+                </View>
+                <View style={styles.inputSection}>
+                  <Grid>
+                    <Col>
+                      <TouchableOpacity
+                        onPress={() => this.openModal('when_call')}
+                        style={[styles.InputContainer, styles.marginRight4]}
+                      >
+                        <View style={styles.InputIcon}>
+                          <Icon name="timetable" color="#000" size={20} />
+                        </View>
+                        <View style={styles.InputTextConatiner}>
+                          <Text>{this.state.FinalCastData.when_call}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </Col>
+                    <Col>
+                      <TouchableOpacity
+                        onPress={() => this.openModal('cast_location')}
+                        style={[styles.InputContainer, styles.marginLeft4]}
+                      >
+                        <View style={styles.InputIcon}>
+                          <Icon
+                            name="map-marker-outline"
+                            color="#000"
+                            size={20}
+                          />
+                        </View>
+                        <View style={styles.InputTextConatiner}>
+                          <Text>{this.state.FinalCastData.cast_location}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </Col>
+                  </Grid>
+                  <Grid style={{ marginTop: 8 }}>
+                    <Col>
+                      <TouchableOpacity
+                        onPress={() => this.openModal('people_per_cast')}
+                        style={[styles.InputContainer, styles.marginRight4]}
+                      >
+                        <View style={styles.InputIcon}>
+                          <Icon name="account" color="#000" size={20} />
+                        </View>
+                        <View style={styles.InputTextConatiner}>
+                          <Text>
+                            {this.state.FinalCastData.people_per_cast}人
+                        </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </Col>
+                    <Col>
+                      <TouchableOpacity
+                        onPress={() => this.openModal('cast_time')}
+                        style={[styles.InputContainer, styles.marginLeft4]}
+                      >
+                        <View style={styles.InputIcon}>
+                          <Icon name="glass-cocktail" color="#000" size={20} />
+                        </View>
+                        <View style={styles.InputTextConatiner}>
+                          <Text>{this.state.FinalCastData.cast_time}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </Col>
+                  </Grid>
+                  <Grid style={{ marginTop: 8 }}>
+                    <Col>
+                      <TouchableOpacity
+                        onPress={() => this.openModal('cast_type')}
+                        style={styles.InputContainer}
+                      >
+                        <View style={styles.InputIcon}>
+                          <Icon name="diamond-stone" color="#000" size={20} />
+                        </View>
+                        <View style={styles.InputTextConatiner}>
+                          <Text>{this.getPackageInfo()}</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </Col>
+                  </Grid>
+                </View>
+                <View style={{ flex: 1, paddingTop: 55 }}>
+                  <StepByStepProcess
+                    title="次に進む (1/4)"
+                    action={this.submitCastCreatepage}
+                  />
+                </View>
+              </View>
             </CustomCard>
-          ) : null}
 
-          <CustomCard>
-            <View style={styles.addCastContainer}>
-              <Text style={styles.addCastContainerMainText}>
-                キャストを希望しているユーザーはこちらからリクエストを送信します
+            {this.state.allUser.length > 0 &&
+              <CustomCard>
+                <Carousel
+                  containerCustomStyle={{ backgroundColor: 'pink' }}
+                  contentContainerCustomStyle={{
+                    backgroundColor: '#fff',
+                    height: 250,
+                  }}
+                  data={this.state.allUser}
+                  renderItem={this.renderListComponent}
+                  sliderWidth={sliderWidth}
+                  itemWidth={sliderItemWidth}
+                  activeSlideAlignment={'start'}
+                  inactiveSlideScale={1}
+                  inactiveSlideOpacity={1}
+                />
+              </CustomCard>
+            }
+
+            <CustomCard>
+              <View style={styles.addCastContainer}>
+                <Text style={styles.addCastContainerMainText}>
+                  キャストを希望しているユーザーはこちらからリクエストを送信します
               </Text>
-              {/* <Text style={styles.addCastContainerSubText}>
+                {/* <Text style={styles.addCastContainerSubText}>
                 まず、こちらからご応募ください。
               </Text> */}
-              <ButtonCustom
-                title="面接リクエスト"
-                onPress={() => this.requestForInterView()}
-              />
-            </View>
-          </CustomCard>
-        </View>
-        <Spinner
-          visible={this.state.loading}
-          textContent={'読み込み中'}
-          textStyle={styles.spinnerTextStyle}
-        />
-        <Modal
-          testID={'castTimeModale'}
-          isVisible={this.state.modalStatus}
-          onSwipeComplete={() => this.closeModal('castTimeModale')}
-          swipeDirection={['up', 'left', 'right', 'down']}
-          style={styles.ModalView}>
-          <TouchableWithoutFeedback
-            onPress={() => this.closeModal('castTimeModale')}>
-            <View style={styles.modalOverlay} />
-          </TouchableWithoutFeedback>
-          <View style={styles.content}>
-            {/* <View style={styles.mainRow}>
+                <ButtonCustom
+                  title="面接リクエスト"
+                  onPress={() => this.requestForInterView()}
+                />
+              </View>
+            </CustomCard>
+          </View>
+          <Spinner
+            visible={this.state.loading}
+            textContent={'読み込み中'}
+            textStyle={styles.spinnerTextStyle}
+          />
+          <Modal
+            testID={'castTimeModale'}
+            isVisible={this.state.modalStatus}
+            onSwipeComplete={() => this.closeModal('castTimeModale')}
+            swipeDirection={['up', 'left', 'right', 'down']}
+            style={styles.ModalView}
+          >
+            <TouchableWithoutFeedback
+              onPress={() => this.closeModal('castTimeModale')}>
+              <View style={styles.modalOverlay} />
+            </TouchableWithoutFeedback>
+            <View style={styles.content}>
+              {/* <View style={styles.mainRow}>
               <Text style={styles.rowTitle}>{this.state.openModalTitle}</Text> 
               {this.state.selected_cast_type == 'cast_location' ? (
                 <TouchableWithoutFeedback
@@ -750,17 +759,16 @@ class Dashboard extends Component {
                 </TouchableWithoutFeedback>
               ) : null}
             </View> */}
-            <View>
-              <View style={{ flexDirection: 'column' }}>
-                {this.state.selected_cast_type == 'cast_type' ? (
-                  <View>
+              <View>
+                <View style={{ flexDirection: 'column' }}>
+                  {this.state.selected_cast_type == 'cast_type' &&
                     <View>
-                      <Text style={styles.tileView}>
-                        表示もカタカナに変更します。
+                      <View>
+                        <Text style={styles.tileView}>
+                          表示もカタカナに変更します。
                       </Text>
-                    </View>
-                    {this.state.CastPackage.map(x => {
-                      return (
+                      </View>
+                      {this.state.CastPackage.map(x => (
                         <View key={shortid.generate()}>
                           <TouchableWithoutFeedback
                             onPress={() =>
@@ -791,264 +799,229 @@ class Dashboard extends Component {
                             </View>
                           </TouchableWithoutFeedback>
                         </View>
-                      );
-                    })}
-                  </View>
-                ) : null}
+                      ))}
+                    </View>
+                  }
+                </View>
               </View>
-            </View>
-            {this.state.selected_cast_type == 'people_per_cast' ? (
-              <View>
-                <View style={styles.mainRow}>
-                  <Text style={styles.rowTitle}>何人呼びますか？</Text>
-                  {/* <TouchableOpacity style={styles.SubRow}>
+              {this.state.selected_cast_type == 'people_per_cast' &&
+                <View>
+                  <View style={styles.mainRow}>
+                    <Text style={styles.rowTitle}>何人呼びますか？</Text>
+                    {/* <TouchableOpacity style={styles.SubRow}>
                     <Icon name="information" size={20} color="#000" />
                     <Text style={styles.paddingLeft10}>最低人数のお願い</Text>
                   </TouchableOpacity> */}
-                </View>
-                <View style={styles.mainRow}>
-                  <View style={styles.SubRow}>
-                    <Text style={styles.CastPeopleSelect}>キャスト人数</Text>
-                    <Text style={styles.CastPeopleSelectNumber}>
-                      {this.state.TemCastData.people_per_cast}
-                    </Text>
-                    <Text style={styles.CastPeopleSelect}>人</Text>
                   </View>
+                  <View style={styles.mainRow}>
+                    <View style={styles.SubRow}>
+                      <Text style={styles.CastPeopleSelect}>キャスト人数</Text>
+                      <Text style={styles.CastPeopleSelectNumber}>
+                        {this.state.TemCastData.people_per_cast}
+                      </Text>
+                      <Text style={styles.CastPeopleSelect}>人</Text>
+                    </View>
+                    <View style={styles.SubRow}>
+                      <TouchableWithoutFeedback
+                        onPress={() => this.changeCastPerPerson(-1)}>
+                        <AntDesign name="minuscircleo" size={30} color={this.state.TemCastData.people_per_cast === 2 ? "#aaa" : "#000"} />
+                      </TouchableWithoutFeedback>
+                      <TouchableWithoutFeedback
+                        onPress={() => this.changeCastPerPerson(1)}>
+                        <View style={{ paddingLeft: 30 }}>
+                          <AntDesign name="pluscircleo" size={30} color="#000" />
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  </View>
+                </View>
+              }
+              {this.state.selected_cast_type == 'cast_location' &&
+                <View>
                   <View style={styles.SubRow}>
+                    <TagSelect
+                      data={this.state.defaultLocation}
+                      max={1}
+                      labelAttr="name"
+                      itemStyle={styles.item}
+                      itemLabelStyle={styles.label}
+                      itemStyleSelected={styles.itemSelected}
+                      itemLabelStyleSelected={styles.labelSelected}
+                      ref={tag => { this.tag = tag; }}
+                      onItemPress={item => this.setState({ selectedCity: item, showOtherAddCity: false })}
+                      onMaxError={() => {
+                        Alert.alert(
+                          'ウォーニング',
+                          '以前の都市を破棄して新しい都市を選択してください。',
+                        );
+                      }}
+                    />
                     <TouchableWithoutFeedback
-                      onPress={() => this.changeCastPerPerson(-1)}>
-                      <AntDesign name="minuscircleo" size={30} color={this.state.TemCastData.people_per_cast === 2 ? "#aaa" : "#000"} />
-                    </TouchableWithoutFeedback>
-                    <TouchableWithoutFeedback
-                      onPress={() => this.changeCastPerPerson(1)}>
-                      <View style={{ paddingLeft: 30 }}>
-                        <AntDesign name="pluscircleo" size={30} color="#000" />
+                      onPress={() => this.openModalChooseCity()}
+                    >
+                      <View style={styles.itemSelectedOthers}>
+                        <Text style={styles.label}>その他</Text>
                       </View>
                     </TouchableWithoutFeedback>
                   </View>
-                </View>
-              </View>
-            ) : null}
-            {this.state.selected_cast_type == 'cast_location' ? (
-              <View>
-                <View style={styles.SubRow}>
-                  <TagSelect
-                    data={this.state.defaultLocation}
-                    max={1}
-                    labelAttr="name"
-                    itemStyle={styles.item}
-                    itemLabelStyle={styles.label}
-                    itemStyleSelected={styles.itemSelected}
-                    itemLabelStyleSelected={styles.labelSelected}
-                    ref={tag => {
-                      this.tag = tag;
-                    }}
-                    onItemPress={item => {
-                      this.setState({
-                        selectedCity: item,
-                        showOtherAddCity: false,
-                      });
-                    }}
-                    onMaxError={() => {
-                      Alert.alert(
-                        'ウォーニング',
-                        '以前の都市を破棄して新しい都市を選択してください。',
-                      );
-                    }}
-                  />
-                  <TouchableWithoutFeedback
-                    onPress={() => this.openModalChooseCity()}>
-                    <View style={styles.itemSelectedOthers}>
-                      <Text style={styles.label}>その他</Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-                <View>
-                  <View style={styles.verfiedTokenCenter}>
-                    <Text style={styles.questionColor}>
-                      ここに都市が含まれていない場合は追加してください
+                  <View>
+                    <View style={styles.verfiedTokenCenter}>
+                      <Text style={styles.questionColor}>
+                        ここに都市が含まれていない場合は追加してください
                     </Text>
-                  </View>
-                  <View style={styles.addCity}>
-                    <TextInput
-                      placeholder={'都市名を入力してください'}
-                      style={styles.addCityInput}
-                      value={this.state.AddedCityName}
-                      onChangeText={AddedCityName =>
-                        this.setState({ AddedCityName })
-                      }
-                    />
-                    {/* <TouchableWithoutFeedback
+                    </View>
+                    <View style={styles.addCity}>
+                      <TextInput
+                        placeholder={'都市名を入力してください'}
+                        style={styles.addCityInput}
+                        value={this.state.AddedCityName}
+                        onChangeText={AddedCityName =>
+                          this.setState({ AddedCityName })
+                        }
+                      />
+                      {/* <TouchableWithoutFeedback
                         onPress={() => this.addNewCity()}>
                         <View style={styles.addCityutton}>
                           <Text style={styles.addCityuttonText}>Add</Text>
                         </View>
                       </TouchableWithoutFeedback> */}
+                    </View>
                   </View>
                 </View>
-              </View>
-            ) : null}
-            {this.state.selected_cast_type == 'when_call' ||
-              this.state.selected_cast_type == 'cast_time' ? (
+              }
+              {(this.state.selected_cast_type == 'when_call' || this.state.selected_cast_type == 'cast_time') &&
                 <View style={styles.SubRow}>
-                  {this.state.openModalData.map((x, index) => {
-                    return (
-                      <TouchableWithoutFeedback
-                        key={shortid.generate()}
-                        onPress={() => this.updateCastData(x)}>
-                        <View
+                  {this.state.openModalData.map((x, index) => (
+                    <TouchableWithoutFeedback
+                      key={shortid.generate()}
+                      onPress={() => this.updateCastData(x)}>
+                      <View
+                        style={
+                          this.isSlectedValue(
+                            this.state.selected_cast_type,
+                            x.value,
+                          )
+                            ? styles.CallTimeButtonSelected
+                            : styles.CallTimeButton
+                        }>
+                        <Text
                           style={
                             this.isSlectedValue(
                               this.state.selected_cast_type,
                               x.value,
                             )
-                              ? styles.CallTimeButtonSelected
-                              : styles.CallTimeButton
+                              ? styles.CallTimeButtonTextSelected
+                              : styles.CallTimeButtonText
                           }>
-                          <Text
-                            style={
-                              this.isSlectedValue(
-                                this.state.selected_cast_type,
-                                x.value,
-                              )
-                                ? styles.CallTimeButtonTextSelected
-                                : styles.CallTimeButtonText
-                            }>
-                            {x.value}
-                          </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    );
-                  })}
+                          {x.value}
+                        </Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  ))}
                 </View>
-              ) : null}
-
-            <View style={{ flex: 1, marginTop: 55 }}>
-              <SetpByStepProcess
-                hideIcon={true}
-                title="保存する"
-                action={() => this.saveCastInfo()}
-              />
-            </View>
-          </View>
-          <Modal
-            testID={'castTimeModale2'}
-            isVisible={this.state.changeSateModal}
-            onSwipeComplete={() => this.changeStateValue()}
-            swipeDirection={['up', 'left', 'right', 'down']}
-            style={styles.ModalView2}>
-            <TouchableWithoutFeedback onPress={() => this.changeStateValue()}>
-              <View style={styles.modalOverlay} />
-            </TouchableWithoutFeedback>
-            <View style={styles.content2}>
-              <View style={styles.mainRow}>
-                <Text style={styles.rowTitle}>状態を変える</Text>
-              </View>
-              <ScrollView>
-                <TouchableHighlight>
-                  <TouchableWithoutFeedback>
-                    <View>
-                      {this.props.castTypeInformations &&
-                        this.props.castTypeInformations.all_cast_location
-                        ? this.props.castTypeInformations.all_cast_location.map(
-                          x => {
-                            return (
-                              <View
-                                key={shortid.generate}
-                                style={{
-                                  flexDirection: 'column',
-                                  alignItems: 'flex-end',
-                                }}>
-                                <TouchableWithoutFeedback
-                                  key={x.id}
-                                  onPress={() => this.UpdateStateValue(x)}>
-                                  <View
-                                    style={
-                                      this.getSelectedStateStatus(x)
-                                        ? styles.Selected
-                                        : styles.NonSelected
-                                    }>
-                                    <Text>{x.state_name}</Text>
-                                  </View>
-                                </TouchableWithoutFeedback>
-                                {x.cities &&
-                                  x.cities.map(y => {
-                                    return (
-                                      <TouchableWithoutFeedback
-                                        key={y.id}
-                                        onPress={() =>
-                                          this.UpdateStateValue(y)
-                                        }>
-                                        <View
-                                          style={
-                                            this.getSelectedStateStatus(y)
-                                              ? styles.SelectedCity
-                                              : styles.NonSelectedCity
-                                          }>
-                                          <Text
-                                            style={{
-                                              alignSelf: 'flex-end',
-                                              paddingRight: 15,
-                                            }}>
-                                            {y.city_name}
-                                          </Text>
-                                        </View>
-                                      </TouchableWithoutFeedback>
-                                    );
-                                  })}
-                              </View>
-                            );
-                          },
-                        )
-                        : null}
-                    </View>
-                  </TouchableWithoutFeedback>
-                </TouchableHighlight>
-              </ScrollView>
+              }
 
               <View style={{ flex: 1, marginTop: 55 }}>
-                <SetpByStepProcess
+                <StepByStepProcess
                   hideIcon={true}
                   title="保存する"
-                  action={() => this.updateSateCity()}
+                  action={() => this.saveCastInfo()}
+                />
+              </View>
+            </View>
+            <Modal
+              testID={'castTimeModale2'}
+              isVisible={this.state.changeSateModal}
+              onSwipeComplete={() => this.changeStateValue()}
+              swipeDirection={['up', 'left', 'right', 'down']}
+              style={styles.ModalView2}>
+              <TouchableWithoutFeedback onPress={() => this.changeStateValue()}>
+                <View style={styles.modalOverlay} />
+              </TouchableWithoutFeedback>
+              <View style={styles.content2}>
+                <View style={styles.mainRow}>
+                  <Text style={styles.rowTitle}>状態を変える</Text>
+                </View>
+                <ScrollView>
+                  <TouchableHighlight>
+                    <TouchableWithoutFeedback>
+                      <View>
+                        {this.props.castTypeInformations && this.props.castTypeInformations.all_cast_location &&
+                          this.props.castTypeInformations.all_cast_location.map(x => (
+                            <View key={shortid.generate} style={{ flexDirection: 'column', alignItems: 'flex-end' }} >
+                              <TouchableWithoutFeedback
+                                key={x.id}
+                                onPress={() => this.UpdateStateValue(x)}
+                              >
+                                <View style={this.getSelectedStateStatus(x) ? styles.Selected : styles.NonSelected}>
+                                  <Text>{x.state_name}</Text>
+                                </View>
+                              </TouchableWithoutFeedback>
+                              {x.cities && x.cities.map(y => (
+                                <TouchableWithoutFeedback
+                                  key={y.id}
+                                  onPress={() => this.UpdateStateValue(y)}
+                                >
+                                  <View style={this.getSelectedStateStatus(y) ? styles.SelectedCity : styles.NonSelectedCity}>
+                                    <Text style={{ alignSelf: 'flex-end', paddingRight: 15 }}>
+                                      {y.city_name}
+                                    </Text>
+                                  </View>
+                                </TouchableWithoutFeedback>
+                              ))}
+                            </View>
+                          ))
+                        }
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </TouchableHighlight>
+                </ScrollView>
+
+                <View style={{ flex: 1, marginTop: 55 }}>
+                  <StepByStepProcess
+                    hideIcon={true}
+                    title="保存する"
+                    action={() => this.updateSateCity()}
+                  />
+                </View>
+              </View>
+            </Modal>
+          </Modal>
+          <Modal
+            testID={'castTimeModale'}
+            isVisible={this.state.callNotification}
+            onSwipeComplete={() => this.closeCallNotification()}
+            swipeDirection={['up', 'left', 'right', 'down']}
+            style={styles.callModalView}>
+            <TouchableWithoutFeedback
+              onPress={() => this.closeCallNotification()}
+            >
+              <View style={styles.modalOverlay} />
+            </TouchableWithoutFeedback>
+            <View style={styles.content}>
+              <View style={styles.centerImage}>
+                <Image
+                  style={{ width: 200, height: 140 }}
+                  source={require('../../../assets/profile/maria_logo.png')}
+                />
+              </View>
+              <View style={styles.thanksConatiner}>
+                <Text style={{ textAlign: 'center', fontSize: 12 }}>
+                  {this.state.callerName}{' '}
+                があなたをキャストするためのコミュニケーションを求めています
+              </Text>
+              </View>
+              <View style={{ marginTop: 55, paddingTop: 30 }}>
+                <StepByStepProcess
+                  hideIcon={true}
+                  title="通話を受け入れる"
+                  action={() => this.openCallNotification()}
                 />
               </View>
             </View>
           </Modal>
-        </Modal>
-        <Modal
-          testID={'castTimeModale'}
-          isVisible={this.state.callNotification}
-          onSwipeComplete={() => this.closeCallNotification()}
-          swipeDirection={['up', 'left', 'right', 'down']}
-          style={styles.callModalView}>
-          <TouchableWithoutFeedback
-            onPress={() => this.closeCallNotification()}>
-            <View style={styles.modalOverlay} />
-          </TouchableWithoutFeedback>
-          <View style={styles.content}>
-            <View style={styles.centerImage}>
-              <Image
-                style={{ width: 200, height: 140 }}
-                source={require('../../../assets/profile/maria_logo.png')}
-              />
-            </View>
-            <View style={styles.thanksConatiner}>
-              <Text style={{ textAlign: 'center', fontSize: 12 }}>
-                {this.state.callerName}{' '}
-                があなたをキャストするためのコミュニケーションを求めています
-              </Text>
-            </View>
-            <View style={{ marginTop: 55, paddingTop: 30 }}>
-              <SetpByStepProcess
-                hideIcon={true}
-                title="通話を受け入れる"
-                action={() => this.openCallNotification()}
-              />
-            </View>
-          </View>
-        </Modal>
-      </DashBoardHeader>
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

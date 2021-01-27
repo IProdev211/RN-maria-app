@@ -139,7 +139,7 @@ export default EStyleSheet.flatten(
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: 88,
+      bottom: 147,
     },
     organgeBgText: {
       borderWidth: 1,

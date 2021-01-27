@@ -4,6 +4,7 @@ import {
   Text,
   FlatList,
   RefreshControl,
+  SafeAreaView
 } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -71,51 +72,50 @@ class Timeline extends Component {
   };
   render() {
     return (
-      <DashBoardHeader
-        navigation={this.props.navigation}
-        addTweet={true}
-        scrollingOff={true}
-        notificationHide={true}
-        title="つぶやき"
-      >
-        <View>
-          {this.state.data ? (
-            <FlatList
-              style={styles.root}
-              data={this.state.data}
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.isFetching}
-                  onRefresh={() => this.getAllTweetWithoutLoading()}
-                />
-              }
-              extraData={this.state}
-              ItemSeparatorComponent={() => {
-                return <View style={styles.separator} />;
-              }}
-              keyExtractor={(item, index) => `user-${index}`}
-              renderItem={items => {
-                let item = items.item;
-                return (
-                  <Tweet
-                    id={item.id}
-                    item={item}
-                    key={shortid.generate()}
-                    ownerImage={item.author_pic}
-                    ownerName={item.author_name}
-                    postedTime={this.checkAMPM(item.tweet_posted_time)}
-                    loved={item.tweet_total_nice}
-                    isLoved={item.is_nice ? true : false}
-                    post={item.tweet_content}
-                    attachmentUrl={item.tweet_picture}
-                    updateNice={() => this.updateNiceStatus(item.id)}
-                    onPressContent={() => this.gotoDetailsPage(item.id)}
-                    onPressUserProfile={() => this.profileView(item.author_id)}
+      <SafeAreaView>
+        <DashBoardHeader
+          navigation={this.props.navigation}
+          addTweet={true}
+          scrollingOff={true}
+          notificationHide={true}
+          title="つぶやき"
+        >
+          <View>
+            {this.state.data ?
+              <FlatList
+                style={styles.root}
+                data={this.state.data}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.isFetching}
+                    onRefresh={() => this.getAllTweetWithoutLoading()}
                   />
-                );
-              }}
-            />
-          ) : (
+                }
+                extraData={this.state}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+                keyExtractor={(item, index) => `user-${index}`}
+                renderItem={items => {
+                  let item = items.item;
+                  return (
+                    <Tweet
+                      id={item.id}
+                      item={item}
+                      key={shortid.generate()}
+                      ownerImage={item.author_pic}
+                      ownerName={item.author_name}
+                      postedTime={this.checkAMPM(item.tweet_posted_time)}
+                      loved={item.tweet_total_nice}
+                      isLoved={item.is_nice ? true : false}
+                      post={item.tweet_content}
+                      attachmentUrl={item.tweet_picture}
+                      updateNice={() => this.updateNiceStatus(item.id)}
+                      onPressContent={() => this.gotoDetailsPage(item.id)}
+                      onPressUserProfile={() => this.profileView(item.author_id)}
+                    />
+                  );
+                }}
+              />
+              :
               <View style={styles.container}>
                 <Text>役職が見つかりません。新しい役職を作成してください</Text>
                 <ButtonCustom
@@ -123,14 +123,16 @@ class Timeline extends Component {
                   onPress={() => this.props.navigation.navigate('AddTweet')}
                 />
               </View>
-            )}
-        </View>
-        <Spinner
-          visible={this.state.loading}
-          textContent={'読み込み中...'}
-          textStyle={styles.spinnerTextStyle}
-        />
-      </DashBoardHeader>
+            }
+          </View>
+
+          <Spinner
+            visible={this.state.loading}
+            textContent={'読み込み中...'}
+            textStyle={styles.spinnerTextStyle}
+          />
+        </DashBoardHeader>
+      </SafeAreaView>
     );
   }
 }

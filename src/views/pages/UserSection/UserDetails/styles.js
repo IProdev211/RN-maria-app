@@ -136,7 +136,7 @@ export default EStyleSheet.flatten(
       position: 'absolute',
       left: 0,
       right: 0,
-      bottom: 50,
+      bottom: 130,
     },
     CallingButtonCOntainer: {
       backgroundColor: '#f7f7f7',

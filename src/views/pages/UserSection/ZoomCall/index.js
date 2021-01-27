@@ -23,16 +23,15 @@ const VideoCallData = route => {
     );
 };
 
-class UserReview extends Component {
+class ZoomCall extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    console.log(this.state, 34);
     return <VideoCallData route={this.props} />;
   }
 }
 
-export default UserReview;
+export default ZoomCall;
 
 //this.props.route.params.tweetId;
