@@ -777,7 +777,7 @@
 				CODE_SIGN_ENTITLEMENTS = maria/maria.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = LGYZ8D7JJG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -812,7 +812,7 @@
 				CODE_SIGN_ENTITLEMENTS = maria/maria.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = LGYZ8D7JJG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
