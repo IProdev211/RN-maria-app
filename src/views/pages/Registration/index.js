@@ -837,11 +837,11 @@ class Registration extends Component {
                         </View>
                         <View style={styles.loginWithFbText}>
                           <Text style={styles.loginWithSMSTextMain}>
-                            Appleではじめる
-                        </Text>
+                            Appleでサインイン
+                          </Text>
                           <Text style={styles.loginWithFbTextSubBlack}>
                             SNS上には一切表示投稿されません
-                        </Text>
+                          </Text>
                         </View>
                       </TouchableOpacity>
                     }

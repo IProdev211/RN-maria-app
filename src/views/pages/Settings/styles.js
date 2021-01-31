@@ -21,5 +21,13 @@ export default EStyleSheet.flatten(
       fontSize: 16,
       marginRight: 20,
     },
+    terms: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: 15,
+      borderBottomWidth: 0.5,
+      borderBottomColor: '#ACA7A1',
+      fontSize: 16,
+    }
   }),
 );

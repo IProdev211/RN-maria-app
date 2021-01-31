@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, SafeAreaView } from 'react-native';
+import { View, Text, TextInput, SafeAreaView, NativeModules } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { CreditCardInput } from 'react-native-credit-card-input';
 import { showMessage } from 'react-native-flash-message';
@@ -13,6 +13,7 @@ import {
   confirmOrderPayment,
   createOrderInGmo,
   paymentOrderInGmo,
+  getTokenFromGMO
 } from '../../../../services/AuthService';
 import DashBoardHeader from '../../../components/DashBoardHeader';
 import { returnErrorMessage } from '../../../Common/utilies/error_codes';
@@ -23,6 +24,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { duckOperations } from '../../../../redux/Main/duck';
 
+const { MakeEncryptedCardInfoModule } = NativeModules;
 
 class UserDeposite extends Component {
   constructor(props) {
@@ -51,7 +53,6 @@ class UserDeposite extends Component {
   getAllDeposite = async () => {
     let arr = [];
     var data = await getDepositeAll();
-    console.log(data, 37);
     if (data.result.deposit_card_list.length > 0) {
       data.result.deposit_card_list.forEach(item => {
         console.log(item);
@@ -60,7 +61,6 @@ class UserDeposite extends Component {
           [item.deposit_time, item.point ? item.point.toString() : 0],
         ];
       });
-      console.log(arr, 'table data');
       this.setState({ tableData: arr });
     }
   };
@@ -68,6 +68,7 @@ class UserDeposite extends Component {
   onChangeHandler = (val, name) => {
     this.setState({ [name]: val });
   };
+
   onSubmit = async () => {
     const { cardNumber, cardName, amount } = this.state;
     const data = {
@@ -77,7 +78,6 @@ class UserDeposite extends Component {
     };
     this.setState({ amount: '', cardName: '', cardNumber: '' });
     const res = await PostDeposite(data);
-    console.log(res, 'response from deposite');
   };
 
   orderPoints = async () => {
@@ -92,17 +92,17 @@ class UserDeposite extends Component {
           this.creatOrderInGMO(response.result[0]);
         }
       } catch {
+        showMessage({
+          message: '処理過程でエラーが発生しました。しばらくしてからもう一度試してください。',
+          type: 'error',
+        });
         this.setState({ loading: false });
       }
-    }
+    }    
   };
 
   creatOrderInGMO = async order => {
     let data = {
-      // ShopID: 'tshop00048773',
-      // ShopPass: '457xqe6b',
-      // SiteID: 'tsite00042373',
-      // SitePass: 'axhe4dew',
       ShopID: '9200002623974',
       ShopPass: 'sw9hz7sy',
       SiteID: 'mst2000023566',
@@ -134,87 +134,125 @@ class UserDeposite extends Component {
       }
     } catch {
       showMessage({
-        message: 'Network error',
+        message: '処理過程でエラーが発生しました。しばらくしてからもう一度試してください。',
         type: 'error',
       });
       this.setState({ loading: false });
     }
   };
 
-  _onChange = form => this.setState({ cardInfo: form });
+  makeEncryptedCardInfo = async () => {
+    try {
+      let encrypted = await MakeEncryptedCardInfoModule.makeEncryptedCardInfo(this.removeStringSpace(this.state.cardInfo.values.number), this.expiryDateFormat(this.state.cardInfo.values.expiry), this.state.cardInfo.values.cvc, this.state.cardInfo.values.name);
+      return encrypted;
+    } catch (error) {
+      showMessage({
+        message: 'カード情報の暗号化に失敗しました。',
+        type: 'error',
+      });
+      return null;
+    }
+  };
 
-  makePayment = async () => {
+  getTokenFromGMO = async () => {
     if (!this.state.cardInfo || !this.state.cardInfo.valid) {
       if (this.state.cardInfo == null) {
         showMessage({
-          message: 'カード情報が正しくない',
+          message: '正確なカード情報を入力してください。',
           type: 'error',
         });
       } else if (this.state.cardInfo.status.number != 'valid') {
         showMessage({
-          message: 'カード番号が無効です',
+          message: 'カード番号が正しくありません。',
           type: 'error',
         });
       }
     } else {
-      let data = {
-        AccessID: this.state.AccessID,
-        AccessPass: this.state.AccessPass,
-        OrderID: this.state.OrderId,
-        Method: '1',
-        CardNo: this.removeStringSpace(this.state.cardInfo.values.number),
-        Expire: this.expiryDateFormat(this.state.cardInfo.values.expiry),
-        HttpAccept: '*/*',
-        HttpUserAgent: 'Maria App Client',
-      };
-      this.setState({ loading: true });
-      try {
-        const response = await paymentOrderInGmo(data);
-        if (response.isSuccess) {
-          let result = response.result;
-          if (result.ErrInfo && result.ErrCode) {
-            showMessage({
-              message: returnErrorMessage(result.ErrInfo),
-              type: 'error',
-            });
+      const enctypted = await this.makeEncryptedCardInfo();
+      if (enctypted) {
+        let data = {
+          Encrypted: enctypted,
+          ShopID: '9200002623974',
+          KeyHash: 'cfb650443b2d8ddc160db38a0b8268bd989f9a2dd5916b2286f1d950969684e4',
+        };
+        this.setState({ loading: true });
+        try {
+          const response = await getTokenFromGMO(data);
+          if (response.isSuccess) {
+            console.log('======= GMO Token =======', response.result);
             this.setState({ loading: false });
-          } else {
-            if (result.Approve) {
-              let info = {
-                order_id: this.state.OrderId,
-                approve: result.Approve,
-                transection_id: result.TranID,
-                transection_date: result.TranDate,
-                check_string: result.CheckString,
-                coupon: false,
-                status: true,
-              };
-              try {
-                const response = await confirmOrderPayment(info);
-                if (response.isSuccess) {
-                  this.getUserInfo();
-                }
-                this.setState({ loading: false, buyingStage: 3 });
-              } catch {
-                this.setState({ loading: false });
-              }
-            } else {
-              showMessage({
-                message: "支払いが承認されていません。カード情報をご確認ください。",
-                type: 'error',
-              });
-              this.setState({ loading: false });
-            }
           }
+        } catch {
+          showMessage({
+            message: 'GMOからのトークン取得に失敗しました。',
+            type: 'error',
+          });
+          this.setState({ loading: false });
         }
-      } catch {
+      } else {
         showMessage({
-          message: 'Network error',
+          message: 'カード情報の暗号化に失敗しました。',
           type: 'error',
         });
-        this.setState({ loading: false });
       }
     }
+  };
+
+  makePayment = async () => {
+      // let data = {
+      //   AccessID: this.state.AccessID,
+      //   AccessPass: this.state.AccessPass,
+      //   OrderID: this.state.OrderId,
+      //   Method: '1',
+      //   Token: Token,
+      // };
+      // this.setState({ loading: true });
+      // try {
+      //   const response = await paymentOrderInGmo(data);
+      //   if (response.isSuccess) {
+      //     let result = response.result;
+      //     if (result.ErrInfo && result.ErrCode) {
+      //       showMessage({
+      //         message: returnErrorMessage(result.ErrInfo),
+      //         type: 'error',
+      //       });
+      //       this.setState({ loading: false });
+      //     } else {
+      //       if (result.Approve) {
+      //         let info = {
+      //           order_id: this.state.OrderId,
+      //           approve: result.Approve,
+      //           transection_id: result.TranID,
+      //           transection_date: result.TranDate,
+      //           check_string: result.CheckString,
+      //           coupon: false,
+      //           status: true,
+      //         };
+      //         try {
+      //           const response = await confirmOrderPayment(info);
+      //           if (response.isSuccess) {
+      //             this.getUserInfo();
+      //           }
+      //           this.setState({ loading: false, buyingStage: 3 });
+      //         } catch {
+      //           this.setState({ loading: false });
+      //         }
+      //       } else {
+      //         showMessage({
+      //           message: "支払いが承認されていません。カード情報をご確認ください。",
+      //           type: 'error',
+      //         });
+      //         this.setState({ loading: false });
+      //       }
+      //     }
+      //   }
+      // } catch {
+      //   showMessage({
+      //     message: 'Network error',
+      //     type: 'error',
+      //   });
+      //   this.setState({ loading: false });
+      // }
   };
 
   removeStringSpace = string => {
@@ -231,10 +269,10 @@ class UserDeposite extends Component {
       const response = await getUserDetails();
       if (response.isSuccess) {
         this.props.addUserInfo(response.result.success);
-        this.forceUpdate();
       }
     } catch { }
   };
+
   render() {
     return (
       <SafeAreaView>
@@ -248,10 +286,10 @@ class UserDeposite extends Component {
               <View>
                 <Text style={styles.PointsInputText}>
                   購入したいポイント数を入力してください。
-              </Text>
+                </Text>
                 <Text style={styles.PointsInputText}>
                   クレジットカードのみ登録したい場合には０を入力してください。
-              </Text>
+                </Text>
                 <TextInput
                   style={styles.cardNumber}
                   placeholder="ポイント"
@@ -261,7 +299,8 @@ class UserDeposite extends Component {
                 />
                 <TouchableOpacity
                   style={styles.pointCalculation}
-                  onPress={() => this.orderPoints()}>
+                  onPress={this.orderPoints}
+                >
                   <Text style={styles.pointCalculationText}> ポイントを購入</Text>
                 </TouchableOpacity>
               </View>
@@ -270,15 +309,15 @@ class UserDeposite extends Component {
               <View>
                 <Text style={styles.PointsInputText}>
                   ポイントの購入リクエストが承認されました。
-                {this.state.pointsAmount}ポイントは{this.state.orderAmount}¥です。
-              </Text>
+                  {this.state.pointsAmount}ポイントは{this.state.orderAmount}¥です。
+                </Text>
                 <TouchableOpacity
                   style={styles.pointCalculation}
                   onPress={() => this.setState({ buyingStage: 2 })}
                 >
                   <Text style={styles.pointCalculationText}>
                     購入を確認します
-                </Text>
+                  </Text>
                 </TouchableOpacity>
               </View>
             }
@@ -286,13 +325,13 @@ class UserDeposite extends Component {
               <View>
                 <Text style={styles.PointsInputText}>
                   支払いを行うには、すべてのクレジットカード情報を入力してください。
-              </Text>
+                </Text>
                 <View style={{ padding: 20 }}>
-                  <CreditCardInput requiresName onChange={this._onChange} />
+                  <CreditCardInput requiresName onChange={(form) => this.setState({ cardInfo: form })} />
                 </View>
                 <TouchableOpacity
                   style={styles.pointCalculation}
-                  onPress={() => this.makePayment()}
+                  onPress={this.getTokenFromGMO}
                 >
                   <Text style={styles.pointCalculationText}>支払</Text>
                 </TouchableOpacity>
@@ -302,14 +341,12 @@ class UserDeposite extends Component {
               <View>
                 <Text style={styles.PointsInputText}>
                   {this.state.pointsAmount}
-                ポイントの購入に成功しました。キャストゲストのMariaアプリをご利用いただき、ありがとうございます。
-              </Text>
-                {/* <View style={{ padding: 20 }}>
-                  <CreditCardInput onChange={this._onChange} />
-                </View> */}
+                  ポイントの購入に成功しました。キャストゲストのMariaアプリをご利用いただき、ありがとうございます。
+                </Text>
                 <TouchableOpacity
                   style={styles.pointCalculation}
-                  onPress={() => this.props.navigation.goBack()}>
+                  onPress={() => this.props.navigation.goBack()}
+                >
                   <Text style={styles.pointCalculationText}>支払う</Text>
                 </TouchableOpacity>
               </View>

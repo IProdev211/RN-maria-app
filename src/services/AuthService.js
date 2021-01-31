@@ -89,6 +89,7 @@ export const callHistory = async data => postApi('call-history', {}, data);
 export const orderPointsToBuy = async data => postApi('order/payment', {}, data);
 export const confirmOrderPayment = async data => postApi('order/payment/confirm', {}, data);
 export const createOrderInGmo = async data => postApiDirectURL('https://p01.mul-pay.jp/payment/EntryTran.idPass', {}, data);
+export const getTokenFromGMO = async data => postApiDirectURL('https://pt01.mul-pay.jp/ext/api/credit/getToken', {}, data);
 export const paymentOrderInGmo = async data => postApiDirectURL('https://p01.mul-pay.jp/payment/ExecTran.idPass', {}, data);
 
 export const getUserDetails = async () => getApi('user/me', {}, {});

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, Switch, Text, SafeAreaView } from 'react-native';
+import { View, Switch, Text, SafeAreaView, Linking } from 'react-native';
+import { showMessage } from 'react-native-flash-message';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import DashBoardHeader from '../../components/DashBoardHeader';
 import SettingTitle from '../../components/SettingTitle';
 import SettingElement from '../../components/SettingElement';
 import golbalConstants from '../../Common/GlobalStyles/constants';
-import styles from './styles';
 import {
   getEmailSettings,
   getAppSettings,
@@ -13,9 +14,11 @@ import {
   updateAppSetting,
   updatePrivacySetting,
 } from '../../../services/AuthService';
+import styles from './styles';
+
 //redux
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { duckOperations } from '../../../redux/Main/duck';
 
 class Settings extends Component {
@@ -113,6 +116,19 @@ class Settings extends Component {
     try {
       const response = await updatePrivacySetting(data);
     } catch { }
+  };
+
+  openTerms = () => {
+    Linking.canOpenURL("http://m-maria.net/ryoukiyaku").then(supported => {
+      if (supported) {
+        Linking.openURL("http://m-maria.net/ryoukiyaku");
+      } else {
+        showMessage({
+          message: 'ブラウザは開けません。',
+          type: 'error',
+        });
+      }
+    });
   };
 
   render() {
@@ -266,7 +282,7 @@ class Settings extends Component {
                 value={this.state.privacySetting.favorite_ranking ? true : false}
               />
             </SettingElement>
-            <SettingTitle text="キャストのプロフィールに載っているマ（おきにいり）ランキングで 匿名表示になりまt" />
+            <SettingTitle text="キャストのプロフィールに載っている（おきにいり）ランキングで 匿名表示になります。" />
             <SettingTitle text="フィーバーズ設定" />
             <SettingElement text="タグ設定">
               <Switch
@@ -277,6 +293,14 @@ class Settings extends Component {
                 value={this.state.privacySetting.tag_settings ? true : false}
               />
             </SettingElement>
+
+            <SettingTitle text="利用規約" />
+            <TouchableOpacity
+              style={styles.terms}
+              onPress={this.openTerms}
+            >
+              <Text>利用規約</Text>
+            </TouchableOpacity>
 
             {/* <SettingTitle text="オフにすると、タグづけされた時に許可通知がくるようになります" /> */}
           </View>
