@@ -132,7 +132,7 @@ class Registration extends Component {
   };
   selectedCityOption = () => {
     if (this.state.selectedCityName) {
-      this.setState({ registrationStage: 4 });
+      this.setState({ registrationStage: 5 });
     } else {
       showMessage({
         message: '都市を選択してください',
@@ -482,7 +482,7 @@ class Registration extends Component {
     RNTwitterSignIn.logOut();
   };
 
-  changeDate = () => {
+  confirmEvidenceImage = () => {
     if (this.state.DateProfImageUri) {
       this.setState({ registrationStage: 3 });
     } else {
@@ -1088,7 +1088,7 @@ class Registration extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.ageVerificationSkipVerify}
-                      onPress={this.changeDate}
+                      onPress={this.confirmEvidenceImage}
                     >
                       <Text style={styles.ageVerificationSkipVerifyText}>
                         確認済み
@@ -1098,7 +1098,7 @@ class Registration extends Component {
                 </View>
                 {/* <StepByStepProcess
                   title="次へ 1/5"
-                  action={() => this.changeDate()}
+                  action={() => this.confirmEvidenceImage()}
                 /> */}
               </View>
             }
@@ -1155,8 +1155,8 @@ class Registration extends Component {
                   </View>
                 </ScrollView>
                 <StepByStepProcess
-                  title="次へ 2/5"
-                  action={() => this.selectedCityOption()}
+                  title="次へ 2/4"
+                  action={this.selectedCityOption}
                 />
               </View>
             }
@@ -1220,7 +1220,7 @@ class Registration extends Component {
                   </View>
                 </ScrollView>
                 <StepByStepProcess
-                  title="次へ 3/5"
+                  title="次へ 3/4"
                   action={() => this.changeGenderFunction()}
                 />
               </View>
@@ -1233,7 +1233,7 @@ class Registration extends Component {
                 <HeaderWithCross
                   title="ニックネームを設定"
                   action={() => this.setState({ registrationStage: 0 })}
-                  actionBackKey={() => this.setState({ registrationStage: 4 })}
+                  actionBackKey={() => this.setState({ registrationStage: 3 })}
                   activeBack={true}
                 />
                 <ScrollView style={styles.scrollView}>
@@ -1253,7 +1253,7 @@ class Registration extends Component {
                   </View>
                 </ScrollView>
                 <StepByStepProcess
-                  title="次へ 4/5"
+                  title="次へ 3/4"
                   action={this.changeNickName}
                 />
               </View>
