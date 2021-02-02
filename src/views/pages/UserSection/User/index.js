@@ -252,7 +252,7 @@ class User extends Component {
                     <View style={styles.pointColumn}>
                       <Text style={{ marginBottom: 10, textAlign: 'center' }}>
                         時給
-                    </Text>
+                      </Text>
                       <Text style={styles.pointColumnHeaderNumber}>
                         {this.state.hourlyRateget ? this.state.hourlyRateget : 0}
                       </Text>
@@ -266,7 +266,7 @@ class User extends Component {
                     </View>
                     <View style={styles.pointColumn}>
                       <Text style={{ marginBottom: 10, textAlign: 'center' }}>ポイント</Text>
-                      <Text style={styles.pointColumnHeaderNumber}>{userInfo ? userInfo.points : 0}</Text>
+                      <Text style={styles.pointColumnHeaderNumber}>{userInfo.points}</Text>
                       <TouchableOpacity onPress={this.withdrawMoney}>
                         <Text style={styles.addButtonPoints}>
                           撤退{'  '}
