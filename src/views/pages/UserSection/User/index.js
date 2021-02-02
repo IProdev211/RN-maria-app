@@ -192,7 +192,7 @@ class User extends Component {
           <View style={{ backgroundColor: '#FEF6E1' }}>
             <View style={styles.ProfileContainer}>
               <TouchableOpacity onPress={() => navigation.navigate('UserDataUpdate')} >
-                {userInfo.usr_profile_photo[0].picture_url ?
+                {userInfo.is_profile_pic || (userInfo.usr_profile_photo && userInfo.usr_profile_photo[0] && userInfo.usr_profile_photo[0].picture_url) ?
                   <Image
                     style={styles.profilePicImage}
                     source={{ uri: userInfo.is_profile_pic ? userInfo.is_profile_pic : userInfo.usr_profile_photo[0].picture_url }}
