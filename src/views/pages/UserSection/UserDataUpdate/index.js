@@ -38,7 +38,14 @@ class UserDataUpdate extends Component {
     }
 
     this.setState({
-      profileImage: this.props.userInfo.is_profile_pic ? this.props.userInfo.is_profile_pic : this.props.userInfo.usr_profile_photo[0].picture_url,
+      profileImage: 
+        this.props.userInfo.is_profile_pic ? 
+          this.props.userInfo.is_profile_pic 
+          :
+          this.props.userInfo.usr_profile_photo[0] ?
+            this.props.userInfo.usr_profile_photo[0].picture_url
+            :
+            null
     });
   }
 
@@ -111,7 +118,14 @@ class UserDataUpdate extends Component {
         let response = await getUserDetails();
         if (response.isSuccess) {
           let user = response.result.success;
-          let profileImage = user.is_profile_pic ? user.is_profile_pic : user.usr_profile_photo[0].picture_url;
+          let profileImage = 
+            user.is_profile_pic ? 
+              user.is_profile_pic 
+              :
+              user.usr_profile_photo[0] ?
+                user.usr_profile_photo[0].picture_url
+                :
+                null;
           this.setState({ profileImage });
           this.props.addUserInfo(user);
         }
